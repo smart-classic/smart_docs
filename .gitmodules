@@ -1,0 +1,3 @@
+[submodule "smart_common"]
+	path = smart_common
+	url = git@github.com:chb/smart_common.git

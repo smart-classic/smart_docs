@@ -1,0 +1,23 @@
+
+<section id="jekyll-page">
+  <div class="row">
+
+    <div class="span4">
+      <a href="{{BASE_PATH}}/">
+        <img id='smart_top_logo' src="{{BASE_PATH}}/images/smart.png"/>
+      </a>
+      {% if page.includenav %}
+        {% include smartnav.html %}
+      {% endif %}
+    </div>
+
+    <div class="span8" id="jekyll-page-content">
+      <div class="page-header">
+        <h1>{{ page.title }} <small>{{ page.tagline }}</small></h1>
+      </div>
+
+      {{ content }}
+
+    </div>
+  </div>
+</section>
