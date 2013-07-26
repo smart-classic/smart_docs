@@ -1,3 +1,8 @@
+---
+layout: default
+title: SMART Developers Documentation
+---
+
 #Container Development
 
 * [Roadmap for development](roadmap.html) 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: SMART Developers Documentation
+---
+
 #Roadmap for Container Development
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna

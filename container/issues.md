@@ -1,3 +1,8 @@
+---
+layout: default
+title: SMART Developers Documentation
+---
+
 #Issues of Interest
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna

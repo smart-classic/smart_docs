@@ -1,3 +1,8 @@
+---
+layout: default
+title: SMART Developers Documentation
+---
+
 #Overview of SMART Reference Container
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
