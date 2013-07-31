@@ -12,23 +12,21 @@
   <body>
 
     <div class="container">
-        <div class="header">
-          <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-        </div>
+      <div class="header">
+        <h1 class="title"><a href="/">{{ site.name }}</a></h1>
+      </div>
 
-        <div class="nav">
-          {% unless page.nonav %}
-            {% include smartnav.html %}
-          {% endunless %}
-        </div>
+      <div class="nav">
+        {% unless page.nonav %}{% include smartnav.html %}{% endunless %}
+      </div>
 
-        {{ content }}
+      {{ content }}
 
-        <div class="footer">
-          <div class="contact">
-              <a href="http://smartplatforms.org">smartplatforms.org</a>
-          </div>
+      <div class="footer">
+        <div class="contact">
+          <a href="http://smartplatforms.org">smartplatforms.org</a>
         </div>
+      </div>
     </div> <!-- /container -->
 
     <script src="http://code.jquery.com/jquery.js"></script>
