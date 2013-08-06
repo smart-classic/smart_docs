@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: front
 title: SMART Developers Documentation
 ---
 
