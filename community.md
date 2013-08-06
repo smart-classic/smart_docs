@@ -3,7 +3,7 @@ layout: default
 title: SMART Developers Documentation
 ---
 
-#Community
+# Community
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
 augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad

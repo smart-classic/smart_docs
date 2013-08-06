@@ -6,6 +6,7 @@
 /* basic overrides */
 body {
     font-family: 'Source Sans Pro', Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #444;
     background-color: #f5f5f5;
     padding-top: 40px;
     padding-bottom: 40px;
@@ -20,6 +21,10 @@ pre, code {
 }
 
 /* further overrides */
+.nav-header {
+  font-weight: 600;
+}
+
 .page-header {
   border-bottom: 1pxpx solid #eeeeee;
 }
