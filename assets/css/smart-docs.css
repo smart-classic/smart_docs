@@ -1,0 +1,18 @@
+/* fonts */
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic);
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400);
+
+/* basic overrides */
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.hero-unit {
+    background-color: #e5e5e5;
+}
+
+pre, code {
+    font-family: 'Source Code Pro', Menlo, Consolas, monospace; font-weight: 400;
+}
