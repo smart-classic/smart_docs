@@ -25,9 +25,27 @@
     <div class="container">
 
       <div class="hero-unit">
-        <h1>SMART is Cool!</h1>
-        <p>This is an example of how SMART is cool and fun! Check out this awesome getting started guide!</p>
-        <p><a href="#" class="btn btn-primary btn-large">Get Started Now! &raquo;</a></p>
+        <h1>Welcome to SMART</h1>
+        <p>SMART is a robust API framework for integration of medical apps into EMR systems. With SMART you 
+        can write your apps once and run them everythere there is medical data.</p>
+        <p><a href="guide/" class="btn btn-primary btn-large">Get Started Now! &raquo;</a></p>
+      </div>
+      
+      <div>
+        <h2>Easy data retrieval through SMART</h2>
+        <pre>
+        SMART.ready(function(){
+            SMART.get_medications().success(function(c) {
+                var meds = c.objects[&quot;@graph&quot;];
+                for (var key in meds) {
+                    var med = meds[key];
+                    if (med[&quot;drugName&quot;]) {
+                        document.write(med.drugName.dcterms__title + &quot;&lt;br/&gt;&quot;);
+                    }
+                }
+            });
+        });
+        </pre>
       </div>
 
       <!-- Example row of columns -->
@@ -35,12 +53,12 @@
         <div class="span4">
           <h2>Our Awesome Docs</h2>
           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">Data Model and API &raquo;</a></p>
+          <p><a class="btn" href="framework/">Data Model and API &raquo;</a></p>
         </div>
         <div class="span4">
           <h2>Container Magic</h2>
           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">Container Docs &raquo;</a></p>
+          <p><a class="btn" href="container/">Container Docs &raquo;</a></p>
        </div>
         <div class="span4">
           <h2>Community</h2>

@@ -5,7 +5,7 @@ title: SMART Developers Documentation
 
 #About This Guide
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
-augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad
-litora torquent per conubia nostra, per inceptos himenaeos. Nunc vel elit
-ante. Praesent eget eros lectus. Morbi quis tempus dolor.
+We wrote this guide with the developer who wants to get started developing
+medical apps with SMART. We will lead you through the process of setting up
+your environment and implementing your first working SMART app that you
+will test against the SMART reference container in the cloud.
