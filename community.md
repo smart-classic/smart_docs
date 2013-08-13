@@ -13,5 +13,5 @@ ask questions, get help, or find out what others are thinking about SMART is to 
 
 ## News and Events
 
-Check out the [SMART web site](http://smartplatforms.org/).] for news about SMART, and to find out
+Check out the [SMART web site](http://smartplatforms.org/). for news about SMART, and to find out
 about any upcoming SMART community events and conferences.
