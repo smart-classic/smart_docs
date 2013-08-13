@@ -5,7 +5,7 @@ title: SMART Developers Documentation
 
 #Extended Tutorials
 
-* SMART Connect
-* SMART REST
-* SMART Frame
-* SMART Standalone
+* [SMART Connect](tutorial1.html)
+* [SMART REST](tutorial2.html)
+* [SMART Frame](tutorial3.html)
+* [SMART Standalone](tutorial4.html)
