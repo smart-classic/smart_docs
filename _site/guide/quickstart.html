@@ -71,9 +71,8 @@ than with Apache.</p>
 <a href="http://localhost:8000/smartapp/index.html">http://localhost:8000/smartapp/index.html</a>
 is where all the fun happens! Make sure to include the SMART page script:</p>
 
-<div>
-  <pre><code class='html'>&lt;script src=&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js&quot;&gt;&lt;/script&gt;</code></pre>
-</div>
+<div class="highlight"><pre><code class="html">    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div>
 
 <p>This script serves to connect your HTML page to the SMART JavaScript library.</p>
 
@@ -92,24 +91,23 @@ reference.</p>
 <p>A more complete index file that displays the current patient&#39;s name might thus
 look like:</p>
 
-<div>
-  <pre><code class='html'>&lt;!DOCTYPE html&gt;
-    &lt;html&gt;
-     &lt;head&gt;
-      &lt;script 
-src=&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-cli
-ent.js&quot;&gt;&lt;/script&gt;
-     &lt;/head&gt;
-     &lt;body&gt;&lt;h1&gt;Hello &lt;span id=&quot;name&quot;&gt;&lt;/span&gt;&lt;/h1&gt;
+<div class="highlight"><pre><code class="html">    <span class="cp">&lt;!DOCTYPE html&gt;</span>
+    <span class="nt">&lt;html&gt;</span>
+     <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;script </span>
+<span class="na">src=</span><span class="s">&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-cli</span>
+<span class="s">ent.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+     <span class="nt">&lt;/head&gt;</span>
+     <span class="nt">&lt;body&gt;&lt;h1&gt;</span>Hello <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/span&gt;&lt;/h1&gt;</span>
 
-     &lt;script&gt;
-       SMART.ready(function(){
-         document.getElementById('name').innerHTML = SMART.record.full_name;
-       });
-     &lt;/script&gt;
-     &lt;/body&gt;
-    &lt;/html&gt;</code></pre>
-</div>
+     <span class="nt">&lt;script&gt;</span>
+       <span class="nx">SMART</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+         <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">SMART</span><span class="p">.</span><span class="nx">record</span><span class="p">.</span><span class="nx">full_name</span><span class="p">;</span>
+       <span class="p">});</span>
+     <span class="nt">&lt;/script&gt;</span>
+     <span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
 
 <h1>Using the SMART API</h1>
 
@@ -127,13 +125,12 @@ are asynchronous: you won&#39;t get the meds as a result of the
 SMART.get_medications() call. Instead, you need to specify callback functions
 that will be invoked when the results are ready:</p>
 
-<div>
-  <pre><code class='javascript'>SMART.get_medications().success(function(meds) {
-      // do something with those meds
-    }).error(function(err) {
-      // handle the error
-    });</code></pre>
-</div>
+<div class="highlight"><pre><code class="javascript">    <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_medications</span><span class="p">().</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">meds</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// do something with those meds</span>
+    <span class="p">}).</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// handle the error</span>
+    <span class="p">});</span>
+</code></pre></div>
 
 <p>Why did we design the API this way? Because, in most cases, the SMART container
 will need to make a call to a server to obtain the requested data. That could
@@ -155,9 +152,8 @@ to RDF and SPARQL.</p>
 <p>The bottom line is a SMART medication list is an RDF graph that can be easily
 navigated and queried. For example, if meds is an RDF graph, then:</p>
 
-<div>
-  <pre><code class='javascript'>meds.graph.where(&quot;?medication rdf:type sp:Medication&quot;)</code></pre>
-</div>
+<div class="highlight"><pre><code class="javascript">  <span class="nx">meds</span><span class="p">.</span><span class="nx">graph</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication rdf:type sp:Medication&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 <p>selects all of &quot;objects&quot; in the graph that have a datatype sp:Medication, where
 sp stands for <a href="http://smartplatforms.org/ns#">http://smartplatforms.org/ns#</a>,
@@ -168,63 +164,60 @@ in particular the name of the drug. The following selects the drug names, which
 are coded-values, and then the value of those coded values, which are the actual
 drug-name strings:</p>
 
-<div>
-  <pre><code class='javascript'>meds.graph
-        .where(&quot;?medication rdf:type sp:Medication&quot;)
-        .where(&quot;?medication sp:drugName ?drug_name_code&quot;)
-        .where(&quot;?drug_name_code dcterms:title ?drugname&quot;);</code></pre>
-</div>
+<div class="highlight"><pre><code class="javascript">    <span class="nx">meds</span><span class="p">.</span><span class="nx">graph</span>
+        <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication rdf:type sp:Medication&quot;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication sp:drugName ?drug_name_code&quot;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?drug_name_code dcterms:title ?drugname&quot;</span><span class="p">);</span>
+</code></pre></div>
 
 <p>This is effectively a JavaScript query on the RDF graph, and it returns a set of
 JavaScript objects with properties we&#39;re interested in, in particular drugname.
 We can then iterate over the list of returned objects and extract the drugname
 property for each one:</p>
 
-<div>
-  <pre><code class='javascript'>var med_names = meds.graph
-             .where(&quot;?medication rdf:type sp:Medication&quot;)
-             .where(&quot;?medication sp:drugName ?drug_name_code&quot;)
-             .where(&quot;?drug_name_code dcterms:title ?drugname&quot;);
+<div class="highlight"><pre><code class="javascript">    <span class="kd">var</span> <span class="nx">med_names</span> <span class="o">=</span> <span class="nx">meds</span><span class="p">.</span><span class="nx">graph</span>
+             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication rdf:type sp:Medication&quot;</span><span class="p">)</span>
+             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication sp:drugName ?drug_name_code&quot;</span><span class="p">)</span>
+             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?drug_name_code dcterms:title ?drugname&quot;</span><span class="p">);</span>
 
-         med_names.each(function(i, single_med) {
-             // do something with single_med.drugname
-           });</code></pre>
-</div>
+         <span class="nx">med_names</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">single_med</span><span class="p">)</span> <span class="p">{</span>
+             <span class="c1">// do something with single_med.drugname</span>
+           <span class="p">});</span>
+</code></pre></div>
 
 <h2>The Complete App</h2>
 
 <p>So, to display the patient&#39;s medications, we set up an HTML list, &lt;ul&gt;, and we
 append to it with the name of each drug in our iteration:</p>
 
-<div>
-  <pre><code class='html'>&lt;!DOCTYPE html&gt;
-    &lt;html&gt;
-     &lt;head&gt;
-      &lt;script src=&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js&quot;&gt;&lt;/script&gt;
-     &lt;/head&gt;
-     &lt;body&gt;&lt;h1&gt;Hello &lt;span id=&quot;name&quot;&gt;&lt;/span&gt;&lt;/h1&gt;
+<div class="highlight"><pre><code class="html">    <span class="cp">&lt;!DOCTYPE html&gt;</span>
+    <span class="nt">&lt;html&gt;</span>
+     <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+     <span class="nt">&lt;/head&gt;</span>
+     <span class="nt">&lt;body&gt;&lt;h1&gt;</span>Hello <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/span&gt;&lt;/h1&gt;</span>
 
-     &lt;ul id=&quot;med_list&quot;&gt;&lt;/ul&gt;
+     <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;med_list&quot;</span><span class="nt">&gt;&lt;/ul&gt;</span>
      
-     &lt;script&gt;
-       SMART.ready(function(){
-         document.getElementById('name').innerHTML = SMART.record.full_name;
-         SMART.get_medications().success(function(meds) {
-           var med_names = meds.graph
-             .where(&quot;?medication rdf:type sp:Medication&quot;)
-             .where(&quot;?medication sp:drugName ?drug_name_code&quot;)
-             .where(&quot;?drug_name_code dcterms:title ?drugname&quot;);
+     <span class="nt">&lt;script&gt;</span>
+       <span class="nx">SMART</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+         <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">SMART</span><span class="p">.</span><span class="nx">record</span><span class="p">.</span><span class="nx">full_name</span><span class="p">;</span>
+         <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_medications</span><span class="p">().</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">meds</span><span class="p">)</span> <span class="p">{</span>
+           <span class="kd">var</span> <span class="nx">med_names</span> <span class="o">=</span> <span class="nx">meds</span><span class="p">.</span><span class="nx">graph</span>
+             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication rdf:type sp:Medication&quot;</span><span class="p">)</span>
+             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication sp:drugName ?drug_name_code&quot;</span><span class="p">)</span>
+             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?drug_name_code dcterms:title ?drugname&quot;</span><span class="p">);</span>
 
-           var med_list = document.getElementById('med_list');
-           med_names.each(function(i, single_med) {
-             med_list.innerHTML += &quot;&lt;li&gt; &quot; + single_med.drugname + &quot;&lt;/li&gt;&quot;;
-           });
-         }).error(function(err) { alert (&quot;An error has occurred&quot;); });
-       });
-     &lt;/script&gt;
-     &lt;/body&gt;
-    &lt;/html&gt;</code></pre>
-</div>
+           <span class="kd">var</span> <span class="nx">med_list</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;med_list&#39;</span><span class="p">);</span>
+           <span class="nx">med_names</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">single_med</span><span class="p">)</span> <span class="p">{</span>
+             <span class="nx">med_list</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">+=</span> <span class="s2">&quot;&lt;li&gt; &quot;</span> <span class="o">+</span> <span class="nx">single_med</span><span class="p">.</span><span class="nx">drugname</span> <span class="o">+</span> <span class="s2">&quot;&lt;/li&gt;&quot;</span><span class="p">;</span>
+           <span class="p">});</span>
+         <span class="p">}).</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span> <span class="p">(</span><span class="s2">&quot;An error has occurred&quot;</span><span class="p">);</span> <span class="p">});</span>
+       <span class="p">});</span>
+     <span class="nt">&lt;/script&gt;</span>
+     <span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
 
 <p>And that&#39;s it! In a few lines of HTML and JavaScript code, we&#39;ve got ourselves
 an app that can request the medications from the current record and display
