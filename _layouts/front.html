@@ -26,13 +26,14 @@
 
       <div class="hero-unit">
         <h1>Welcome to SMART</h1>
-        <p>SMART is a robust API framework for integration of medical apps into EMR systems. With SMART you 
-        can write your apps once and run them everythere there is medical data.</p>
+        <p>SMART is a robust framework for integration of medical apps into EMR systems. With SMART you 
+        can write your apps once and run them everythere there is medical data, because SMART's API and 
+        data models provide an EMR-agnostic layer of abstraction that you can rely upon.</p>
         <p><a href="guide/" class="btn btn-primary btn-large">Get Started Now! &raquo;</a></p>
       </div>
 
       <div>
-        <h2>Easy data retrieval through SMART</h2>
+        <h2>Easy data retrieval with SMART Connect</h2>
         <pre>
     SMART.get_medications().success(function(response){
         $.each(response.objects.of_type.Medication, function(i, med){
