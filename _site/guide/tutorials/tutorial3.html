@@ -90,9 +90,8 @@ apps to display side-by-side:</p>
 other apps, they need extra permissions from the container. To communicate this
 fact, a Frame UI app include the following line in its SMART Manifest:</p>
 
-<div>
-  <pre><code class='javascript'>&quot;mode&quot; : &quot;frame_ui&quot;</code></pre>
-</div>
+<div class="highlight"><pre><code class="javascript">  <span class="s2">&quot;mode&quot;</span> <span class="o">:</span> <span class="s2">&quot;frame_ui&quot;</span>
+</code></pre></div>
 
 <h2>Building blocks</h2>
 
@@ -116,21 +115,20 @@ to display:</p>
 
 <h3>Displaying a &quot;carousel&quot; of available apps:</h3>
 
-<div>
-  <pre><code class='javascript'>SMART.get_manifests(function(response) {
-             manifests = response.json;
-             carousel.html(&quot;&quot;);
+<div class="highlight"><pre><code class="javascript">  <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_manifests</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+             <span class="nx">manifests</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">;</span>
+             <span class="nx">carousel</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
 
-             // Populate a carousel element for each available app.
-             jQuery.each(manifests, function(i,m) {
-               var app = jQuery(&quot;&lt;img src='&quot;+m.icon+&quot;' title='&quot;+m.name+ &quot;: &quot; + m.description + &quot;'&gt;&quot;);
-               carousel.append(app);
-               app.click(function(){
-                 SMART_HOST.launch_app(m, SMART.context);
-               });
-             });
-       });</code></pre>
-</div>
+             <span class="c1">// Populate a carousel element for each available app.</span>
+             <span class="nx">jQuery</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">manifests</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span><span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+               <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;&lt;img src=&#39;&quot;</span><span class="o">+</span><span class="nx">m</span><span class="p">.</span><span class="nx">icon</span><span class="o">+</span><span class="s2">&quot;&#39; title=&#39;&quot;</span><span class="o">+</span><span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">m</span><span class="p">.</span><span class="nx">description</span> <span class="o">+</span> <span class="s2">&quot;&#39;&gt;&quot;</span><span class="p">);</span>
+               <span class="nx">carousel</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+               <span class="nx">app</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                 <span class="nx">SMART_HOST</span><span class="p">.</span><span class="nx">launch_app</span><span class="p">(</span><span class="nx">m</span><span class="p">,</span> <span class="nx">SMART</span><span class="p">.</span><span class="nx">context</span><span class="p">);</span>
+               <span class="p">});</span>
+             <span class="p">});</span>
+       <span class="p">});</span>
+</code></pre></div>
 
 <p>This code fetches a list of manifests from the container <code>SMART.get_manifests</code>,
 loops through them, and displays an icon for each app available. It then
@@ -150,15 +148,14 @@ this doesn&#39;t take much. We&#39;ll assume that three IFRAMES are available on
 screen at all times, and we&#39;ll just populate them in order, looping back to the
 beginning when they&#39;re all full.</p>
 
-<div>
-  <pre><code class='javascript'>var current_iframe = 0;
-     var iframes_available = 3;
+<div class="highlight"><pre><code class="javascript">     <span class="kd">var</span> <span class="nx">current_iframe</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+     <span class="kd">var</span> <span class="nx">iframes_available</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 
-     SMART_HOST.get_iframe = function (app_instance, callback){
-       callback($(&quot;iframe&quot;)[current_iframe % iframes_available]);
-       current_iframe++;
-     };</code></pre>
-</div>
+     <span class="nx">SMART_HOST</span><span class="p">.</span><span class="nx">get_iframe</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">app_instance</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+       <span class="nx">callback</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;iframe&quot;</span><span class="p">)[</span><span class="nx">current_iframe</span> <span class="o">%</span> <span class="nx">iframes_available</span><span class="p">]);</span>
+       <span class="nx">current_iframe</span><span class="o">++</span><span class="p">;</span>
+     <span class="p">};</span>
+</code></pre></div>
 
 <h2>See it live</h2>
 

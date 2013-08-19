@@ -126,7 +126,7 @@ OAuth-signed REST API calls.</p>
 
 <p>This secret is provisioned when your app is loaded into the smart
 container with the following command:</p>
-<div class="highlight"><pre><code class="text">$ manage.py load_app &lt;manifest-location&gt; &lt;secret&gt;
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ manage.py load_app &lt;manifest-location&gt; &lt;secret&gt;
 </code></pre></div>
 <h1>OAuth</h1>
 
@@ -163,7 +163,7 @@ request_token to allow access to a specific patient record. This is done
 simply by initializing the SMARTClient with the <code>api_base</code> and desired
 <code>record_id</code>. Assuming your initialized SMARTClient is stored in a
 variable named <code>smart</code>:</p>
-<div class="highlight"><pre><code class="text">smart.fetch_request_token()
+<div class="highlight"><pre><code class="text language-text" data-lang="text">smart.fetch_request_token()
 </code></pre></div>
 <h2>Authorizing the request</h2>
 
@@ -171,7 +171,7 @@ variable named <code>smart</code>:</p>
 the user signal to the container that they approve this request for
 access. This is done by having your app redirect the user&#39;s browser
 to the container&#39;s &quot;access authorization page&quot;:</p>
-<div class="highlight"><pre><code class="text"> flask.redirect(smart.auth_redirect_url)
+<div class="highlight"><pre><code class="text language-text" data-lang="text"> flask.redirect(smart.auth_redirect_url)
 </code></pre></div>
 <h2>Exchange the Request Token for the Access Token</h2>
 
@@ -183,7 +183,7 @@ parameter. Your app&#39;s handler for this URL should then &quot;exchange&quot; 
 <code>request_token</code> and the <code>oauth_verifer</code> with the container to receive
 the <code>access_token</code> which your app will use to make requests for
 protected data from the container.</p>
-<div class="highlight"><pre><code class="text">acc_token = smart.exchange_token(verifier)
+<div class="highlight"><pre><code class="text language-text" data-lang="text">acc_token = smart.exchange_token(verifier)
 </code></pre></div>
 <h2>Accessing Protected Data With the acc_token</h2>
 
@@ -191,19 +191,19 @@ protected data from the container.</p>
 to store the access token in a web session (or other means) so it can be
 reused across multiple requests. And the smart client&#39;s internal token
 should be &quot;updated&quot; e.g.</p>
-<div class="highlight"><pre><code class="text">flask.session[&#39;acc_token&#39;] = acc_token
+<div class="highlight"><pre><code class="text language-text" data-lang="text">flask.session[&#39;acc_token&#39;] = acc_token
 smart.update_token(acc_token)
 </code></pre></div>
 <p>Now accessing data using the SMART REST API is simply a matter of
 making calls such as:</p>
-<div class="highlight"><pre><code class="text"># Now we&#39;re ready to get data!
+<div class="highlight"><pre><code class="text language-text" data-lang="text"># Now we&#39;re ready to get data!
 # Let&#39;s fetch demographics and display the name
 demo = smart.get_demographics()
 </code></pre></div>
 <p>The result is an SMARTResponse object containing an RDF graph of data,
 which we can query for just the fields we want which you can query with
 SPARQL e.g.:</p>
-<div class="highlight"><pre><code class="text">sparql = &quot;&quot;&quot;
+<div class="highlight"><pre><code class="text language-text" data-lang="text">sparql = &quot;&quot;&quot;
     PREFIX vc: &lt;http://www.w3.org/2006/vcard/ns#&gt;
     SELECT ?given ?family
     WHERE {
