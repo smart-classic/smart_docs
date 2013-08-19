@@ -30,21 +30,15 @@
         can write your apps once and run them everythere there is medical data.</p>
         <p><a href="guide/" class="btn btn-primary btn-large">Get Started Now! &raquo;</a></p>
       </div>
-      
+
       <div>
         <h2>Easy data retrieval through SMART</h2>
         <pre>
-        SMART.ready(function(){
-            SMART.get_medications().success(function(c) {
-                var meds = c.objects[&quot;@graph&quot;];
-                for (var key in meds) {
-                    var med = meds[key];
-                    if (med[&quot;drugName&quot;]) {
-                        document.write(med.drugName.dcterms__title + &quot;&lt;br/&gt;&quot;);
-                    }
-                }
-            });
-        });
+    SMART.get_medications().success(function(response){
+        $.each(response.objects.of_type.Medication, function(i, med){
+            document.write(med.drugName.dcterms__title + "&lt;br/&gt;");
+        })
+    });
         </pre>
       </div>
 
