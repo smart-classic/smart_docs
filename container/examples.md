@@ -5,7 +5,9 @@ title: SMART Developers Documentation
 
 #Examples of Other SMART Containers
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
-augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad
-litora torquent per conubia nostra, per inceptos himenaeos. Nunc vel elit
-ante. Praesent eget eros lectus. Morbi quis tempus dolor.
+* Indivo
+* I2B2
+* OpenMRS
+* MirthResults
+* WorldVista
+* BCH Cerner
