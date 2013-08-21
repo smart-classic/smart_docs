@@ -1,72 +1,196 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SMART Developers Documentation</title>
+    <title>SMART Data Model</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap bootstrap -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span2 nav">
-          <div id="left_nav">
-  <ul class="nav nav-list">
-
-    <li class="nav-header">Getting Started Guide<br>(App Development)</li>
-
-    <li><small><a href="/guide/about.html">About This Guide</a></small></li>
-    <li><small><a href="/guide/setup.html">Setup</a></small></li>
-    <li><small><a href="/guide/quickstart.html">Quickstart Example</a></small></li>
-    <li><small><a href="/guide/tutorials/">Extended Tutorials</a></small></li>
-    <li><small><a href="/guide/nextsteps.html">Where to Go Next</a></small></li>
-
-    <li class="nav-header">Framework Documentation</li>
-
-    <li><small><a href="/framework/architecture/">Architecture</a></small></li>
-    <li><small><a href="/framework/models/">Data Models Reference</a></small></li>
-    <li><small><a href="/framework/api/">API Reference</a></small></li>
-    <li><small><a href="/framework/manifests/">Manifests</a></small></li>
-    <li><small><a href="/framework/reference-implementation/">Reference Implementation</a></small></li>
-
-    <li class="nav-header">Container Development</li>
-
-    <li><small><a href="/container/roadmap.html">Roadmap for Development</a></small></li>
-    <li><small><a href="/container/tutorial.html">Sample Container - Tutorial</a></small></li>
-    <li><small><a href="/container/reference-container.html">Overview of SMART Reference Container</a></small></li>
-    <li><small><a href="/container/examples.html">Other SMART Containers</a></small></li>
-    <li><small><a href="/container/issues.html">Discussion of issues</a></small></li>
-
-    <li class="nav-header">Questions?</li>
-    <li><small><a href="/faq.html">Read the FAQ</a></small></li>
-
-    <li class="nav-header">Community</li>
-    <li><small><a href="/community.html">Developer Group</a></small></li>
-
-  </ul>
-</div>
-
-        </div>
-        <div class="span9 offset1">
-          <h1>Data Models Reference</h1>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
-augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad
-litora torquent per conubia nostra, per inceptos himenaeos. Nunc vel elit
-ante. Praesent eget eros lectus. Morbi quis tempus dolor.</p>
-
-<p>GENERATED DOCS INSERTED BELOW THIS LINE</p>
-
-        </div>
-      </div>
-    </div> <!-- /container -->
-
+    <style type="text/css">
+       body { padding-top: 0; }
+      .sidebar-nav { padding: 9px 0; }
+    </style>
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){ $('#sidebar').height($(window).height() - 125); })
+    </script>
+  </head>
 
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="/"><img style='height: 25px; width: 30px' src='/assets/img/smart-bug.png'></a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="#about">Home</a></li>
+              <li><a href="#about">App Dev</a></li>
+              <li><a href="#about">Framework Guide</a></li>
+              <li class="active"><a href="#about">Data Models</a></li>
+              <li><a href="/framework/api/">API</a></li>
+              <li><a href="#about">Container Dev</a></li>
+              <li><a href="#about">FAQ</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+            <div id='sidebar' class="well sidebar-nav" style='overflow-y: scroll; overflow-x: hidden; position: fixed; margin-left: -10px; margin-top: -10px'>
+            <ul class="nav nav-list">
+              Included file 'dm_nav.html' not found in _includes directory
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
+          <h2>SMART Data Model</h2>
+
+<div class="well">
+  <p>N.B. This is highly preliminary, not a commitment or final
+  version of any particular API or data model. This is purely
+  for internal collaboration and preview purposes.</p>
+</div>
+
+<h3>RDF Overview</h3>
+
+<p>SMART API calls return data in the form of RDF graphs. Within these graphs,
+top-level SMART data objects have fully dereferenceable URIs. For instance,
+let&#39;s consider a SMART-enabled EMR hosted with its API base at
+<a href="http://sample_smart_emr.com/smart-app/">http://sample_smart_emr.com/smart-app/</a>. An individual medication in this EMR
+might be retrievable via:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">GET http://sample_smart_emr.com/smart-app/records/123456/medications/664373).
+</code></pre></div>
+<p>When you issue a GET request for a top-level SMART object like a medication,
+you&#39;ll receive a graph containing:</p>
+
+<ol>
+<li>The object itself</li>
+<li>All properties linking it to &quot;core data&quot; elements (such as a medication&#39;s <code>drugName</code>,
+which is a <code>CodedValue</code> node)</li>
+<li>All properties linking it to other top-level SMART objects</li>
+<li>All &quot;core data&quot; elements belonging to the elements in (3)</li>
+</ol>
+
+<p>For instance, when you <code>GET</code> a medication, you&#39;ll get all the information about
+that medication and any fulfillments that belong to it! Likewise, when you <code>GET</code>
+a fulfillment, you&#39;ll get all the information about that fulfillment and the
+medication to which it belongs.</p>
+
+<p>Another way to say this is: when you make an API call for data, the graph you
+receive goes one top-level SMART element deep.</p>
+
+<h3>Important note: RDF/XML Serializations are not unique!</h3>
+
+<p>It&#39;s important to understand that SMART API calls return RDF graphs <a href="http://www.w3.org/TR/REC-rdf-syntax/">RDF/XML</a>
+&mdash; and for a given graph, there are <em>multiple</em> possible serializations. We
+don&#39;t make guarantees about how a graph will be serialized, beyond saying that
+it&#39;s valid RDF/XML. So to consume the SMART API, you should parse the RDF/XML
+payloads as RDF/XML &mdash; for example, <code>don&#39;t</code> try to query them directly with
+xpath!</p>
+
+<p>To give a concrete example, a medication might be serialized as:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;sp:Medication&gt;
+  ... { additional properties here }....
+&lt;/sp:Medication&gt;
+</code></pre></div>
+<p>Or you could see the equivalent:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;rdf:Description&gt;
+      &lt;rdf:type rdf:resource=&quot;http://smartplatforms.org/terms#Medication&quot;/&gt;
+  ... { additional properties here }....
+&lt;/rdf:Description&gt;
+</code></pre></div>
+<h3>Namespaces</h3>
+
+<p>A common set of namespace prefixes is used for the examples below. These are:</p>
+
+<table class="table table-striped">
+  <caption align="bottom">RDF Namespaces</caption>
+  <tr>
+    <td>dcterms</td>
+    <td><a href="http://purl.org/dc/terms/">http://purl.org/dc/terms/</a></td>
+    <td>Dublin core terms</td>
+  </tr>
+  
+   <tr>
+    <td>foaf</td>
+    <td><a href="http://xmlns.com/foaf/0.1/">http://xmlns.com/foaf/0.1/</a></td>
+    <td>Friend of a friend</td>
+  </tr>
+
+   <tr>
+    <td>rdf</td>
+    <td><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a></td>
+    <td>Resource description framework</td>
+  </tr>
+
+  <tr>
+    <td>sp</td>
+    <td><a href="http://smartplatforms.org/terms#">http://smartplatforms.org/terms#</a></td>
+    <td>Smart platforms root namespace</td>
+  </tr>
+
+  <tr>
+    <td>v</td>
+    <td><a href="http://www.w3.org/2006/vcard/ns#">http://www.w3.org/2006/vcard/ns#</a></td>
+    <td>vCard namespace</td>
+  </tr>
+</table>
+
+<h3>Naming Conventions in the SMART Ontology</h3>
+
+<p>We use the prefix <code>sp</code> to designate the <a href="http://smartplatforms.org/terms">http://smartplatforms.org/terms</a>
+namespace. Within this namespace, we use a simple convention to differentiate 
+between classes and predicates:</p>
+
+<ul>
+<li><p>Class names are designated by <code>CamelCase</code> with a capitalized first character.
+Examples: <code>sp:Medication</code> and <code>sp:LabResult</code>.</p></li>
+<li><p>Predicate names are designated by <code>camelCase</code> with a lower-case first character.
+Examples: <code>sp:medication</code> or <code>sp:valueAndUnit</code>.</p></li>
+</ul>
+
+<p>You may wonder why classes and predicates tend to have similar names. For
+example, we define a class <code>sp:Medication</code> as well as a predicate <code>sp:medication</code>.
+Here&#39;s why: a predicate like <code>sp:medication</code> is used to indicate that a clinical
+statement is associated with a medication; a class like <code>sp:Medication</code> is used to
+indicate that a clinical statement is a medication. For example, each
+<code>sp:Fulfillment</code> statement is associated with a <code>sp:Medication</code> statement via the
+predicate <code>sp:medication</code>. This makes sense when we consider a few RDF triples
+that expresses the basic pattern, associating a fulfillment with its medication
+via the <code>sp:medication</code> predicate</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">_:f123 rdf:type sp:Fulfillment.   # declares a Fulfillment statement
+_:m456 rdf:type sp:Medication.    # declares a Medication statement
+_:f123 sp:medication _:m456.      # links the Fulfillment to its Medication
+</code></pre></div>
+<hr>
+
+
+          <hr>
+
+          Included file 'dm.html' not found in _includes directory
+
+        </div><!--span9-->
+      </div><!--row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; <a href='http://smartplatforms.org'>SMARTPlatforms.org 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
   </body>
 </html>
+

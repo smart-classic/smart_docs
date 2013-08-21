@@ -85,8 +85,8 @@ def type_start(t):
     example = t.example
     name_id = name.replace(' ', '_')
 
-    # manually add ids to the type <h2>s
-    print "\n<h2 id='%s'><code>%s</code></h2>\n" % (name_id, name)
+    # manually add ids to the type <h3>s
+    print "\n<h3 id='%s'><code>%s</code></h3>\n" % (name_id, name)
 
     if len(t.parents) > 0:
         print "`%s` is a subtype of and inherits properties from:" % type_name_string(t)
@@ -175,7 +175,10 @@ def properties_end():
     print """</table>"""
 
 def wiki_batch_start(batch):
-    print "\n# %s\n"%batch
+    print "\n## %s\n"%batch
+
+def wiki_nav_batch_start(batch):
+    print "\n\n<li class='nav-header'>%s</li>\n"%batch
 
 def type_name_string(t):
     if t.name:
@@ -253,15 +256,15 @@ def wiki_properties_for_type(t):
     properties_end()
 
 def wiki_api_for_type(t, calls_for_t):
-    print "## %s" % t.name
+    print "<h3 id='%s'>%s</h3>" % (t.name.replace(' ', '_'), t.name)
 
     last_description = ""
     for call in calls_for_t:
         #if (str(call.http_method) != "GET"): continue # Document only the GET calls for now!
 
-        print "<ul>"
-        print "<li>URI:<code>", strip_smart(str(call.http_method)), str(call.path), "</code></li>"
-        print "<li>Client method name:<code>", str(call.client_method_name), "</code></li>"
+        print "<ul id='%s'>" % string.strip(str(call.client_method_name))
+        print "<li>URI: <code>", string.strip(strip_smart(str(call.http_method)) + str(call.path)), "</code></li>"
+        print "<li>Client method name: <code>", string.strip(str(call.client_method_name)), "</code></li>"
         print "</ul>"
 
         if (str(call.description) != last_description):
@@ -269,6 +272,19 @@ def wiki_api_for_type(t, calls_for_t):
             last_description = str(call.description)
 
     print "[%s RDF](../data_model/#%s)\n\n"%(t.name, t.name.replace(' ', '_'))
+
+
+main_types = []
+calls_to_document = copy.copy(api_calls)
+
+def wiki_api_for_type_for_nav(t, calls_for_t):
+    print "\n<li><a href='#%s'>%s</a></li>" % (t.name.replace(' ', '_'), t.name)
+
+    for call in calls_for_t:
+        #if (str(call.http_method) != "GET"): continue # Document only the GET calls for now!
+        s = string.strip(str(call.client_method_name))
+        print "<li><code><a href='#%s'>%s</a></code></li>" % (s, s)
+
 
 
 main_types = []
@@ -335,6 +351,20 @@ if __name__=="__main__":
             calls_for_t = filter(lambda x: call_category(x)==current_batch, sorted(target.calls))
             processed.extend(calls_for_t)
             wiki_api_for_type(target, calls_for_t)
+
+    if "api_nav" in sys.argv:
+        current_batch = None
+        processed = []
+        for t in calls_to_document:
+            if call_category(t) != current_batch:
+                current_batch = call_category(t)
+                wiki_nav_batch_start(current_batch.capitalize()+" Calls")
+            if (t in processed): continue
+
+            target = SMART_Class[t.target]
+            calls_for_t = filter(lambda x: call_category(x)==current_batch, sorted(target.calls))
+            processed.extend(calls_for_t)
+            wiki_api_for_type_for_nav(target, calls_for_t)
 
     if "js_client" in sys.argv:
         def build_doc_chunk(call):

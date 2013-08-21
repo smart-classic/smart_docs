@@ -6,7 +6,9 @@ import tempfile
 
 config = [
     ('api', './_includes/api.html'),
-    # ('payload', './framework/models/index.md')
+    ('api_nav', './_includes/api_nav.html'),
+    # ('dm', './_includes/api.html'),
+    # ('dm_nav', './_includes/api_nav.html'),
     # ('js_client', './libraries/javascript/index.md')
 ]
 
