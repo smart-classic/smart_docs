@@ -71,6 +71,25 @@ consider implementing the Medications, Problems, or VitalSigns interfaces.
 
 ## Reusing portions of the SMART Reference Container
 
+As discussed in the [reference container](reference-container.html) section, the SMART Platforms
+team maintains an open-source complete medical system that implements the SMART specification.
+The reference container is available under Apache 2 open source license and can serve as a base
+for rapid SMART container implementations. One of the implementation strategies outlined in the
+[roamap for container developers](roadmap.html) is replacing the reference contianer's data
+source and user authentication subsystems with an adapter to your medical data system. The
+downside of reusing the reference container code is that it has not been tested in highly
+scalable environments and will introduce dependencies on Python/Django based code components.
+
 ## Extending the SMART API and data models
 
+While not a common practice, your SMART container implementation can extended the SMART
+specification with new API calls and data models that support the needs of your specific community.
+Apps written to take advantage of these non-standard calls that need to run on a standard
+SMART container will need to degrade gracefully in the absence of the extended API calls.
+
 ## Implementing write capabilities
+
+With the exception of the Clinical Notes, Preferences, and Scratchpad APIs, the SMART standard does
+not provide for write functionality in the container. Therefore the majority of the SMART
+apps presently available assume read-only interactions with the container. However,
+a container may provide write capabilities.
