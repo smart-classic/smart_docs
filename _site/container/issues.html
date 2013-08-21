@@ -52,12 +52,54 @@
 
         </div>
         <div class="span9 offset1">
-          <h1>Issues of Interest</h1>
+          <h1>Topics of Interest to Container Developers</h1>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
-augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad
-litora torquent per conubia nostra, per inceptos himenaeos. Nunc vel elit
-ante. Praesent eget eros lectus. Morbi quis tempus dolor.</p>
+<h2>Translating between coding systems</h2>
+
+<p>Chances are that your medical data is already encoded in one of the widely available coding
+standards used in the medical community. When exposing your data through the SMART API,
+you will have to provide data about the patient using the coding systems defined by
+SMART (such as SNOMED-CT, RXNORM, LOINC, etc). Thus, you will need to map your local
+data codes into the SMART defined coding systems.</p>
+
+<p>Unfortunately, the problem of generating accurate translations between coding
+systems is an inexact science. Due to differences between the terminology terms,
+it is often times not possible to derive a complete one-to-one map between
+two systems to preclude loss of meaning as result of translation. A good
+practice when generating SMART RDF with translated codes is to include
+provenance information. Here is an example that specifies the provenance for 
+a lab result translation from a local labcode to LOINC:</p>
+
+<div class="highlight"><pre><code class="xml"><span class="nt">&lt;sp:labName&gt;</span>
+    <span class="nt">&lt;sp:CodedValue&gt;</span>
+        <span class="nt">&lt;sp:code</span> <span class="na">rdf:resource=</span><span class="s">&quot;http://loinc.org/codes/2951-2&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;dcterms:title&gt;</span>Serum sodium<span class="nt">&lt;/dcterms:title&gt;</span>
+        <span class="nt">&lt;sp:codeProvenance&gt;</span>
+            <span class="nt">&lt;sp:CodeProvenance&gt;</span>
+                <span class="nt">&lt;sp:sourceCode</span> <span class="na">rdf:resource=</span><span class="s">&quot;http://local-emr/labcodes/01234&quot;</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;dcterms:title&gt;</span>Random blood sodium level<span class="nt">&lt;/dcterms:title&gt;</span>
+                <span class="nt">&lt;sp:translationFidelity</span> <span class="na">rdf:resource=</span><span class="s">&quot;http://smartplatforms.org/terms/code/fidelity#automated&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/sp:CodeProvenance&gt;</span>
+        <span class="nt">&lt;/sp:codeProvenance&gt;</span>
+    <span class="nt">&lt;/sp:CodedValue&gt;</span>
+<span class="nt">&lt;/sp:labName&gt;</span>
+</code></pre></div>
+
+<p>For translating from one system to another, we highly recommend reusing commonly
+available maps. For example, the US National Library of Medicine provides maps for 
+translation between ICD-9-CM and SNOMED-CT 
+(<a href="http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cmv3_to_snomedct.html">http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cmv3_to_snomedct.html</a>,
+<a href="http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cm_to_snomedct.html">http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cm_to_snomedct.html</a>).</p>
+
+<h2>RDF vs JSON</h2>
+
+<h2>Partial implementations</h2>
+
+<h2>Resusing portions of the SMART Reference Container</h2>
+
+<h2>Extending the SMART API and data models</h2>
+
+<h2>Implementing write capabilities</h2>
 
         </div>
       </div>
