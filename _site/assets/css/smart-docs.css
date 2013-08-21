@@ -16,6 +16,10 @@ body {
     background-color: #e5e5e5;
 }
 
+code {
+    color: #3a87ad;
+}
+
 pre, code {
     font-family: 'Source Code Pro', Menlo, Consolas, monospace; font-weight: 400;
 }
