@@ -45,9 +45,31 @@ translation between ICD-9-CM and SNOMED-CT
 
 ## RDF vs JSON
 
+(add discussion points here)
+
 ## Partial implementations
 
-## Resusing portions of the SMART Reference Container
+Implementing the complete SMART specification on top of your medical records system
+will allow you and your system's users to run the full range of standard SMART medical apps
+available on the market. However, a complete implementation may turn out to be a large scale project.
+Some times the objective of a SMART enablement project is to enable running specific
+applications on a medical records system. Under such a scenario, you may want to
+consider a partial implementation of the SMART standard following the least common
+denominator principle. SMART provides for a discovery mechanism that can be used by SMART
+apps to learn about the API calls supported by a container by requesting the container
+manifest through the `/manifest` REST path. For example, the public sandbox of the SMART
+Platforms project exposes its manifest on the following URL:
+[http://sandbox-api.smartplatforms.org/manifest](http://sandbox-api.smartplatforms.org/manifest)
+
+Even if your end goal is complete SMART support, it may still be a good development
+strategy to start small and implement a few maningful basic API calls and testing 
+your container with some basic apps that rely on them. Since a large majority of the SMART
+apps our there use the SMART Connect interface, it would make sense to focus on implementing
+this interface before tackling the SMART REST interface which requires, amongst the others,
+OAuth support. Starting with the Demographics data model and API a developer may wish to
+consider implementing the Medications, Problems, or VitalSigns interfaces.
+
+## Reusing portions of the SMART Reference Container
 
 ## Extending the SMART API and data models
 
