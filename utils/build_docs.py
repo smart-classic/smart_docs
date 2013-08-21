@@ -4,11 +4,9 @@ import os
 import subprocess
 import tempfile
 
-MARKER = "GENERATED DOCS INSERTED BELOW THIS LINE"
-
 config = [
-    ('api', './framework/api/index.md'),
-    ('payload', './framework/models/index.md')
+    ('api', './_includes/api.html'),
+    # ('payload', './framework/models/index.md')
     # ('js_client', './libraries/javascript/index.md')
 ]
 
@@ -23,24 +21,25 @@ if __name__ == "__main__":
         proc = subprocess.Popen(['python ./utils/wiki_apidocs.py ' + param],
                                 stdout=subprocess.PIPE,
                                 shell=True)
-        chunk = proc.communicate()[0]
+        markdown = proc.communicate()[0]
+
+        # convert to html with redcarpet
+        cmd = 'redcarpet --parse-no_intra_emphasis --parse-autolink ' + \
+            '--parse-strikethrough --parse-fenced_code'
+        proc = subprocess.Popen([cmd],
+                                stdout=subprocess.PIPE,
+                                stdin=subprocess.PIPE,
+                                shell=True)
+        html = proc.communicate(markdown)[0]
 
         with open(filename) as f:
-            # find the first line after the marker
-            doc = f.read()
-            line_no_after_marker = doc.find('\n', doc.find(MARKER))
-
-            # append the chunk to the docs after the marker
-            new_doc = doc[:line_no_after_marker] + '\n\n\n' + chunk
-
             # overwrite the current file with the tempfile
             # don't call the tempfile "tempfile", duh!
             dirname, basename = os.path.split(filename)
-            temp = tempfile.NamedTemporaryFile(
-                suffix='.tmp',
-                dir=dirname,
-                delete=False)
-            temp.write(new_doc)
+            temp = tempfile.NamedTemporaryFile(suffix='.tmp',
+                                               dir=dirname,
+                                               delete=False)
+            temp.write(html)
             temp.flush()
             os.rename(temp.name, filename)
             temp.close()

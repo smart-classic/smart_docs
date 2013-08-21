@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+    <style type="text/css">
+       body { padding-top: 0; }
+      .sidebar-nav { padding: 9px 0; }
+    </style>
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){ $('#sidebar').height($(window).height() - 100); })
+    </script>
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="/"><img style='height: 25px; width: 30px' src='/assets/img/smart-bug.png'></a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="#about">Home</a></li>
+              <li><a href="#about">App Dev</a></li>
+              <li><a href="#about">Framework Guide</a></li>
+              <li><a href="#about">Data Models</a></li>
+              <li class="active"><a href="#about">API</a></li>
+              <li><a href="#about">Container Dev</a></li>
+              <li><a href="#about">FAQ</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div id='sidebar' class="well sidebar-nav" style='overflow-y: scroll'>
+            <ul class="nav nav-list">
+
+              <!-- NAV START MARKER -->
+              <!-- NAV END MARKER -->
+
+              <li class="nav-header">Sidebar</li>
+              <li class="active"><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+              <li class="nav-header">Sidebar</li>
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
+          <div>
+            <h2>SMART REST API</h2>
+          </div>
+
+          <div class="well">
+            <p>N.B. This is highly preliminary, not a commitment or final
+            version of any particular API or data model. This is purely
+            for internal collaboration and preview purposes.</p>
+          </div>
+
+          <div>
+            <h3>Overview</h3>
+            <p>N.B. This is highly preliminary, not a commitment or final
+            version of any particular API or data model. This is purely
+            for internal collaboration and preview purposes.</p>
+          </div>
+
+            <hr>
+            {% include api.html %}
+
+        </div><!--span9-->
+      </div><!--row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; <a href='http://smartplatforms.org'>SMARTPlatforms.org 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+  </body>
+</html>
+
