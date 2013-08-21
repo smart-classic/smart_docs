@@ -15,7 +15,7 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script>
-        $(function(){ $('#sidebar').height($(window).height() - 100); })
+        $(function(){ $('#sidebar').height($(window).height() - 125); })
     </script>
   </head>
 
@@ -47,7 +47,7 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-          <div id='sidebar' class="well sidebar-nav" style='overflow-y: scroll'>
+            <div id='sidebar' class="well sidebar-nav" style='overflow-y: scroll; overflow-x: hidden; position: fixed; margin-left: -10px'>
             <ul class="nav nav-list">
               <p><li class='nav-header'>Container Calls</li></p>
 
