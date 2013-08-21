@@ -85,8 +85,8 @@ def type_start(t):
     example = t.example
     name_id = name.replace(' ', '_')
 
-    # manually add ids to the type <h2>s
-    print "\n<h2 id='%s'><code>%s</code></h2>\n" % (name_id, name)
+    # manually add ids to the type <h3>s
+    print "\n<h3 id='%s'><code>%s</code></h3>\n" % (name_id, name)
 
     if len(t.parents) > 0:
         print "`%s` is a subtype of and inherits properties from:" % type_name_string(t)
@@ -175,7 +175,7 @@ def properties_end():
     print """</table>"""
 
 def wiki_batch_start(batch):
-    print "\n# %s\n"%batch
+    print "\n## %s\n"%batch
 
 def type_name_string(t):
     if t.name:
@@ -253,15 +253,15 @@ def wiki_properties_for_type(t):
     properties_end()
 
 def wiki_api_for_type(t, calls_for_t):
-    print "## %s" % t.name
+    print "### %s" % t.name
 
     last_description = ""
     for call in calls_for_t:
         #if (str(call.http_method) != "GET"): continue # Document only the GET calls for now!
 
         print "<ul>"
-        print "<li>URI:<code>", strip_smart(str(call.http_method)), str(call.path), "</code></li>"
-        print "<li>Client method name:<code>", str(call.client_method_name), "</code></li>"
+        print "<li>URI: <code>", string.strip(strip_smart(str(call.http_method)) + str(call.path)), "</code></li>"
+        print "<li>Client method name: <code>", string.strip(str(call.client_method_name)), "</code></li>"
         print "</ul>"
 
         if (str(call.description) != last_description):
