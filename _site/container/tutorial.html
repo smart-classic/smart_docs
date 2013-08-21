@@ -38,7 +38,7 @@
     <li><small><a href="/container/roadmap.html">Roadmap for Development</a></small></li>
     <li><small><a href="/container/tutorial.html">Sample Container - Tutorial</a></small></li>
     <li><small><a href="/container/reference-container.html">Overview of SMART Reference Container</a></small></li>
-    <li><small><a href="/container/examples.html">Examples of Other Containers</a></small></li>
+    <li><small><a href="/container/examples.html">Other SMART Containers</a></small></li>
     <li><small><a href="/container/issues.html">Discussion of issues</a></small></li>
 
     <li class="nav-header">Questions?</li>
@@ -54,10 +54,331 @@
         <div class="span9 offset1">
           <h1>Sample Container - Tutorial</h1>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
-augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad
-litora torquent per conubia nostra, per inceptos himenaeos. Nunc vel elit
-ante. Praesent eget eros lectus. Morbi quis tempus dolor.</p>
+<h2>What is smart-api-container.js?</h2>
+
+<p><code>smart-api-container.js</code> enables a SMART container to talk with SMART apps,
+establishing inter-frame messaging to pass data and notifications between
+application and container.</p>
+
+<div class='simple_box'>
+  N.B. <code>smart-api-container.js</code> is for SMART container developers, not SMART
+  app developers!
+</div>
+
+<p><code>smart-api-container.js</code> is used by SMART containers such as electronic medical
+records platforms. It is a key component that helps turn ordinary EMRs into
+SMART containers. If you&#39;re a SMART app developer, you don&#39;t need to worry about
+the api-container, since it sits on the other side of the interface between your
+SMART Connect app and the data it consumes.</p>
+
+<h2>Using <code>smart-api-container.js</code></h2>
+
+<p>There are two broad steps involved in turning your ordinary EMR into a SMART
+container:</p>
+
+<ol>
+<li>Expose the SMART REST API on your server</li>
+<li>Offer the SMART Connect API on your Web site</li>
+</ol>
+
+<p>This document focuses on #2.</p>
+
+<h2>Including the Javascript Files</h2>
+
+<p>SMART containers the provide SMART Connect API on their Web site by including
+(or otherwise loading) three key javascript files: jQuery, jschannel, and
+<code>smart-api-container</code>. The simplest way is to include the following script tags in
+your HTML:</p>
+
+<div class="highlight"><pre><code class="html">  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sandbox.smartplatforms.org/static/smart_common/resources/jschannel.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sandbox.smartplatforms.org/static/smart_common/resources/smart-api-container.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div>
+
+<p>If your existing JavaScript codebase employs the &#39;$&#39; variable and you don&#39;t want
+jQuery to clobber that namespace, you might also want to call:</p>
+
+<div class="highlight"><pre><code class="html">  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">noConflict</span><span class="p">();</span><span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+
+<h2>Exposing the SMART Connect Interface</h2>
+
+<h3>Instantiate a <code>SMART_CONNECT_HOST</code></h3>
+
+<p><code>smart-api-container</code> attempts to handle the generic messaging and data routing
+that SMART Connect apps require. To get things started, first instantiate a
+<code>SMART_CONNECT_HOST</code> object. By convention, we&#39;ll call it <code>SMART_HOST</code></p>
+
+<div class="highlight"><pre><code class="javascript">  <span class="kd">var</span> <span class="nx">SMART_HOST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SMART_CONNECT_HOST</span><span class="p">();</span>
+</code></pre></div>
+
+<h3>Override <code>SMART_HOST.get_credentials(app_instance, callback)</code></h3>
+
+<p><code>get_credentials</code> is called automatically when a new app launches. Its job is to
+provide the fledgling app with SMART REST tokens, formatted as an App Instances
+Credential object (details below).</p>
+
+<ul>
+<li>Input: App Instance object with UUID, context (details below)</li>
+<li>Callback with: App Instance Credentials object (details below)</li>
+</ul>
+
+<h3>Override <code>SMART_HOST.get_iframe(app_instance, callback)</code></h3>
+
+<p><code>get_credentials</code> is called automatically when a new app launches -- right after
+<code>get_credentials</code>. Its job is to provide the fledgling app with an empty <code>&lt;iframe&gt;</code>
+DOM element in which to render.</p>
+
+<ul>
+<li>Input: App Instance object with UUID, context, credentials (details below)</li>
+<li>Callback with: iframe DOM ojbect</li>
+</ul>
+
+<h3>Override <code>SMART_HOST.handle_api(app_instance, api_call, callback_success, callback_error)</code></h3>
+
+<p><code>handle_api</code> is called whenever an already-running app needs to make a API call
+with SMART CONNECT. Its job is to obtain the results of the specified API call
+and return them back to the app.</p>
+
+<ul>
+<li>Inputs:
+
+<ul>
+<li>App Instance object with UUID, context, credentials (details below).</li>
+<li>API Call object with method, func, params (details below)</li>
+</ul></li>
+<li>Callback on success with: <code>callback_success({&#39;contentType&#39;: string, data: string})</code></li>
+<li>Callback on error with: <code>callback_error(http_status, {&#39;contentType&#39;: string, data: string})</code></li>
+</ul>
+
+<p>Note: your SMART Container may override additional functions if needed. Four
+functions are provided as hooks for this purpose:</p>
+
+<ul>
+<li><code>SMART_HOST.on_app_launch_begin</code></li>
+<li><code>SMART_HOST.on_app_launch_complete</code></li>
+<li><code>SMART_HOST.on_app_launch_delegated_begin</code></li>
+<li><code>SMART_HOST.on_app_launch_delegated_complete</code></li>
+</ul>
+
+<p>The framework calls these functions at the beginning and end of launch (and
+delegated launch) operations.</p>
+
+<h3>Launch an app</h3>
+
+<p>Your Container should provide some way for a user to trigger the launch of an
+app, for instance by clicking on the app&#39;s icon in a sidebar. When this occurs,
+you&#39;ll need to notify the <code>SMART_CONNECT_HOST</code> that an app launch has been
+requested. This will instigate the app launch process, beginning with the
+creation of an <code>app_instance</code> with a unique ID. The <code>SMART_CONNECT_HOST</code> uses
+<code>app_instance</code> objects to keep track of the currently-running apps.</p>
+
+<p><code>SMART_HOST.launch_app(manifest, context, options)</code></p>
+
+<ul>
+<li>Inputs:
+
+<ul>
+<li>SMART Manifest JSON (see below)</li>
+<li>App Instance Context object (see below)</li>
+<li>JSON object the container may optionally attach to the new app instance </li>
+</ul></li>
+</ul>
+
+<h3>Subscribe to App Notifications</h3>
+
+<p>Apps that you&#39;ve launch may send notifications and requests. For example, an app
+that desires more screen real estate may sent a <code>request_fullscreen</code>
+notification. To subscribe to a notification, call <code>SMART_HOST.on</code> as in the
+example below:</p>
+
+<div class="highlight"><pre><code class="javascript">  <span class="nx">SMART_HOST</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;request_fullscreen&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app_instance</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nx">app_instance</span><span class="p">.</span><span class="nx">iframe</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">css</span><span class="p">({</span>
+        <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;fixed&#39;</span><span class="p">,</span> 
+        <span class="nx">width</span><span class="o">:</span> <span class="s1">&#39;100%&#39;</span><span class="p">,</span> 
+        <span class="nx">height</span><span class="o">:</span> <span class="s1">&#39;100%&#39;</span><span class="p">,</span> 
+        <span class="nx">left</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> 
+        <span class="nx">top</span><span class="o">:</span><span class="mi">0</span>
+      <span class="p">});</span>
+  <span class="p">});</span>
+</code></pre></div>
+
+<h3>Send Notifications to an App</h3>
+
+<p>When important events occur, you should notify any running apps.</p>
+
+<ul>
+<li><code>backgrounded</code> when an app instance is hidden from view</li>
+<li><code>foregrounded</code> when an app instance is restored to view</li>
+<li><code>destroyed</code> when an app instance is permanently closed</li>
+</ul>
+
+<p>For example, if you permit a user to hide an app, you should call:
+<code>SMART_HOST.notify_app(app_instance, &quot;backgrounded&quot;);</code></p>
+
+<p>And if you restore it to view you should call:
+`SMART_HOST.notify_app(app_instance, &quot;foregrounded&quot;);</p>
+
+<h3>Closing Apps when the Patient Record Context Changes</h3>
+
+<p>The SMART Connect API works in a &quot;one patient record at a time&quot; paradigm: that
+is, within a given browser window, there is one &quot;current patient record&quot; in
+context, and all running apps share that context. When the patient record
+context changes, the set of running apps is effectively cleared by calling:</p>
+
+<p><code>SMART_HOST.record_context_changed();</code></p>
+
+<p>This will close all currently-running apps -- so apps never have to deal with a
+context change.</p>
+
+<p>You may want your container to automatically launch new apps after the record
+context changes. In this case, you can trigger the appropriate logic by
+defining a <code>handle_context_changed</code> function:</p>
+
+<div class="highlight"><pre><code class="javascript">  <span class="nx">SMART_HOST</span><span class="p">.</span><span class="nx">handle_context_changed</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+     <span class="c1">// your code here</span>
+  <span class="p">};</span>
+</code></pre></div>
+
+<h2>Understanding App Instance, Manifest, and API Call JavaScript Objects</h2>
+
+<h3>App Instance Object</h3>
+
+<p>The <code>SMART_CONNECT_HOST</code> interface uses plain-old JavaScript objects to represent 
+app instances as follows:</p>
+
+<div class="highlight"><pre><code class="javascript">  <span class="p">{</span>
+    <span class="nx">uuid</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>  <span class="c1">// unique ID for this instance of the app (new with each launch.)</span>
+    <span class="nx">manifest</span><span class="o">:</span>  <span class="o">&lt;</span><span class="nx">SMART</span> <span class="nx">App</span> <span class="nx">Manifest</span> <span class="nx">JSON</span> <span class="nx">structure</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// includes app ID, URL, etc. (see below)</span>
+    <span class="nx">iframe</span><span class="o">:</span>  <span class="o">&lt;</span><span class="nx">iframe</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// DOM iframe element in which the app instance should render.</span>
+
+    <span class="c1">// UI apps need user and patient context; Frame UI apps need user context.</span>
+    <span class="nx">context</span><span class="o">:</span>  <span class="p">{</span>
+       <span class="nx">user</span><span class="o">:</span> <span class="p">{</span>
+         <span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>  <span class="c1">// User ID assigned by the SMART Container</span>
+         <span class="nx">full_name</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span> <span class="c1">// Flattened string representation of the user&#39;s name</span>
+        <span class="p">},</span>
+        <span class="nx">record</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// Patient Record ID assigned by the SMART Container</span>
+          <span class="nx">full_name</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span> <span class="c1">// Flattened string representation of the patient&#39;s name</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nx">credentials</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">SMART</span> <span class="nx">Credentials</span> <span class="nx">JSON</span> <span class="nx">structure</span><span class="o">&gt;</span> <span class="c1">// see below</span>
+  <span class="p">}</span>
+</code></pre></div>
+
+<h3>App Instance Credentials</h3>
+
+<p>To support REST apps, your SMART Container should generate OAuth tokens each
+time an app launches. The OAuth tokens are provided to the app as part of a
+credentials JavaScript object, which is automatically incorporated into the
+<code>app_instance</code> object. The credentials object includes:</p>
+
+<div class="highlight"><pre><code class="javascript">  <span class="p">{</span>
+     <span class="nx">api_base</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// Base URL for the container&#39;s SMART API</span>
+     <span class="nx">rest_token</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// SMART REST Token bound to this user/patient/session</span>
+     <span class="nx">rest_secret</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// SMART REST Secret bound to this user/patient/session</span>
+     <span class="nx">oauth_header</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// OAuth header string embedding context &amp; tokens (see below)</span>
+   <span class="p">}</span>
+</code></pre></div>
+
+<p>The <code>oauth_header</code> field is particularly important, since it&#39;s sent to the app
+automatically, for a one-step way for the app to obtain access to the in-context
+record. The <code>oauth_header</code> is a string representing a well-formed OAuth header,
+which means that it must supply:</p>
+
+<ul>
+<li><code>oauth_nonce</code>: a one-time value that will not be sent again to this app</li>
+<li><code>oauth_timestamp</code>: current UNIX epoch time</li>
+<li><code>oauth_signature_method</code>: &quot;HMAC-SHA1&quot;</li>
+<li><code>oauth_version</code>: &quot;1.0&quot;</li>
+<li><code>oauth_consumer_key</code>: the consumer key that your SMART container has assigned to the app being launched</li>
+<li><code>oauth_signature</code>: a computed signature for the HTTP GET of this app&#39;s index.html</li>
+</ul>
+
+<p>The following SMART-specific fields are also required, to provide the launching
+app with necessary context:</p>
+
+<ul>
+<li><code>smart_app_id</code>: the ID of the app being launched (usually the same as the app&#39;s OAuth consumer key)</li>
+<li><code>smart_record_id</code>: the ID of the patient record on which the app is being launched (should match context.record.id)</li>
+<li><code>smart_user_id</code>: the ID of the user launching the app (should match context.user.id)</li>
+<li><code>smart_container_api_base</code>: the base REST URL of the SMART container launching the app (no trailing slash)</li>
+<li><code>smart_oauth_token</code>: an OAuth token that the app can use to sign requests for the current session</li>
+<li><code>smart_oauth_token_secret</code>: an OAuth secret that the app can use to sign requests for the current session</li>
+</ul>
+
+<p>Here&#39;s an example of a fully-formed <code>oauth_header</code>s, with line breaks inserted for
+clarity:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&#39;oauth_header&#39; : &#39;OAuth realm=&quot;&quot;,
+smart_record_id=&quot;1768562&quot;,
+smart_app_id=&quot;problem-list%40apps.smartplatforms.org&quot;,
+smart_user_id=&quot;joshmandel%40smart.org&quot;,
+smart_oauth_token_secret=&quot;GHY2zhTL6oG1XLwvWHRB&quot;,
+smart_oauth_token=&quot;Iet6gX4NMbPHjFYBhLkm&quot;,
+smart_container_api_base=&quot;http%3A%2F%2Fsandbox-api.smartplatforms.org&quot;,
+oauth_signature=&quot;QMVJcONlB/O53UUNTpkySuvT+Og%3D&quot;,
+oauth_nonce=&quot;YiAs73cBx7QSO69bpLvh&quot;,
+oauth_timestamp=&quot;1305921820&quot;,
+oauth_signature_method=&quot;HMAC-SHA1&quot;,
+oauth_version=&quot;1.0&quot;,
+oauth_consumer_key=&quot;problem-list%40apps.smartplatforms.org&quot;&#39;
+</code></pre></div>
+<h3>API Call Object</h3>
+
+<p>When an app makes an API Call, your handler function will be invoked with an
+argument that looks like:</p>
+
+<div class="highlight"><pre><code class="javascript">  <span class="p">{</span>
+   <span class="nx">type</span><span class="o">:</span>  <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// HTTP method (e.g. &quot;GET&quot;)</span>
+   <span class="nx">func</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// URL relative to container base (e.g. &quot;/apps/manifests&quot;)</span>
+   <span class="nx">contentType</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="c1">// sent to server (e.g. &quot;application/x-www-form-urlencoded&quot;)</span>
+   <span class="nx">params</span><span class="o">:</span>  <span class="o">&lt;</span><span class="nx">object</span><span class="o">&gt;</span> <span class="c1">// JS Object containing key/value URL parameters</span>
+  <span class="p">}</span>
+</code></pre></div>
+
+<p>You can use this object to determine how to respond appropriately.</p>
+
+<h3>SMART Manifest Object</h3>
+
+<p>You&#39;ll provide the <code>SMART_CONNECT_HOST</code> with details about an app to launch by
+passing a JavaScript manifest object that looks like the one below. For more
+details, see App Manifest Documentation.</p>
+
+<div class="highlight"><pre><code class="javascript">  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span> <span class="o">:</span> <span class="s2">&quot;Med List&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span> <span class="o">:</span> <span class="s2">&quot;Display medications in a table or timeline view&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;author&quot;</span> <span class="o">:</span> <span class="s2">&quot;Josh Mandel, Children&#39;s Hospital Boston&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;id&quot;</span> <span class="o">:</span> <span class="s2">&quot;med-list@apps.smartplatforms.org&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span> <span class="o">:</span> <span class="s2">&quot;.1a&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;mode&quot;</span> <span class="o">:</span> <span class="s2">&quot;ui&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;scope&quot;</span><span class="o">:</span> <span class="s2">&quot;record&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;icon&quot;</span> <span class="o">:</span>  <span class="s2">&quot;http://app-server/framework/med_list/icon.png&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;index&quot;</span><span class="o">:</span> <span class="s2">&quot;http://app-server/framework/med_list/index.html&quot;</span>
+  <span class="p">}</span>
+</code></pre></div>
+
+<h2>A &quot;working&quot; example</h2>
+
+<p>Here&#39;s a complete <a href="http://sample-apps.smartplatforms.org/sample_container/index.html">working example</a>
+of a SMART Container. This container implements only
+one API call: (<code>GET medications</code>), and displays an alert if the contained app
+attempts to call any other function. Be sure to view the source code! </p>
+
+<h2>Some manifests online</h2>
+
+<p>If you&#39;re building a container, here are some manifests you can try loading to
+get started, hosted in our sandbox</p>
+
+<p><a href="http://sample-apps.smartplatforms.org/framework/got_statins/smart_manifest.json">http://sample-apps.smartplatforms.org/framework/got_statins/smart_manifest.json</a>
+<br>
+<a href="http://sample-apps.smartplatforms.org/framework/cardio_risk_viz/smart_manifest.json">http://sample-apps.smartplatforms.org/framework/cardio_risk_viz/smart_manifest.json</a>
+<br>
+<a href="http://sample-apps.smartplatforms.org/framework/med_list/smart_manifest.json">http://sample-apps.smartplatforms.org/framework/med_list/smart_manifest.json</a>
+<br>
+<a href="http://sample-apps.smartplatforms.org/framework/problem_list/smart_manifest.json">http://sample-apps.smartplatforms.org/framework/problem_list/smart_manifest.json</a></p>
 
         </div>
       </div>

@@ -8,5 +8,5 @@ title: SMART Developers Documentation
 * [Roadmap for development](roadmap.html) 
 * [Sample container tutorial](tutorial.html)
 * [Overview of SMART Reference container](reference-container.html)
-* [Examples of other containers](examples.html)
+* [Other SMART containers](examples.html)
 * [Discussion of issues](issues.html)
