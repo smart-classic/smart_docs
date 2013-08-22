@@ -1,43 +1,267 @@
-/* fonts */
+/* Fonts */
 
+/* Use the semi-bold 600 weight rather than font-weight: bold */
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic);
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400);
 
-/* basic overrides */
+/* Basic overrides including font family */
 body {
     font-family: 'Source Sans Pro', Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #444;
     background-color: #f5f5f5;
     padding-top: 40px;
     padding-bottom: 40px;
 }
 
-.hero-unit {
-    background-color: #e5e5e5;
+input,
+button,
+select,
+textarea { font-family: 'Source Sans Pro', Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+pre, code {
+    font-family: 'Source Code Pro', Menlo, Consolas, monospace;
+    font-weight: 400;
 }
 
 code {
     color: #3a87ad;
-    border: 1px solid #f0f0f0;
+    border: none;
 }
 
-pre, code {
-    font-family: 'Source Code Pro', Menlo, Consolas, monospace; font-weight: 400;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #666;
+    font-weight: 600;
 }
 
-/* further overrides */
+.hero-unit { background-color: #e5e5e5; }
+
 .nav-header {
   font-weight: 600;
 }
 
 .page-header {
-  border-bottom: 1pxpx solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
 }
 
 hr {
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #ffffff;
 }
+
+/* Font size adjustments */
+body {
+    font-size: 15px;
+    line-height: 1.6; /* */
+}
+pre, code {
+    font-size: 14px;
+}
+
+.lead {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 30px;
+}
+
+h1,
+h2,
+h3 { line-height: 40px; }
+
+h1 { font-size: 36px; letter-spacing: -1px; }
+h2 { font-size: 29px; letter-spacing: -1px; }
+h3 { font-size: 22px; letter-spacing: -1px; }
+h4 { font-size: 15px; text-transform: uppercase; }
+h5 { font-size: 12px; text-transform: uppercase; font-weight: 700; }
+h6 { font-size: 10px; text-transform: uppercase; font-weight: 700; }
+
+/* todo */
+h1 small { font-size: 24.5px; }
+h2 small { font-size: 17.5px; }
+h3 small { font-size: 14px; }
+h4 small { font-size: 14px; }
+
+blockquote p {
+  margin-bottom: 0;
+  font-size: 17.5px;
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+.navbar-search .search-query {
+  font-family: inherit!;
+  font-size: 13px;
+}
+
+legend { font-size: 21px; }
+
+legend small {
+  font-size: 15px;
+  color: #999999;
+}
+
+label,
+input,
+button,
+select,
+textarea {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  height: 20px;
+  padding: 4px 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #555555;
+}
+
+.input-append input,
+.input-prepend input,
+.input-append select,
+.input-prepend select,
+.input-append .uneditable-input,
+.input-prepend .uneditable-input,
+.input-append .dropdown-menu,
+.input-prepend .dropdown-menu,
+.input-append .popover,
+.input-prepend .popover {
+  font-size: 14px;
+}
+
+.input-append .add-on,
+.input-prepend .add-on {
+  height: 20px;
+  min-width: 16px;
+  padding: 4px 5px;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: #eeeeee;
+  border: 1px solid #ccc;
+}
+
+.btn { font-size: 14px; }
+.btn-large {
+  padding: 11px 19px;
+  font-size: 17.5px;
+}
+
+.btn-large [class^="icon-"],
+.btn-large [class*=" icon-"] { margin-top: 4px; }
+
+.btn-small {
+  padding: 2px 10px;
+  font-size: 11.9px;
+}
+
+.btn-mini {
+  padding: 0 6px;
+  font-size: 10.5px;
+}
+
+.btn-group > .btn,
+.btn-group > .dropdown-menu,
+.btn-group > .popover {
+  font-size: 14px;
+}
+
+.btn-group > .btn-mini {
+  font-size: 10.5px;
+}
+
+.btn-group > .btn-small {
+  font-size: 11.9px;
+}
+
+.btn-group > .btn-large {
+  font-size: 17.5px;
+}
+
+.nav-header {
+  padding: 3px 15px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #999999;
+  text-transform: uppercase;
+}
+
+.tooltip {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.label,
+.badge {
+  padding: 2px 4px;
+  font-size: 11.844px;
+  font-weight: bold;
+  line-height: 14px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #999999;
+}
+
+.popover-title {
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ebebeb;
+  -webkit-border-radius: 5px 5px 0 0;
+     -moz-border-radius: 5px 5px 0 0;
+          border-radius: 5px 5px 0 0;
+}
+
+.navbar .brand {
+  display: block;
+  float: left;
+  padding: 10px 20px 10px;
+  margin-left: -20px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #777777;
+  text-shadow: 0 1px 0 #ffffff;
+}
+
+.close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
 
 select,
 textarea,
