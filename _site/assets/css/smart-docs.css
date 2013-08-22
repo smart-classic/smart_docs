@@ -27,6 +27,7 @@ code {
     border: none;
 }
 
+
 h1,
 h2,
 h3,
@@ -52,14 +53,13 @@ hr {
   border-bottom: 1px solid #ffffff;
 }
 
-/* Font size adjustments */
+/* Font size, line height, and margin adjustments */
 body {
     font-size: 15px;
-    line-height: 1.6; /* */
+    line-height: 1.6;
 }
-pre, code {
-    font-size: 14px;
-}
+
+pre, code { font-size: 14px; }
 
 .lead {
   margin-bottom: 20px;
@@ -68,9 +68,21 @@ pre, code {
   line-height: 30px;
 }
 
+
 h1,
 h2,
-h3 { line-height: 40px; }
+h3 {
+    line-height: 40px;
+    margin: 18px 0 2px 0;
+    text-rendering: optimizelegibility;
+}
+
+h4,
+h5,
+h6 {
+  margin: 10px 0;
+  text-rendering: optimizelegibility;
+}
 
 h1 { font-size: 36px; letter-spacing: -1px; }
 h2 { font-size: 29px; letter-spacing: -1px; }
