@@ -2,17 +2,17 @@
 
 <h3 id='App_Manifest'>App Manifest</h3>
 
-<ul id='get_app_manifest'>
-<li>URI: <code> GET/apps/{descriptor}/manifest </code></li>
-<li>Client method name: <code> get_app_manifest </code></li>
-</ul>
-
-<p>Returns a JSON SMART UI app manifest for the app matching {descriptor}, or 404.  Note that {descriptor} can be an app ID like &quot;got-statins <br><br>
 <ul id='get_app_manifests'>
 <li>URI: <code> GET/apps/manifests/ </code></li>
 <li>Client method name: <code> get_app_manifests </code></li>
 </ul>
-Returns a JSON list of all SMART UI app manifests installed on the container. <br><br>
+
+<p>Returns a JSON list of all SMART UI app manifests installed on the container. <br><br>
+<ul id='get_app_manifest'>
+<li>URI: <code> GET/apps/{descriptor}/manifest </code></li>
+<li>Client method name: <code> get_app_manifest </code></li>
+</ul>
+Returns a JSON SMART UI app manifest for the app matching {descriptor}, or 404.  Note that {descriptor} can be an app ID like &quot;got-statins <br><br>
 <a href="../data_model/#App_Manifest">App Manifest RDF</a></p>
 
 <h3 id='ContainerManifest'>ContainerManifest</h3>
@@ -80,17 +80,17 @@ Get one Allergy for a patient <br><br>
 
 <h3 id='Clinical_Note'>Clinical Note</h3>
 
-<ul id='get_clinical_notes'>
-<li>URI: <code> GET/records/{record_id}/clinical_notes/ </code></li>
-<li>Client method name: <code> get_clinical_notes </code></li>
-</ul>
-
-<p>Get all Clinical Notes for a patient <br><br>
 <ul id='get_clinical_note'>
 <li>URI: <code> GET/records/{record_id}/clinical_notes/{clinical_note_id} </code></li>
 <li>Client method name: <code> get_clinical_note </code></li>
 </ul>
-Get one Clinical Note for a patient <br><br>
+
+<p>Get one Clinical Note for a patient <br><br>
+<ul id='get_clinical_notes'>
+<li>URI: <code> GET/records/{record_id}/clinical_notes/ </code></li>
+<li>Client method name: <code> get_clinical_notes </code></li>
+</ul>
+Get all Clinical Notes for a patient <br><br>
 <ul id='post_clinical_note'>
 <li>URI: <code> POST/records/{record_id}/clinical_notes/ </code></li>
 <li>Client method name: <code> post_clinical_note </code></li>
@@ -110,17 +110,17 @@ Post a Clinical Note for a patient. The body of the post should contain SMART RD
 
 <h3 id='Document'>Document</h3>
 
-<ul id='get_document'>
-<li>URI: <code> GET/records/{record_id}/documents/{document_id} </code></li>
-<li>Client method name: <code> get_document </code></li>
-</ul>
-
-<p>Allows a SMART app to request a single document. The optional <code>format</code> parameter sets the output format of the call. The possible values are <code>metadata</code>, <code>raw</code>, and <code>combined</code>. In <code>format=metadata</code> mode, the container returns metadata and desceriptors of the document in RDF-XML. In <code>format=combined</code> mode the call returns the serialized document content in addition to all the data from the <code>format=metadata</code> mode. In <code>format=raw</code> mode, SMART returns the raw document content with the proper MIME type. In the absence of a <code>format</code> parameter, the API defaults to <code>format=raw</code>. <br><br>
 <ul id='get_documents'>
 <li>URI: <code> GET/records/{record_id}/documents/ </code></li>
 <li>Client method name: <code> get_documents </code></li>
 </ul>
-Returns data about all the available documents for the patient record subject to the standard filter restrictions. The optional <code>format</code> parameter sets the output format of the call. The possible values are <code>metadata</code> and <code>combined</code>. In <code>format=metadata</code> mode, the container returns metadata and desceriptors of the documents in RDF-XML. In <code>format=combined</code> mode the call returns the serialized documents&#39; content in addition to all the data from the <code>format=metadata</code> mode. In the absence of a <code>format</code> parameter, the API defaults to <code>format=metadata</code>. <br><br>
+
+<p>Returns data about all the available documents for the patient record subject to the standard filter restrictions. The optional <code>format</code> parameter sets the output format of the call. The possible values are <code>metadata</code> and <code>combined</code>. In <code>format=metadata</code> mode, the container returns metadata and desceriptors of the documents in RDF-XML. In <code>format=combined</code> mode the call returns the serialized documents&#39; content in addition to all the data from the <code>format=metadata</code> mode. In the absence of a <code>format</code> parameter, the API defaults to <code>format=metadata</code>. <br><br>
+<ul id='get_document'>
+<li>URI: <code> GET/records/{record_id}/documents/{document_id} </code></li>
+<li>Client method name: <code> get_document </code></li>
+</ul>
+Allows a SMART app to request a single document. The optional <code>format</code> parameter sets the output format of the call. The possible values are <code>metadata</code>, <code>raw</code>, and <code>combined</code>. In <code>format=metadata</code> mode, the container returns metadata and desceriptors of the document in RDF-XML. In <code>format=combined</code> mode the call returns the serialized document content in addition to all the data from the <code>format=metadata</code> mode. In <code>format=raw</code> mode, SMART returns the raw document content with the proper MIME type. In the absence of a <code>format</code> parameter, the API defaults to <code>format=raw</code>. <br><br>
 <a href="../data_model/#Document">Document RDF</a></p>
 
 <h3 id='Encounter'>Encounter</h3>
@@ -170,17 +170,17 @@ Get all Fulfillments for a patient <br><br>
 
 <h3 id='Immunization'>Immunization</h3>
 
-<ul id='get_immunizations'>
-<li>URI: <code> GET/records/{record_id}/immunizations/ </code></li>
-<li>Client method name: <code> get_immunizations </code></li>
-</ul>
-
-<p>Get all Immunizations for a patient <br><br>
 <ul id='get_immunization'>
 <li>URI: <code> GET/records/{record_id}/immunizations/{immunization_id} </code></li>
 <li>Client method name: <code> get_immunization </code></li>
 </ul>
-Get one Immunization for a patient <br><br>
+
+<p>Get one Immunization for a patient <br><br>
+<ul id='get_immunizations'>
+<li>URI: <code> GET/records/{record_id}/immunizations/ </code></li>
+<li>Client method name: <code> get_immunizations </code></li>
+</ul>
+Get all Immunizations for a patient <br><br>
 <a href="../data_model/#Immunization">Immunization RDF</a></p>
 
 <h3 id='Lab_Panel'>Lab Panel</h3>
@@ -215,17 +215,17 @@ Get all Lab Results for a patient <br><br>
 
 <h3 id='Medication'>Medication</h3>
 
-<ul id='get_medication'>
-<li>URI: <code> GET/records/{record_id}/medications/{medication_id} </code></li>
-<li>Client method name: <code> get_medication </code></li>
-</ul>
-
-<p>Get one Medication for a patient <br><br>
 <ul id='get_medications'>
 <li>URI: <code> GET/records/{record_id}/medications/ </code></li>
 <li>Client method name: <code> get_medications </code></li>
 </ul>
-Get all Medications for a patient <br><br>
+
+<p>Get all Medications for a patient <br><br>
+<ul id='get_medication'>
+<li>URI: <code> GET/records/{record_id}/medications/{medication_id} </code></li>
+<li>Client method name: <code> get_medication </code></li>
+</ul>
+Get one Medication for a patient <br><br>
 <a href="../data_model/#Medication">Medication RDF</a></p>
 
 <h3 id='Photograph'>Photograph</h3>
@@ -240,52 +240,52 @@ Get all Medications for a patient <br><br>
 
 <h3 id='Problem'>Problem</h3>
 
-<ul id='get_problems'>
-<li>URI: <code> GET/records/{record_id}/problems/ </code></li>
-<li>Client method name: <code> get_problems </code></li>
-</ul>
-
-<p>Get all Problems for a patient <br><br>
 <ul id='get_problem'>
 <li>URI: <code> GET/records/{record_id}/problems/{problem_id} </code></li>
 <li>Client method name: <code> get_problem </code></li>
 </ul>
-Get one Problem for a patient <br><br>
+
+<p>Get one Problem for a patient <br><br>
+<ul id='get_problems'>
+<li>URI: <code> GET/records/{record_id}/problems/ </code></li>
+<li>Client method name: <code> get_problems </code></li>
+</ul>
+Get all Problems for a patient <br><br>
 <a href="../data_model/#Problem">Problem RDF</a></p>
 
 <h3 id='Procedure'>Procedure</h3>
 
-<ul id='get_procedure'>
-<li>URI: <code> GET/records/{record_id}/procedures/{procedure_id} </code></li>
-<li>Client method name: <code> get_procedure </code></li>
-</ul>
-
-<p>Get one Procedure for a patient <br><br>
 <ul id='get_procedures'>
 <li>URI: <code> GET/records/{record_id}/procedures/ </code></li>
 <li>Client method name: <code> get_procedures </code></li>
 </ul>
-Get all Procedures for a patient <br><br>
+
+<p>Get all Procedures for a patient <br><br>
+<ul id='get_procedure'>
+<li>URI: <code> GET/records/{record_id}/procedures/{procedure_id} </code></li>
+<li>Client method name: <code> get_procedure </code></li>
+</ul>
+Get one Procedure for a patient <br><br>
 <a href="../data_model/#Procedure">Procedure RDF</a></p>
 
 <h3 id='Scratchpad_Data'>Scratchpad Data</h3>
 
-<ul id='put_scratchpad_data'>
-<li>URI: <code> PUT/records/{record_id}/apps/{smart_app_id}/scratchpad </code></li>
-<li>Client method name: <code> put_scratchpad_data </code></li>
-</ul>
-
-<p>Stores scratchpad data in the patient&#39;s account in the SMART container scoped to the current app. The HTTP request body represents the unicode-encoded data blob. The app chooses the best format for the data that makes sense for its use case (it is unstructured from SMART&#39;s perspective). If the data save was successful, the SMART server will respond with an HTTP 200 code and include the stored data in the response body. It is the app&#39;s responsibility to compare the response with the intended data content. If there are any discrepancies, then a concurrency problem occured while writing the data and the app should request a fresh copy of the scratchpad data stored on the server, merge it with its local copy and attempt writing it again. <br><br>
 <ul id='delete_scratchpad_data'>
 <li>URI: <code> DELETE/records/{record_id}/apps/{smart_app_id}/scratchpad </code></li>
 <li>Client method name: <code> delete_scratchpad_data </code></li>
 </ul>
-Purges the scratchpad data stored in the SMART container for the selected app. If everything goes well, this call will respond with HTTP 200 status code. <br><br>
+
+<p>Purges the scratchpad data stored in the SMART container for the selected app. If everything goes well, this call will respond with HTTP 200 status code. <br><br>
 <ul id='get_scratchpad_data'>
 <li>URI: <code> GET/records/{record_id}/apps/{smart_app_id}/scratchpad </code></li>
 <li>Client method name: <code> get_scratchpad_data </code></li>
 </ul>
 Returns the scratchpad blob unicode data stored in the patient&#39;s account by a previous run of the owner app in the response body. An app can ready any other app&#39;s scratchpad. If not data is available the call will return an empty string. <br><br>
+<ul id='put_scratchpad_data'>
+<li>URI: <code> PUT/records/{record_id}/apps/{smart_app_id}/scratchpad </code></li>
+<li>Client method name: <code> put_scratchpad_data </code></li>
+</ul>
+Stores scratchpad data in the patient&#39;s account in the SMART container scoped to the current app. The HTTP request body represents the unicode-encoded data blob. The app chooses the best format for the data that makes sense for its use case (it is unstructured from SMART&#39;s perspective). If the data save was successful, the SMART server will respond with an HTTP 200 code and include the stored data in the response body. It is the app&#39;s responsibility to compare the response with the intended data content. If there are any discrepancies, then a concurrency problem occured while writing the data and the app should request a fresh copy of the scratchpad data stored on the server, merge it with its local copy and attempt writing it again. <br><br>
 <a href="../data_model/#Scratchpad_Data">Scratchpad Data RDF</a></p>
 
 <h3 id='Social_History'>Social History</h3>
@@ -300,37 +300,37 @@ Returns the scratchpad blob unicode data stored in the patient&#39;s account by 
 
 <h3 id='Vital_Sign_Set'>Vital Sign Set</h3>
 
-<ul id='get_vital_sign_sets'>
-<li>URI: <code> GET/records/{record_id}/vital_sign_sets/ </code></li>
-<li>Client method name: <code> get_vital_sign_sets </code></li>
-</ul>
-
-<p>Get all Vital Sign Sets for a patient <br><br>
 <ul id='get_vital_sign_set'>
 <li>URI: <code> GET/records/{record_id}/vital_sign_sets/{vital_sign_set_id} </code></li>
 <li>Client method name: <code> get_vital_sign_set </code></li>
 </ul>
-Get one Vital Sign Set for a patient <br><br>
+
+<p>Get one Vital Sign Set for a patient <br><br>
+<ul id='get_vital_sign_sets'>
+<li>URI: <code> GET/records/{record_id}/vital_sign_sets/ </code></li>
+<li>Client method name: <code> get_vital_sign_sets </code></li>
+</ul>
+Get all Vital Sign Sets for a patient <br><br>
 <a href="../data_model/#Vital_Sign_Set">Vital Sign Set RDF</a></p>
 
 <h2>User Calls</h2>
 
 <h3 id='User_Preferences'>User Preferences</h3>
 
-<ul id='get_user_preferences'>
-<li>URI: <code> GET/users/{user_id}/apps/{smart_app_id}/preferences </code></li>
-<li>Client method name: <code> get_user_preferences </code></li>
-</ul>
-
-<p>Returns the preferences blob unicode data stored in the user&#39;s account by a previous run of the app in the response body. If not data is available the call will return an empty string. <br><br>
 <ul id='put_user_preferences'>
 <li>URI: <code> PUT/users/{user_id}/apps/{smart_app_id}/preferences </code></li>
 <li>Client method name: <code> put_user_preferences </code></li>
 </ul>
-Stores preferences data in the user&#39;s account in the SMART container scoped to the current app. The HTTP request body represents the unicode-encoded data blob. The app chooses the best format for the data that makes sense for its use case (it is unstructured from SMART&#39;s perspective). If the data save was successful, the SMART server will respond with an HTTP 200 code and include the stored data in the response body. It is the app&#39;s responsibility to compare the response with the intended data content. If there are any discrepancies, then a concurrency problem occured while writing the data and the app should request a fresh copy of the preferences data stored on the server, merge it with its local copy and attempt writing it again. <br><br>
+
+<p>Stores preferences data in the user&#39;s account in the SMART container scoped to the current app. The HTTP request body represents the unicode-encoded data blob. The app chooses the best format for the data that makes sense for its use case (it is unstructured from SMART&#39;s perspective). If the data save was successful, the SMART server will respond with an HTTP 200 code and include the stored data in the response body. It is the app&#39;s responsibility to compare the response with the intended data content. If there are any discrepancies, then a concurrency problem occured while writing the data and the app should request a fresh copy of the preferences data stored on the server, merge it with its local copy and attempt writing it again. <br><br>
 <ul id='delete_user_preferences'>
 <li>URI: <code> DELETE/users/{user_id}/apps/{smart_app_id}/preferences </code></li>
 <li>Client method name: <code> delete_user_preferences </code></li>
 </ul>
 Purges the user preferences stored in the SMART container for the selected app. If everything goes well, this call will respond with HTTP 200 status code. <br><br>
+<ul id='get_user_preferences'>
+<li>URI: <code> GET/users/{user_id}/apps/{smart_app_id}/preferences </code></li>
+<li>Client method name: <code> get_user_preferences </code></li>
+</ul>
+Returns the preferences blob unicode data stored in the user&#39;s account by a previous run of the app in the response body. If not data is available the call will return an empty string. <br><br>
 <a href="../data_model/#User_Preferences">User Preferences RDF</a></p>

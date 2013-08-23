@@ -7,36 +7,19 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
-    <style type="text/css">
-       body { padding-top: 60px; }
-       .sidebar-nav {
-           width: 23%;
-           padding: 0 0;
-           overflow-y: scroll;
-           overflow-x: hidden;
-           position: fixed;
-           margin-left: -10px;
-       }
-       .navbar { line-height: 20px; }
-       .smartbug { height: 25px; width: 30px; }
-    </style>
+    <style type="text/css">body { padding-top: 60px; }</style>
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script>
-        $(function(){ $('#sidebar').height($(window).height() - 50); })
+        $(function(){ $('#ref-sidebar-inner').height($(window).height() - 150); })
     </script>
   </head>
 
-  <body>
-    <div class="navbar navbar-fixed-top">
+  <body data-spy='scroll' data-target='#ref-sidebar'>
+    <div id='ref-topbar' class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="brand" href="/"><img class='smartbug' src='/assets/img/smart-bug.png' /></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
@@ -55,8 +38,8 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
-            <div id='sidebar' class="well sidebar-nav">
+        <div id='ref-sidebar' class="span3">
+          <div id='ref-sidebar-inner' class='ref-sidenav well' data-spy='affix'>
             <ul class="nav nav-list">
               {% include api_nav.html %}
             </ul>
