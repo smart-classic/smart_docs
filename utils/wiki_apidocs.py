@@ -256,13 +256,13 @@ def wiki_properties_for_type(t):
     properties_end()
 
 def wiki_api_for_type(t, calls_for_t):
-    print "<h3 id='%s'>%s</h3>" % (t.name.replace(' ', '_'), t.name)
+    print "<h3 class='call-group-header-body' id='%s'>%s</h3>" % (t.name.replace(' ', '_'), t.name)
 
     last_description = ""
     for call in calls_for_t:
         #if (str(call.http_method) != "GET"): continue # Document only the GET calls for now!
 
-        print "<ul id='%s'>" % string.strip(str(call.client_method_name))
+        print "<ul class='call-body' id='%s'>" % string.strip(str(call.client_method_name))
         print "<li>URI: <code>", string.strip(strip_smart(str(call.http_method)) + str(call.path)), "</code></li>"
         print "<li>Client method name: <code>", string.strip(str(call.client_method_name)), "</code></li>"
         print "</ul>"
@@ -278,12 +278,16 @@ main_types = []
 calls_to_document = copy.copy(api_calls)
 
 def wiki_api_for_type_for_nav(t, calls_for_t):
-    print "\n<li><a href='#%s'>%s</a></li>" % (t.name.replace(' ', '_'), t.name)
+    print "\n  <li class='call-group-header'><a href='#%s'>%s</a></li>" % (t.name.replace(' ', '_'), t.name)
+
+    print "\n    <ul class='call-group hide'>"
 
     for call in calls_for_t:
         #if (str(call.http_method) != "GET"): continue # Document only the GET calls for now!
         s = string.strip(str(call.client_method_name))
-        print "<li><code><a href='#%s'>%s</a></code></li>" % (s, s)
+        print "      <li class='call'><code><a href='#%s'>%s</a></code></li>" % (s, s)
+
+    print "    </ul>"
 
 
 
