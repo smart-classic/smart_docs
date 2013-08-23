@@ -61,7 +61,7 @@ body {
 
 pre, code {
     font-size: inherit;
-    padding: none;
+    padding: 0 0;
     background-color: inherit;
 }
 
@@ -110,7 +110,7 @@ blockquote p {
 }
 
 .navbar-search .search-query {
-  font-family: inherit!;
+  font-family: inherit;
   font-size: 13px;
 }
 
