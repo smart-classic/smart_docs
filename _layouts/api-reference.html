@@ -9,20 +9,12 @@
     <link href="/assets/css/syntax.css" rel="stylesheet">
     <style type="text/css">
         body { padding-top: 60px; }
-        .call-body,
-        .call-group-header-body {
-            padding-top: 60px;
-            margin-top: -60px;
-        }
     </style>
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script>
         $(function(){
-            // set sidebar height
-            $('#ref-sidebar-inner').height($(window).height() - 150);
-
             // add scrollspy listener
             $('.call-group-header').on('activate', function (e) {
                 // hide all the other call groups and show this one
