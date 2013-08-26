@@ -8,6 +8,7 @@ DEBUG = False
 import sys
 sys.path.append('.')
 
+import cgi
 import copy
 import yaml
 import pprint
@@ -177,6 +178,9 @@ def properties_end():
 def wiki_batch_start(batch):
     print "\n## %s\n"%batch
 
+def wiki_api_batch_start(batch):
+    print "\n<h2 class='call-scope'>%s</h2>\n"%batch
+
 def wiki_nav_batch_start(batch):
     print "\n\n<li class='nav-header'>%s</li>\n"%batch
 
@@ -258,6 +262,7 @@ def wiki_properties_for_type(t):
 def wiki_api_for_type(t, calls_for_t, current_batch):
     batch_href = current_batch.replace(' ', '_') + '_' + t.name.replace(' ', '_').lower()
     print "<h3 class='call-group-header-body' id='%s'>%s</h3>" % (batch_href, t.name)
+    print "<div class='call-group-body'>"
 
     last_description = ""
     for call in calls_for_t:
@@ -269,10 +274,11 @@ def wiki_api_for_type(t, calls_for_t, current_batch):
         print "</ul>"
 
         if (str(call.description) != last_description):
-            print str(call.description), "<br><br>"
+            print "<p>", cgi.escape(call.description, True), "</p>\n"
             last_description = str(call.description)
 
-    print "[%s RDF](../data_model/#%s)\n\n"%(t.name, t.name.replace(' ', '_'))
+    print "<p><a href='/framework/models/#%s'>%s data model</a></p>\n\n" % (t.name.replace(' ', '_'), t.name)
+    print "</div>"
 
 
 main_types = []
@@ -348,7 +354,7 @@ if __name__=="__main__":
         for t in calls_to_document:
             if call_category(t) != current_batch:
                 current_batch = call_category(t)
-                wiki_batch_start(current_batch.capitalize()+" Calls")
+                wiki_api_batch_start(current_batch.capitalize()+" Calls")
             if (t in processed): continue
 
             target = SMART_Class[t.target]

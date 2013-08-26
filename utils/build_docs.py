@@ -5,7 +5,7 @@ import subprocess
 import tempfile
 
 config = [
-    ('api', './_includes/api.html', True),
+    ('api', './_includes/api.html', False),
     ('api_nav', './_includes/api_nav.html', False)
     # ('dm', './_includes/api.html'),
     # ('dm_nav', './_includes/api_nav.html'),
