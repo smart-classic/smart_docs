@@ -255,8 +255,9 @@ def wiki_properties_for_type(t):
         properties_row(name, c.uri, cardinality, desc, required_p)
     properties_end()
 
-def wiki_api_for_type(t, calls_for_t):
-    print "<h3 class='call-group-header-body' id='%s'>%s</h3>" % (t.name.replace(' ', '_'), t.name)
+def wiki_api_for_type(t, calls_for_t, current_batch):
+    batch_href = current_batch.replace(' ', '_') + '_' + t.name.replace(' ', '_').lower()
+    print "<h3 class='call-group-header-body' id='%s'>%s</h3>" % (batch_href, t.name)
 
     last_description = ""
     for call in calls_for_t:
@@ -278,12 +279,11 @@ main_types = []
 calls_to_document = copy.copy(api_calls)
 
 def wiki_api_for_type_for_nav(t, calls_for_t):
-    print "\n  <li class='call-group-header'><a href='#%s'>%s</a></li>" % (t.name.replace(' ', '_'), t.name)
-
+    href = current_batch.replace(' ', '_') + '_' + t.name.replace(' ', '_').lower()
+    print "\n  <li class='call-group-header'><a href='#%s'>%s</a></li>" % (href, t.name)
     print "\n    <ul class='call-group hide'>"
 
     for call in calls_for_t:
-        #if (str(call.http_method) != "GET"): continue # Document only the GET calls for now!
         s = string.strip(str(call.client_method_name))
         print "      <li class='call'><code><a href='#%s'>%s</a></code></li>" % (s, s)
 
@@ -345,7 +345,7 @@ if __name__=="__main__":
     if "api" in sys.argv:
         current_batch = None
         processed = []
-        for t in calls_to_document: 
+        for t in calls_to_document:
             if call_category(t) != current_batch:
                 current_batch = call_category(t)
                 wiki_batch_start(current_batch.capitalize()+" Calls")
@@ -354,7 +354,7 @@ if __name__=="__main__":
             target = SMART_Class[t.target]
             calls_for_t = filter(lambda x: call_category(x)==current_batch, sorted(target.calls))
             processed.extend(calls_for_t)
-            wiki_api_for_type(target, calls_for_t)
+            wiki_api_for_type(target, calls_for_t, current_batch)
 
     if "api_nav" in sys.argv:
         current_batch = None
