@@ -5,10 +5,10 @@ import subprocess
 import tempfile
 
 config = [
-    ('api', './_includes/api.html', False),
-    ('api_nav', './_includes/api_nav.html', False)
-    # ('dm', './_includes/api.html'),
-    # ('dm_nav', './_includes/api_nav.html'),
+    # ('api', './_includes/api.html', False),
+    # ('api_nav', './_includes/api_nav.html', False)
+    ('models', './_includes/models.html', True),
+    ('models_nav', './_includes/models_nav.html', True),
     # ('js_client', './libraries/javascript/index.md')
 ]
 

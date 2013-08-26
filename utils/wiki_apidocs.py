@@ -38,7 +38,7 @@ if f != None:
     config = yaml.load(f)
 
 SP_STATMENT = "http://smartplatforms.org/terms#Statement"
-CONTEXT_URI = config['production_url']+'/reference/data_model/contexts/smart_context.jsonld'
+CONTEXT_URI = config['production_url']+'/framework/smart_context.jsonld'
 
 # create smart_jsonld_context, copied from smart_sample_apps
 # could be in smart_common
@@ -87,10 +87,10 @@ def type_start(t):
     name_id = name.replace(' ', '_')
 
     # manually add ids to the type <h3>s
-    print "\n<h3 id='%s'><code>%s</code></h3>\n" % (name_id, name)
+    print "\n<h3 class='model-type' id='%s'><code>%s</code></h3>\n" % (name_id, name)
 
     if len(t.parents) > 0:
-        print "`%s` is a subtype of and inherits properties from:" % type_name_string(t)
+        print "<code>%s</code> is a subtype of and inherits properties from:" % type_name_string(t)
 
         parents = []
         for p in sorted(t.parents, key=lambda x: type_name_string(x)):
@@ -176,7 +176,7 @@ def properties_end():
     print """</table>"""
 
 def wiki_batch_start(batch):
-    print "\n## %s\n"%batch
+    print "\n<h2 class='model-type-class'>%s</h2>\n"%batch
 
 def wiki_api_batch_start(batch):
     print "\n<h2 class='call-scope'>%s</h2>\n"%batch
@@ -202,9 +202,9 @@ def wiki_payload_for_type(t):
     type_start(t)
     wiki_properties_for_type(t)
 
-cardinalities  = {"0 - 1": "Optional: 0 or 1", 
-                  "0 - Many": "Optional: 0 or more", 
-                  "1": "Required: exactly 1", 
+cardinalities  = {"0 - 1": "Optional: 0 or 1",
+                  "0 - Many": "Optional: 0 or more",
+                  "1": "Required: exactly 1",
                   "1 - Many": "Required: 1 or more"}
 
 def wiki_properties_for_type(t):
@@ -340,9 +340,9 @@ main_types = sorted(main_types, key=lambda x: type_sort_order(x) + str(x.name))
 calls_to_document = sorted(calls_to_document, key=call_sort_order)
 
 if __name__=="__main__":
-    if "payload" in sys.argv:
+    if "models" in sys.argv:
         current_batch = None
-        for t in main_types: 
+        for t in main_types:
             if type_sort_order(t) != current_batch:
                 current_batch = type_sort_order(t)
                 wiki_batch_start(current_batch+" Types") # e.g. "Record Items" or "Container Items"

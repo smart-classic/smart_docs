@@ -30,6 +30,11 @@ code {
 }
 
 
+/* /1* Adjust header sizes *1/ */
+/* h1 { color: #696969; font-size: 24px; margin-top: 12px; } */
+/* h2 { color: #696969; font-size: 20px; margin-top: 36px; } */
+/* h3 { color: #5f5f5f; font-size: 14px; font-variant: small-caps; text-transform: uppercase; margin-top: 22px;} */
+
 h1,
 h2,
 h3,
@@ -543,4 +548,115 @@ input[type="color"],
 .call {
     list-style: disc;
     font-size: 13px;
+}
+
+.model-type-class { margin-top: 50px; }
+.model-type { margin-top: 20px; }
+
+/* old */
+
+/* uhh, do _not_ use pre-wrap! */
+pre { white-space: pre !important; }
+
+
+
+/* in Markdown-land a single _ or * is an <em>, __ or ** is <strong> */
+em {
+  font-style: normal;
+  font-weight: bold;
+  color: #666;
+}
+
+strong {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 105%;
+  color: red;
+}
+
+
+.simple_box {
+  margin: 35px;
+  border: 4px solid #ccc;
+  padding: 15px;
+}
+
+.simple_small_box {
+  margin: 35px;
+  border: 2px solid #ddd;
+  padding: 10px;
+}
+
+.red_box {
+  margin: 35px;
+  border: 4px solid red;
+  padding: 15px;
+}
+
+.red_box_thin {
+  margin: 35px;
+  border: 2px dotted red;
+  padding: 15px;
+}
+
+.table caption { font-style: italic; }
+
+.highlight {
+    background: none;
+}
+
+.highlight pre {
+    font-size: 85%;
+    white-space:pre;
+    word-wrap:normal;
+    overflow-x: auto;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: 2px solid #ddd;
+    border-radius: 0px;
+    padding-left: 4px !important;
+}
+
+.nav-tabs {
+  font-variant: small-caps;
+  text-transform: uppercase;
+  font-size: smaller !important;
+  border-bottom: none !important;
+}
+
+.nav-tabs > li {
+  margin-left: 20px;
+}
+
+.nav-tabs > li:first-child {
+  margin-left: 0px
+  width: 140px;
+}
+
+
+.nav-tabs > li > a {
+  padding: 3px 0 0 0;
+  border: none;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+  background-color: inherit;
+  border: none;
+  padding: 3px 0 0 0;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+  color: #555555;
+  background-color: inherit;
+  border: none !important;
+  border-bottom-color: transparent;
+  cursor: default;
+}
+
+.rdf_xml, .n_triples, .turtle, .json_ld {
+  display: none;
+}
+.rdf_xml.active, .n_triples.active, .turtle.active, .json_ld.active {
+  display: block;
 }
