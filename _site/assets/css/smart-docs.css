@@ -517,11 +517,24 @@ input[type="color"],
 /* reference pages: api and models */
 
 .ref-sidenav {
+    height: 90%;
     width: 23%;
     padding: 0 0;
-    overflow-y: scroll;
     overflow-x: hidden;
     margin-left: -10px;
 }
 .ref-topbar { line-height: 20px; }
 .smartbug { height: 25px; width: 30px; }
+.call-body,
+.call-group-header-body {
+    padding-top: 60px;
+    margin-top: -60px;
+}
+.nav-header {
+    font-size: 12px;
+    padding-top: 20px;
+}
+.call {
+    list-style: disc;
+    font-size: 13px;
+}
