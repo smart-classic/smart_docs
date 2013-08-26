@@ -8,34 +8,35 @@
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
     <style type="text/css">
-       body { padding-top: 0; }
-      .sidebar-nav { padding: 9px 0; }
+        body { padding-top: 60px; }
     </style>
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script>
-        $(function(){ $('#sidebar').height($(window).height() - 125); })
+        $(function(){
+            // add scrollspy listener
+            $('.call-group-header').on('activate', function (e) {
+                // hide all the other call groups and show this one
+                $('.call-group').not($(e.target).next()).hide();
+                $(e.target).next().show();
+            })
+        })
     </script>
   </head>
 
-  <body>
-    <div class="navbar">
+  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
+    <div id='ref-topbar' class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/"><img style='height: 25px; width: 30px' src='/assets/img/smart-bug.png'></a>
+          <a class="brand" href="/"><img class='smartbug' src='/assets/img/smart-bug.png' /></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="#about">Home</a></li>
               <li><a href="#about">App Dev</a></li>
               <li><a href="#about">Framework Guide</a></li>
-              <li class="active"><a href="#about">Data Models</a></li>
-              <li><a href="/framework/api/">API</a></li>
+              <li><a href="/framework/models/">Data Models</a></li>
+              <li class="active"><a href="#about">API</a></li>
               <li><a href="#about">Container Dev</a></li>
               <li><a href="#about">FAQ</a></li>
             </ul>
@@ -46,10 +47,12 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
-            <div id='sidebar' class="well sidebar-nav" style='overflow-y: scroll; overflow-x: hidden; position: fixed; margin-left: -10px; margin-top: -10px'>
+        <div id='ref-sidebar' class="span3">
+          <div id='ref-sidebar-inner' class='ref-sidenav well' data-spy='affix'>
             <ul class="nav nav-list">
-              {% include dm_nav.html %}
+
+{% include models_nav.html %}
+
             </ul>
           </div>
         </div><!--span3-->
@@ -59,7 +62,7 @@
 
           <hr>
 
-          {% include dm.html %}
+{% include models.html %}
 
         </div><!--span9-->
       </div><!--row-->
