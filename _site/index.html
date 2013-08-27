@@ -9,7 +9,7 @@
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
     <style type="text/css">
-      body { padding-top: 60px; padding-bottom: 40px; }
+      body { padding-top: 10px; padding-bottom: 40px; }
     </style>
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -22,41 +22,68 @@
   </head>
 
   <body>
+
     <div class="container">
+      <!-- <div class='row' style='margin: 10px 0 10px 50px; color: #666; height: 40px; font-size: 18px; font-weight: 300'> -->
+      <!--     <img class='smartbug' src='/assets/img/smart-bug.png' /> -->
+      <!--     SMART Developer's Documentation -->
+      <!-- </div> -->
 
-      <div class="hero-unit">
-        <h1>Welcome to SMART</h1>
-        <p>SMART is a robust framework for integration of medical apps into EMR systems. With SMART you 
-        can write your apps once and run them everythere there is medical data, because SMART's API and 
-        data models provide an EMR-agnostic layer of abstraction that you can rely upon.</p>
-        <p><a href="guide/" class="btn btn-primary btn-large">Get Started Now! &raquo;</a></p>
-      </div>
+      <div class='row' style='background: #e5e5e5; margin: 0px 50px 30px 50px; border-radius: 6px;'>
 
-      <div>
-        <h2>Easy data retrieval with SMART Connect</h2>
-        <pre>
-    SMART.get_medications().success(function(response){
-        $.each(response.objects.of_type.Medication, function(i, med){
-            document.write(med.drugName.dcterms__title + "&lt;br/&gt;");
-        })
-    });
-        </pre>
-      </div>
+        <div class="" style='width: 35%; padding: 40px 0px 40px 40px; font-size: 18px; font-weight: 200; line-height: 30px;float: left;' >
+          <h1>Revolutionize Health IT</h1>
+          <p>Intro paragraph about why SMART is so cool and why developers should be so excited that they
+          click this button.</p>
+          <p><a href="guide/" class="btn btn-primary btn-large">Get Started Now! &raquo;</a></p>
+        </div>
+
+        <div style='width: 50%; float: right; font-size: 14px; font-family: consolas, monospace; padding-top: 40px; padding-right: 30px;'>
+            <pre style='background: lavender; border: 1px solid #f5f5f5; padding: 3px;'><code>
+SMART.get_medications().success(
+  function(response){
+    $.each(response.objects.of_type.Medication, function(i, med){
+      document.write(med.drugName.dcterms__title + "&lt;br/&gt;");
+    })
+});
+            </code></pre>
+          </div>
+
+        </div> <!-- row -->
+
+        <div class='row' style='text-align: center; margin: 30px 0px; font-weight: 600;'>
+          <a href='/guide/'>Overview</a>
+          &nbsp;<span style='font-weight: 500'>&lowast;</span>&nbsp;
+          <a href='/guide/'>API</a>
+          &nbsp;<span style='font-weight: 500'>&lowast;</span>&nbsp;
+          <a href='/guide/'>Data Models</a>
+          &nbsp;<span style='font-weight: 500'>&lowast;</span>&nbsp;
+          <a href='/guide/'>App Dev Guide</a>
+          &nbsp;<span style='font-weight: 500'>&lowast;</span>&nbsp;
+          <a href='/guide/'>Container Dev Guide</a>
+          &nbsp;<span style='font-weight: 500'>&lowast;</span>&nbsp;
+          <a href='/guide/'>Source on Github</a>
+        </div> <!-- row -->
 
       <!-- Example row of columns -->
       <div class="row">
-        <div class="span4">
+        <div class="span3">
           <h2>Our Awesome Docs</h2>
           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
           <p><a class="btn" href="framework/">Data Model and API &raquo;</a></p>
         </div>
-        <div class="span4">
+        <div class="span3">
           <h2>Container Magic</h2>
           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
           <p><a class="btn" href="container/">Container Docs &raquo;</a></p>
        </div>
-        <div class="span4">
+        <div class="span3">
           <h2>Community</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn" href="community.html">Come Join Us &raquo;</a></p>
+        </div>
+        <div class="span3">
+          <h2>Another Paragraph!</h2>
           <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
           <p><a class="btn" href="community.html">Come Join Us &raquo;</a></p>
         </div>
