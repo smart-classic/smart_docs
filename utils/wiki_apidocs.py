@@ -77,6 +77,17 @@ if DEBUG:
 def strip_smart(s):
     return s.replace("http://smartplatforms.org", "")
 
+def type_start_for_nav(t):
+    name = type_name_string(t)
+    if (sp.Code in [x.uri for x in t.parents]):
+        name += " code"
+
+    name_id = name.replace(' ', '_')
+
+    # manually add ids to the type <h3>s
+    print "\n<li class='nav-type'><code><a href='#%s'>%s</a></code></li>" % (name_id, name)
+
+
 def type_start(t):
     name = type_name_string(t)
     if (sp.Code in [x.uri for x in t.parents]):
@@ -178,6 +189,10 @@ def properties_end():
 def wiki_batch_start(batch):
     print "\n<h2 class='model-type-class'>%s</h2>\n"%batch
 
+def wiki_models_nav_batch_start(batch):
+    print "\n<li class='nav-header'>%s</li>\n"%batch
+
+
 def wiki_api_batch_start(batch):
     print "\n<h2 class='call-scope'>%s</h2>\n"%batch
 
@@ -201,6 +216,9 @@ def split_uri(t):
 def wiki_payload_for_type(t):
     type_start(t)
     wiki_properties_for_type(t)
+
+def wiki_payload_for_type_nav(t):
+    type_start_for_nav(t)
 
 cardinalities  = {"0 - 1": "Optional: 0 or 1",
                   "0 - Many": "Optional: 0 or more",
@@ -347,6 +365,14 @@ if __name__=="__main__":
                 current_batch = type_sort_order(t)
                 wiki_batch_start(current_batch+" Types") # e.g. "Record Items" or "Container Items"
             wiki_payload_for_type(t)
+
+    if "models_nav" in sys.argv:
+        current_batch = None
+        for t in main_types:
+            if type_sort_order(t) != current_batch:
+                current_batch = type_sort_order(t)
+                wiki_models_nav_batch_start(current_batch+" Types") # e.g. "Record Items" or "Container Items"
+            wiki_payload_for_type_nav(t)
 
     if "api" in sys.argv:
         current_batch = None
