@@ -85,7 +85,7 @@ def type_start_for_nav(t):
     name_id = name.replace(' ', '_')
 
     # manually add ids to the type <h3>s
-    print "\n<li class='nav-type'><a href='#%s'><code>%s</code></a></li>" % (name_id, name)
+    print "\n<li class='nav-type'><a href='#%s'>%s</a></li>" % (name_id, name)
 
 
 def type_start(t):
