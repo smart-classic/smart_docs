@@ -10,10 +10,40 @@ Your app needs to serve at least the following URL:
    * test [http://localhost:8000/smartapp/index.html](http://localhost:8000/smartapp/index.html)
 
 You could set up Apache to serve these as static files. In this documentation,
-we're using webpy for everything, just for consistency. Also, you may find that,
+we're using web.py for everything, just for consistency. Also, you may find that,
 for putting up a couple of static files, it's easier to get going with webpy
 than with Apache.
 
+For this quickstart example, if you decide to use web.py to serve your app, the most straight-froward
+way to do it is to use the following web.py script:
+
+{% highlight python %}
+import web
+        
+urls = (
+    '/smartapp/index.html', 'index'
+)
+app = web.application(urls, globals())
+
+class index:        
+    def GET(self):
+        f = open('index.html', 'r')
+        data = f.read()
+        f.close()
+        return data
+
+if __name__ == "__main__":
+    app.run()
+{% endhighlight  %}
+
+Simply save this script in file named `app.py` and then run it with the command `python app.py 8000`.
+It will launch a simple web server that will respond to the `http://localhost:8000/smartapp/index.html`
+URL by serving the content of the `index.html` file stored in the same directory as the script. All you
+then need to do is create an `index.html` file in the same directory and put your first SMART connect app
+from the guide in it.
+
+Note: Depending on your environment you may need to install Python and web.py. Follow the
+[install web.py guide](http://webpy.org/install) if you need to do this.
 
 ## Index
 

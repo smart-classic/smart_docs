@@ -61,9 +61,39 @@
 </ul>
 
 <p>You could set up Apache to serve these as static files. In this documentation,
-we&#39;re using webpy for everything, just for consistency. Also, you may find that,
+we&#39;re using web.py for everything, just for consistency. Also, you may find that,
 for putting up a couple of static files, it&#39;s easier to get going with webpy
 than with Apache.</p>
+
+<p>For this quickstart example, if you decide to use web.py to serve your app, the most straight-froward
+way to do it is to use the following web.py script:</p>
+
+<div class="highlight"><pre><code class="python"><span class="kn">import</span> <span class="nn">web</span>
+        
+<span class="n">urls</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;/smartapp/index.html&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span>
+<span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">application</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
+
+<span class="k">class</span> <span class="nc">index</span><span class="p">:</span>        
+    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;index.html&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Simply save this script in file named <code>app.py</code> and then run it with the command <code>python app.py 8000</code>.
+It will launch a simple web server that will respond to the <code>http://localhost:8000/smartapp/index.html</code>
+URL by serving the content of the <code>index.html</code> file stored in the same directory as the script. All you
+then need to do is create an <code>index.html</code> file in the same directory and put your first SMART connect app
+from the guide in it.</p>
+
+<p>Note: Depending on your environment you may need to install Python and web.py. Follow the
+<a href="http://webpy.org/install">install web.py guide</a> if you need to do this.</p>
 
 <h2>Index</h2>
 

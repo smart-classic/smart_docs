@@ -30,6 +30,4 @@ which you can try out your app. To get going, you'll need to:
 </ol>
 
 This will open a SMART app iframe pointing to `localhost:8000`, which is where
-your app should be running. If you need an app with a different hostname (say,
-my_internal_server.net), just e-mail joshua dot mandel at childrens.harvard.edu
-with a manifest file and we'll set you up!
+your app should be running.
