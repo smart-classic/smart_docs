@@ -525,7 +525,7 @@ input[type="color"],
     height: 90%;
     width: 23%;
     padding: 0 0;
-    overflow-x: hidden;
+    overflow-x: auto;
     margin-left: -10px;
 }
 .ref-topbar { line-height: 20px; }
