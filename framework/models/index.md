@@ -1,9 +1,9 @@
 ---
 layout: models-reference
-title: SMART Data Model
+title: SMART Data Models
 ---
 
-## SMART Data Model
+## SMART Data Models
 
 <div class="well">
   <p>N.B. This is highly preliminary, not a commitment or final

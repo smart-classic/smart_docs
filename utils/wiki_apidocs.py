@@ -134,7 +134,7 @@ def type_start(t):
             print """
 <div class='format_tabs'>
   <ul class="nav nav-tabs" data-tabs="tabs">
-    <li style="margin-left: 0px;">Show example in</li>
+    <li style="margin-left: 0px; margin-top: 3px;">Show example in</li>
     <li class="active"><a href="" data-target="#%s_examples > div.rdf_xml" data-toggle="tab">RDF/XML</a></li>
     <li class="">      <a href="" data-target="#%s_examples > div.n_triples" data-toggle="tab">N-Triples</a></li>
     <li class="">      <a href="" data-target="#%s_examples > div.turtle" data-toggle="tab">Turtle</a></li>
@@ -143,8 +143,8 @@ def type_start(t):
 </div>""" % (name_id, name_id, name_id, name_id)
 
             print "<div class='rdf_xml active'>{%% highlight xml %%}\n%s\n{%% endhighlight %%}</div>\n"%example
-            print "<div class='n_triples'>{%% highlight xml %%}\n%s\n{%% endhighlight %%}</div>\n"%ex_graph.serialize(format='nt')
-            print "<div class='turtle'>{%% highlight xml %%}\n%s\n{%% endhighlight %%}</div>\n"%ex_graph.serialize(format='turtle')
+            print "<div class='n_triples'><pre><code>\n%s\n</code></pre></div>\n" % cgi.escape(ex_graph.serialize(format='nt'), True)
+            print "<div class='turtle'><pre><code>\n%s\n</code></pre></div>\n" % cgi.escape(ex_graph.serialize(format='turtle'), True)
             print "<div class='json_ld'>{%% highlight javascript %%}\n%s\n{%% endhighlight %%}</div>\n"%ex_graph.serialize(format='json-ld', indent=2, context=context, context_uri=CONTEXT_URI)
             print "</div>"
 
@@ -155,7 +155,7 @@ def properties_row(property, uri,card, description, required_p):
     print "<tr><td style='width: 30%;"
 
     if required_p:
-        print "font-weight: bold'>"
+        print "font-weight: 600'>"
     else:
         print "'>"
 
