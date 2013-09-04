@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Installing SMART on OS X</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap bootstrap -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2 nav">
+          <div id="left_nav">
+  <ul class="nav nav-list">
+
+    <li class="nav-header">Getting Started Guide<br>(App Development)</li>
+
+    <li><small><a href="/guide/about.html">About This Guide</a></small></li>
+    <li><small><a href="/guide/setup.html">Setup</a></small></li>
+    <li><small><a href="/guide/quickstart.html">Quickstart Example</a></small></li>
+    <li><small><a href="/guide/tutorials/">Extended Tutorials</a></small></li>
+    <li><small><a href="/guide/nextsteps.html">Where to Go Next</a></small></li>
+
+    <li class="nav-header">Framework Documentation</li>
+
+    <li><small><a href="/framework/architecture/">Architecture</a></small></li>
+    <li><small><a href="/framework/models/">Data Models Reference</a></small></li>
+    <li><small><a href="/framework/api/">API Reference</a></small></li>
+    <li><small><a href="/framework/manifests/">Manifests</a></small></li>
+    <li><small><a href="/framework/reference-implementation/">Reference Implementation</a></small></li>
+
+    <li class="nav-header">Container Development</li>
+
+    <li><small><a href="/container/roadmap.html">Roadmap for Development</a></small></li>
+    <li><small><a href="/container/tutorial.html">Sample Container - Tutorial</a></small></li>
+    <li><small><a href="/container/reference-container.html">Overview of SMART Reference Container</a></small></li>
+    <li><small><a href="/container/examples.html">Other SMART Containers</a></small></li>
+    <li><small><a href="/container/issues.html">Discussion of issues</a></small></li>
+
+    <li class="nav-header">Questions?</li>
+    <li><small><a href="/faq.html">Read the FAQ</a></small></li>
+
+    <li class="nav-header">Community</li>
+    <li><small><a href="/community.html">Developer Group</a></small></li>
+
+  </ul>
+</div>
+
+        </div>
+        <div class="span9 offset1">
+          <p>This walks you through installing an <em>insecure SMART testing environment</em> on
+Mac OS X. We will be installing everything needed for SMART into the directory
+<code>/Library/SMART</code>, all the instructions assume that you are running a Terminal
+open from this location. Of course you can use your own location, just remember
+to return to your <code>SMART</code> directory. Tested on OS X Lion and Mountain Lion.</p>
+
+<h1>Install Homebrew</h1>
+
+<p>We use <a href="http://mxcl.github.com/homebrew/">Homebrew</a> as package manager to install most libraries. Since this
+needs some extra command line tools to compile code, you first have to do
+<em>one</em> of the following:</p>
+
+<ul>
+<li><p>Install <a href="http://itunes.apple.com/ch/app/xcode/id497799835?l=en&amp;mt=12">Xcode</a> from the App Store (it&#39;s free, if large), then open
+<code>Xcode &gt; Preferences &gt; Downloads &gt; Components</code> and install the <code>Command Line
+Tools</code></p></li>
+<li><p>Download only the <a href="https://developer.apple.com/downloads/index.action">Command Line Tools</a> (search for the correct version) from
+the Apple Developer Center (you will need a free developer account for this)</p></li>
+</ul>
+
+<p><a href="http://mxcl.github.com/homebrew/">Homebrew</a> is a superb replacement for the old managers Fink and MacPorts and
+you will love it! Here&#39;s a one-line installer for it:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ /usr/bin/ruby -e &quot;$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)&quot;
+</code></pre></div>
+<p>If you had Homebrew installed before, make sure to update it:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ brew update
+</code></pre></div>
+<h1>Install Django and Python Tools</h1>
+
+<p>We have to use <a href="https://www.djangoproject.com/download/">Django 1.3</a> for now. You will see a lot of warnings from clang that you can safely ignore.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ sudo easy_install django==1.3.2
+$ sudo easy_install lxml, psycopg2
+$ sudo easy_install -U rdflib rdfextras jsonschema httplib2
+</code></pre></div>
+<p>At the time of this writing, this will install Django <code>1.3.2</code>, lxml <code>3.1.0</code>, psycopg <code>2.4.6</code>, rdflib <code>3.4.0</code>, rdfextras <code>0.4</code> and jsonschema <code>1.1</code>. Those versions all work well, if you are having trouble with newer versions you want to specify which version to install.</p>
+
+<h1>PostgreSQL</h1>
+
+<p>OS X 10.8 ships with PostgreSQL including a launchd-item, but I was out of luck finding its data directory. So we...</p>
+
+<ul>
+<li><p>Install postgres with homebrew (installs version 9.2.3):</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ brew install postgresql
+$ initdb /usr/local/var/postgres -E utf8
+$ cp /usr/local/Cellar/postgresql/9.2.3/homebrew.mxcl.postgresql.plist \
+  ~/Library/LaunchAgents/
+</code></pre></div></li>
+<li><p>Launch Postgres</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+</code></pre></div></li>
+<li><p>Because of some socket issues we must symlink the socket from its default in <code>/tmp</code> to <code>/var/pgsql_socket</code>. Both are needed and I haven&#39;t been able to figure out why. First, create the directory and make it yours:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ sudo mkdir /var/pgsql_socket
+$ sudo chown `whoami`:admin /var/pgsql_socket/
+$ ln -s /tmp/.s.PGSQL.5432 /var/pgsql_socket/.s.PGSQL.5432
+</code></pre></div>
+<blockquote>
+<p>If you know how to circumvent this, let us know!</p>
+</blockquote></li>
+<li><p>Create a PostgreSQL user for your SMART service. We will be using <em>smart</em>,
+use your own password:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ createuser --superuser smart
+$ psql postgres
+$ postgres=# \password smart
+$ postgres=# \q
+</code></pre></div></li>
+</ul>
+
+<blockquote>
+<p><strong>Caveat</strong>: When using Postgres &lt; 9.1 see the <a href="https://github.com/chb/smart_server">instructions</a> on how to change
+the Postgres config to use md5 passwords.</p>
+</blockquote>
+
+<h1>Tomcat and openrdf-sesame</h1>
+
+<ul>
+<li><p>Install Tomcat</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ brew install tomcat
+</code></pre></div></li>
+<li><p>Configure Tomcat: The environment variable <em>$CATALINA_HOME</em> needs to point
+to the tomcat base directory. So in your Bash <code>.profile</code> add:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ export CATALINA_HOME=/usr/local/Cellar/tomcat/7.0.32/libexec
+</code></pre></div>
+<p>If brew didn&#39;t install version 7.0.32, change that number accordingly. If you don&#39;t use Bash adjust accordingly. Reload your profile file with:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ source ~/.profile
+</code></pre></div></li>
+<li><p>Install openrdf-sesame</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ curl -O http://freefr.dl.sourceforge.net/project/sesame/Sesame%202/2.7.2/openrdf-sesame-2.7.2-sdk.tar.gz
+$ tar -xzvf openrdf-sesame-2.7.2-sdk.tar.gz
+$ mkdir $CATALINA_HOME/.aduna
+$ mkdir $CATALINA_HOME/logs
+$ cp -r openrdf-sesame-2.7.2/war/* $CATALINA_HOME/webapps/
+</code></pre></div></li>
+<li><p>Launch Tomcat and check its availability</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ $CATALINA_HOME/bin/startup.sh
+</code></pre></div></li>
+</ul>
+
+<p>You should now be able to access <code>http://localhost:8080/openrdf-workbench/</code></p>
+
+<blockquote>
+<p>OS X no longer ships with <strong>Java</strong> installed. Tomcat runs on Java, so if you haven&#39;t installed Java yet simply type <code>java</code> in the Terminal and the OS will prompt and install Java for you.</p>
+</blockquote>
+
+<h1>Automated SMART install</h1>
+
+<p>We&#39;re now ready to get the latest and greatest from SMART.</p>
+
+<ul>
+<li><p>Download the SMART manager</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ curl -O https://raw.github.com/chb/smart_server/master/load_tools/smart_manager.py
+</code></pre></div></li>
+<li><p>Run the manager. This will install the current <code>master</code> branch of all SMART
+repositories that we need. If you want the bleeding edge <code>dev</code> version, add a
+<code>-d</code> switch to the following command</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ python smart_manager.py -a
+</code></pre></div></li>
+</ul>
+
+<p>This will fetch all needed repositories, run an installer that asks you for some configurations, generate patient sample data and in the end run the server.</p>
+
+<h2>The reset script</h2>
+
+<p>If you didn&#39;t run the automated install, mostly because you had an old SMART version around already, you might want to use the script <code>smart_server/reset.sh</code> to recreate your Postgres databases.</p>
+
+<blockquote>
+<p>This drops the current database, so all data will be lost!</p>
+</blockquote>
+
+<h1>Running SMART</h1>
+
+<p>If you&#39;ve just run the automated install, you only need to start Tomcat via
+<code>$CATALINA_HOME/bin/startup.sh</code>, in the future:</p>
+
+<h2>To start SMART (and Tomcat):</h2>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ $CATALINA_HOME/bin/startup.sh
+$ python smart_manager.py -v -w
+</code></pre></div>
+<h2>To stop SMART (and Tomcat):</h2>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ python smart_manager.py -k
+$ $CATALINA_HOME/bin/shutdown.sh
+</code></pre></div>
+<p>Nobody is stopping you from putting these two commands in a start- and/or stop
+script, of course. :)</p>
+
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

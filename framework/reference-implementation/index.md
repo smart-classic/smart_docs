@@ -7,12 +7,11 @@ title: SMART Developers Documentation
 
 * Reference container
  * [Architecture](architecture.html)
- * Download and installation
- * Virtual Machines
+ * Download and installation ([Ubuntu](install-ubuntu.html), [OSX](install-osx.html))
+ * [Pre-build Virtual Machine](vm.html)
 * Client libraries
- * JavaScript
-  * RDF vs JSON-LD
- * Python
- * Java
- * .Net
- * iOS
+ * [JavaScript](client-js.html) (we need RDF vs JSON-LD discussion here)
+ * [Python](client-python.html)
+ * [Java](client-java.html)
+ * [.Net](client-dotnet.html)
+ * [iOS](client-ios.html)

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SMART</title>
+    <title>SMART Architecture</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap bootstrap -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -54,8 +54,6 @@
         <div class="span9 offset1">
           <h1>Reference Implementation - Architecture</h1>
 
-<h1>Overview of SMART Reference Container</h1>
-
 <p>The SMART Reference container is a basic EMR system that fully implements
 the SMART specification. It is written in Python with the Django web 
 framework. The patient medical data is stored in RDF graph form in
@@ -74,9 +72,38 @@ apps</li>
 to be used for demonstration purposes</li>
 </ul>
 
-<p>Installation instructions can be found <a href="#">here</a>.</p>
-
 <p><img src="architecture.png" /></p>
+
+<p>The sample patients repository contains a set of tools for generating
+a set of sample patients that can be used for demonstration purposes
+with the SMART reference container. The data for these sample patients
+has been deidentified and is fully HIPAA compliant.</p>
+
+<p>The sample apps server contains a set of sample SMART applications
+that ship with the reference container. The server contains
+an embedded web server for providing access to the apps via HTTP.</p>
+
+<p>The SMART server is the central repository for all the medical data in the
+container. It also serves as a registry for the SMART apps that are accessible through
+the reference container. The server has facilities for importing new patients (normally
+from the sample patients generator) in SMART RDF format and for registering
+and authorizing new SMART applications. These are provided via command-line
+tools (add details here). Finally, the SMART Server implements the complete SMART
+REST API with OAuth authentication and enforces the API access policy.</p>
+
+<p>The UI server provides a web user interface that enables the reference
+container users to set up accounts on the system, log in, select apps
+that they would like to use, select patient records, and launch apps against
+the patient records. The UI server has special access tokens
+with elevated privileges to the SMART server that allow it to
+manipulate the user accounts on the server. The UI server configuration
+file can be used to &quot;brand&quot; the server with custom messages and also
+to enable a spacial &quot;showcase&quot; mode that is useful for demonstration
+purposes as it does not require login credentials (it automatically
+log the visitors into the designated showcase account). (need more details here)</p>
+
+<p>As of SMART 0.6 the UI server also provides an interface for supporting
+authorization of standalone SMART applications.</p>
 
         </div>
       </div>
