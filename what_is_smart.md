@@ -3,8 +3,6 @@ title: What is SMART?
 layout: default
 ---
 
-# Big H1
-
 ## What is SMART?
 
 SMART defines a open source platform based on web standards for building
@@ -35,7 +33,7 @@ support to app and container developers including a cloud hosted reference EMR
 filled with sample patient data.
 
 
-### What is a SMART Container?
+### The SMART Container
 
 A medical data system that exposes the SMART API is a _SMART container_.
 Several existing systems have been "SMART enabled" including the OpenVistA
@@ -44,14 +42,11 @@ data system, and the Mirth Results health information exchange system. More
 systems both academic and commercial are planning to become SMART enabled in
 the near future.
 
+See our [FAQ](/faq.html) for answers to further questions.
 
-### How Do I Write Medical Apps With SMART?
-
-
-#### How Do I "SMART Enable" My System?
-
-
-##### Who is Using SMART?
-
-
-###### Is SMART a "Standard"?
+<!---
+How Do I Write Medical Apps With SMART?
+How Do I "SMART Enable" My System?
+Who is Using SMART?
+Is SMART a "Standard"?
+--->
