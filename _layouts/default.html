@@ -11,6 +11,9 @@
     <link href="/assets/css/syntax.css" rel="stylesheet">
   </head>
   <body>
+
+    {% include topnav.html %}
+
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span2 nav">
@@ -20,6 +23,9 @@
           {{ content }}
         </div>
       </div>
+
+      {% include footer.html %}
+
     </div> <!-- /container -->
 
     <script src="http://code.jquery.com/jquery.js"></script>
