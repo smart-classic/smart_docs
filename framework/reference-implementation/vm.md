@@ -1,6 +1,6 @@
 ---
 layout: default
-title:SMART VM
+title: SMART VM
 ---
 
 
