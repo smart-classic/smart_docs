@@ -604,7 +604,7 @@ strong {
 .table caption { font-style: italic; }
 
 .highlight {
-    background: none;
+    background: #fafafc;
 }
 
 .highlight pre {
