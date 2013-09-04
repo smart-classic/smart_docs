@@ -15,7 +15,9 @@
         margin: 50px 0px 30px 0px;
         border-radius: 6px;
       }
+      .get-started-btn { margin-top: 26px; }
       .hero-left {
+        text-align: justify;
         width: 38%;
         padding: 40px 0px 40px 40px;
         font-size: 18px;
@@ -46,11 +48,17 @@
       .footer-row {
         text-align: right;
         margin: 10px 50px 10px 0px;
-        color: #666;
         height: 40px;
-        font-size: 16px;
-        font-weight: 200;
       }
+      .left-para {
+        margin-left: 25px;
+      }
+      .copy-row {
+        background: #f0f0f2;
+        border-radius: 12px;
+        padding-bottom: 18px;
+      }
+
     </style>
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico">
@@ -67,10 +75,12 @@
       <div class='row top-row'>
         <div class='hero-left'>
           <h1 class='hero-h1'>Revolutionize Health IT</h1>
-          <p>SMART is a universal platform that supports medical applications development and deployment
-          accross a wide range of health records systems.</p>
-
-          <p><a href="guide/" class="btn btn-primary btn-large">Get Started Now! &raquo;</a></p>
+          <div>SMART is a universal platform that supports
+          medical applications development and deployment
+          accross a wide range of health records systems.</div>
+          <div class='center get-started-btn'>
+            <a href="guide/" class="btn btn-primary btn-large">Get Started Now! &raquo;</a>
+          </div>
         </div>
 
         <div class='hero-right'>
@@ -98,47 +108,41 @@ SMART.get_medications().success(
         &nbsp;<span class='weight500'>&lowast;</span>&nbsp;
         <a href='/container/roadmap.html'>Container Dev Guide</a>
         &nbsp;<span class='weight500'>&lowast;</span>&nbsp;
-        <a href='http://github.com/chb/'>Sources on Github</a>
+        <a href='http://github.com/chb/'>Source on Github</a>
       </div> <!-- row -->
 
       <!-- Example row of columns -->
-      <div class="row">
-        <div class="span3">
-          <h2>Documentation</h2>
-          <p>For everything that you need to know about the SMART API, Data Models, Manifests, etc.</p>
-          <p><a class="btn" href="framework/">Data Model and API &raquo;</a></p>
+      <div class="row copy-row">
+        <div class="span3" style='margin-left: 22px'>
+          <div>
+            <h2>Documentation</h2>
+            <p>For everything that you need to know about SMART's <a href='what_is_smart.html'>mission</a>
+            <a href='/framework/architecture/'>techincal architecture</a>,
+            <a href='/framework/api'>APIs</a>, and <a href='/framework/models/'>data models</a> and much more.
+          </div>
         </div>
         <div class="span3">
           <h2>Container Guide</h2>
-          <p>So you are thinking of SMART-emabling your medical records system? Look no further. We have
-          prepared a guide to help you get started as painlessly as possible.</p>
-          <p><a class="btn" href="container/">Container Docs &raquo;</a></p>
+          <p>So you are thinking of SMART-emabling your medical records system? Here
+          is our <a href='/container/'>container development guide</a> to get you started as painlessly as possible.
         </div>
         <div class="span3">
           <h2>Sandbox</h2>
           <p>Our cloud-hosted SMART reference container is perfect for trying out a selection of sample
-          apps and testing your own apps.</p>
-          <p><a class="btn" href="http://sandbox.smartplatforms.org">Try it &raquo;</a></p>
+          apps and testing your own apps. <a href="http://sandbox.smartplatforms.org">Try it.</a></p>
         </div>
         <div class="span3">
           <h2>Community</h2>
-          <p>Dream SMART, talk SMART, live SMART! Join a vibrant community of fellow medical application developers
-          that want to make a difference in advancing the medical professionl
-          </p>
-          <p><a class="btn" href="community.html">Come Join Us &raquo;</a></p>
+          <p>Dream SMART, talk SMART, live SMART! <a href='community.html'>Join a vibrant community</a> of fellow medical app developers who want to make a difference in advancing healthcare.</p>
         </div>
       </div>
 
       <hr>
 
-      <!-- <div class='footer-row'> -->
-      <!--     <img class='smartbug' src='/assets/img/smart-bug.png' style='height: 20px; width: 22px'> -->
-      <!--     SMARTPlatforms.org -->
-      <!-- </div> -->
-
-      <footer>
-          <p><a href='smartplatforms.org'>SMARTPlatforms.org</a> &copy; 2013</p>
-      </footer>
+      <div class='footer-row'>
+          <img class='smartbug' src='/assets/img/smart-bug.png' style='height: 20px; width: 22px; margin-right: 4px;'>
+          <a href='smartplatforms.org'>SMARTPlatforms.org</a> &copy; 2013
+      </div>
 
     </div> <!-- /container -->
 
