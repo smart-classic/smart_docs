@@ -482,7 +482,7 @@ input[type="color"],
 }
 
 .navbar .nav > li > a {
-  padding: 18px 14px 11px;
+  padding: 18px 11px 11px;
   color: #666666;
 }
 
@@ -526,13 +526,13 @@ input[type="color"],
 .ref-sidenav {
     font-family: 'roboto condensed';
     height: 90%;
-    width: 23%;
+    width: 20%;
     padding: 0 0;
     overflow-x: auto;
-    margin-left: -10px;
+    margin-left: -5px;
 }
 #ref-topbar { font-weight: 300; }
-.smartbug { height: 25px; width: 30px; padding-right: 20px; }
+.smartbug { height: 25px; width: 30px; padding-right: 2px; }
 
 .call-scope { margin-top: 50px; }
 
@@ -663,3 +663,6 @@ strong {
 .rdf_xml.active, .n_triples.active, .turtle.active, .json_ld.active {
   display: block;
 }
+
+.dropdown-menu { background: #fafafa; }
+
