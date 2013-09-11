@@ -2,13 +2,11 @@
 
 /* Fonts */
 
-/* Use the semi-bold 600 weight rather than font-weight: bold */
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic);
-@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Slab:400,700|Roboto+Condensed:400,300);
 
 /* Basic overrides including font family */
 body {
-    font-family: 'Source Sans Pro', Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Roboto, Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #f5f5f5;
     padding-top: 50px;
     padding-bottom: 40px;
@@ -17,10 +15,10 @@ body {
 input,
 button,
 select,
-textarea { font-family: 'Source Sans Pro', Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+textarea { font-family: Roboto, Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 pre, code {
-    font-family: 'Source Code Pro', Menlo, Consolas, monospace;
+    font-family: Consolas, Menlo, monospace;
     font-weight: 400;
 }
 
@@ -41,6 +39,7 @@ h3,
 h4,
 h5,
 h6 {
+    font-family: 'Roboto Slab', Roboto, Calibri, sans-serif;
     color: #666;
     font-weight: 600;
 }
@@ -103,9 +102,9 @@ h6 {
   text-rendering: optimizelegibility;
 }
 
-h1 { font-size: 36px; letter-spacing: -1px; }
-h2 { font-size: 29px; letter-spacing: -1px; }
-h3 { font-size: 22px; letter-spacing: -1px; }
+h1 { font-size: 36px; }
+h2 { font-size: 29px; }
+h3 { font-size: 22px; }
 h4 { font-size: 15px; text-transform: uppercase; }
 h5 { font-size: 12px; text-transform: uppercase; font-weight: 700; }
 h6 { font-size: 10px; text-transform: uppercase; font-weight: 700; }
