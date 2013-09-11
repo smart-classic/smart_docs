@@ -40,7 +40,7 @@ h4,
 h5,
 h6 {
     font-family: 'Roboto Slab', Roboto, Calibri, sans-serif;
-    color: #666;
+    color: #777;
     font-weight: 600;
 }
 
@@ -271,6 +271,7 @@ input[type="color"],
 }
 
 .navbar .brand {
+  font-family: 'Roboto Condensed', Roboto, Calibri, sans-serif;
   padding: 11px 20px 12px;
   color: #727272;
   display: block;
@@ -523,13 +524,14 @@ input[type="color"],
 /* reference pages: api and models */
 
 .ref-sidenav {
+    font-family: 'roboto condensed';
     height: 90%;
     width: 23%;
     padding: 0 0;
     overflow-x: auto;
     margin-left: -10px;
 }
-.ref-topbar { line-height: 20px; }
+#ref-topbar { font-weight: 300; }
 .smartbug { height: 25px; width: 30px; padding-right: 20px; }
 
 .call-scope { margin-top: 50px; }
@@ -616,7 +618,7 @@ strong {
     border-bottom: none;
     border-left: 2px solid #ddd;
     border-radius: 0px;
-    padding-left: 4px !important;
+    padding-left: 8px !important;
 }
 
 .nav-tabs {
