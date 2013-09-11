@@ -17,15 +17,45 @@
       <div class="navbar-inner">
         <div class="container-fluid">
             <a class="brand" href="/"><img class='smartbug' src='/assets/img/smart-bug.png' />
-                SMART Documentation
             </a>
           <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li><a href="/framework/architecture/">Architecture</a></li>
-              <li><a href="/guide/">App Dev</a></li>
+              <ul class="nav" style='text-transform: uppercase; font-size: 14px'>
+
+                <li class="dropdown">
+                  <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">framework <b class="caret"></b></a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/framework/architecture/">architecture basics</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/framework/manifests/">manifests</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/framework/reference-implementation/">reference implementation</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">App Dev<b class="caret"></b></a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/guide/about.html">Start Here</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/guide/setup.html">Setup</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/guide/quickstart.html">Quickstart Example</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/guide/tutorials/">Extended Tutorials</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/guide/nextsteps.html">Next Steps</a></li>
+                  </ul>
+                </li>
+
               <li><a href="/framework/models/">Data Models</a></li>
               <li><a href="/framework/api/">API</a></li>
-              <li><a href="/container/roadmap.html">Container Dev</a></li>
+
+                <li class="dropdown">
+                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Container Dev<b class="caret"></b></a>
+
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/container/roadmap.html">roadmap</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/container/tutorial.html">Simple Tutorial</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/container/reference-container.html">The Reference Container</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/container/examples.html">Example Containers</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/container/issues.html">Developement Issues</a></li>
+                  </ul>
+                </li>
+              <li><a href="/faq.html">FAQ</a></li>
+              <li><a href="/community.html">Community</a></li>
               <li><a href="http://github.com/chb/">Github</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -35,47 +65,7 @@
 
 
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span2 nav">
-          <div id="left_nav" style='background: #f0f0f2; margin-top: 22px; border-radius: 12px; padding-bottom: 12px;'>
-  <ul class="nav nav-list">
-
-    <li class="nav-header">Getting Started Guide<br>(App Development)</li>
-
-    <li><small><a href="/guide/about.html">About This Guide</a></small></li>
-    <li><small><a href="/guide/setup.html">Setup</a></small></li>
-    <li><small><a href="/guide/quickstart.html">Quickstart Example</a></small></li>
-    <li><small><a href="/guide/tutorials/">Extended Tutorials</a></small></li>
-    <li><small><a href="/guide/nextsteps.html">Where to Go Next</a></small></li>
-
-    <li class="nav-header">Framework Documentation</li>
-
-    <li><small><a href="/framework/architecture/">Architecture</a></small></li>
-    <li><small><a href="/framework/models/">Data Models Reference</a></small></li>
-    <li><small><a href="/framework/api/">API Reference</a></small></li>
-    <li><small><a href="/framework/manifests/">Manifests</a></small></li>
-    <li><small><a href="/framework/reference-implementation/">Reference Implementation</a></small></li>
-
-    <li class="nav-header">Container Development</li>
-
-    <li><small><a href="/container/roadmap.html">Roadmap for Development</a></small></li>
-    <li><small><a href="/container/tutorial.html">Sample Container - Tutorial</a></small></li>
-    <li><small><a href="/container/reference-container.html">Overview of SMART Reference Container</a></small></li>
-    <li><small><a href="/container/examples.html">Other SMART Containers</a></small></li>
-    <li><small><a href="/container/issues.html">Discussion of issues</a></small></li>
-
-    <li class="nav-header">Questions?</li>
-    <li><small><a href="/faq.html">Read the FAQ</a></small></li>
-
-    <li class="nav-header">Community</li>
-    <li><small><a href="/community.html">Developer Group</a></small></li>
-
-  </ul>
-</div>
-
-        </div>
-        <div class="span9 offset1">
+    <div style='margin: 30px 130px;'>
           <h1>Manifests</h1>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
@@ -83,8 +73,7 @@ augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad
 litora torquent per conubia nostra, per inceptos himenaeos. Nunc vel elit
 ante. Praesent eget eros lectus. Morbi quis tempus dolor.</p>
 
-        </div>
-      </div>
+    </div>
 
       
 <hr>
