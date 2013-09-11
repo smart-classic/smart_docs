@@ -14,15 +14,9 @@
 
     {% include topnav.html %}
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span2 nav">
-          {% unless page.nonav %}{% include smartnav.html %}{% endunless %}
-        </div>
-        <div class="span9 offset1">
+    <div style='margin: 30px 130px;'>
           {{ content }}
-        </div>
-      </div>
+    </div>
 
       {% include footer.html %}
 
