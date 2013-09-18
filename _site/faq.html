@@ -114,38 +114,87 @@
 
 
     <div style='margin: 30px 130px;'>
-          <h1>Frequently Asked Questions</h1>
+          <h1>Frequently Asked Questions about SMART</h1>
 
-<h2>How do I install SMART in my electronic health records system (EHR)?</h2>
+<h2>What is SMART?</h2>
 
-<p>We get this one a lot...</p>
+<p>SMART is a specification of a open source platform based on web standards for
+building substutiable apps on medical data systems such as electronic health
+records, personal health records, clinical data systems and health information
+exchanges. The SMART specification is designed to help solve the problems in
+both exposing medical data to apps and the creation of innovative substutiable
+apps for these systems.</p>
 
-<p>SMART is a framework that supports the development and deployment of
-medical applications on top of EHRs. It compromises a set of standards that define how an EHR
-can launch medical apps, how the apps authenticate with the EHR, the format of data that
-the apps receive from the EHR, and the API calls that the EHR should expose to the apps. 
-Therefore, SMART is not a software application that can be installed in an environment in and
-of itself.</p>
+<p>The SMART platform defines four main components:</p>
 
-<p>You can run SMART apps on your EHR, if the EHR that you have is SMART-enabled or you have a
-SMART-enabled product that can connect to your EHR and retrieve data from it. If you have
-an EHR that you would like to SMART-enable, please check out our
-<a href="container/">container developers guide</a>.</p>
+<ol>
+<li><p>A developer-friendly data model covering the most commonly used medical data
+elements such as problems, medications, labs, vital signs, encounters, and
+fulfillments. The data is meaningfully structured with references to
+relevant coding systems and related data is linked. For example, a given
+fulfillment references the related medicaion which references a specifc
+RxNorm code.</p></li>
+<li><p>A easy-to-use REST API to access the data models above</p></li>
+<li><p>A simple set of specifications based on widely used, off-the-shelf protocols
+for app registration, authenticaion, and authorization</p></li>
+<li><p>A set of software development tools and documentation including native
+client libraries for Javascript, Python, iOS, and Java (the SMART Framework)
+and a <em>Reference EMR</em> for testing referred to as the &quot;SMART Reference
+Container&quot;.</p></li>
+</ol>
 
-<h2>What is the SMART reference container?</h2>
+<h2>What is a SMART Container?</h2>
 
-<p>The SMART reference container is our reference implementation of SMART. It is a self-contained
-sample EHR that fully implements the SMART specification. The reference container is useful
-for development and testing of SMART applications whithout the need to have access to a
-SMART-enabled hospital EHR. It also is intended to serve as an example of a SMART container
-that can be examined by container developers who are in the process of SMART-enabling their
-EHR.</p>
+<p>The concrete implementations of the SMART Platform&quot; either using the provided
+SMART Framework or built into an EHR system are called SMART Containers.</p>
+
+<p>For example, our cloud-hosted reference EMR filled with sample patient data for
+convenient testing of SMART apps is our implementation of the SMART platform
+built with the SMART Framework and called the SMART Reference Container.</p>
+
+<p>Several existing systems have been &quot;SMART enabled&quot; including the OpenVistA
+electronic medical record, the Indivo personal healh record, the i2b2 clinical
+data system, and the Mirth Results health information exchange system. More
+systems both academic and commercial are planning to become SMART enabled in
+the near future.</p>
+
+<h2>What is the SMART Reference Container?</h2>
+
+<p>The SMART Reference Container is our reference implementation of SMART. It is a
+self-contained sample EHR that fully implements the SMART specification. The
+reference container is useful for development and testing of SMART applications
+whithout the need to have access to a SMART-enabled hospital EHR. It also is
+intended to serve as an example of a SMART container that can be examined by
+container developers who are in the process of SMART-enabling their EHR.</p>
+
+<h2>How do I &quot;install&quot; SMART in my EHR?</h2>
+
+<p>Since SMART is a specification of a platform for medical apps and not a piece
+of software it can&#39;t be &quot;installed&quot; into a system. However, to aid in the
+adoption of the SMART platform, we&#39;ve created the SMART Framework, which is a
+set of software libraries and tools to help you SMART enable your system.</p>
+
+<p>To get started, see our <a href="container/">container developers guide</a>.</p>
+
+<h2>Is SMART a &quot;standard&quot;?</h2>
+
+<p>SMART is currently not overseen by a formal standards body.</p>
 
 <h2>Can I write data into my EHR through SMART?</h2>
 
-<p>As of SMART 0.6, the framework supports very limited write capabilities. Specifically,
-a SMART app can write clinical notes and store its preferences and annotations of a patient
-record as unstructured data. Most of the API calls in SMART are read-only.</p>
+<p>As of SMART v0.6, the framework supports very limited write capabilities.
+Specifically, a SMART app can write clinical notes and store its preferences
+and annotations of a patient record as unstructured data. Most of the API calls
+in SMART are read-only.</p>
+
+<h2>How Do I Write Medical Apps With SMART?</h2>
+
+<p>Getting started creating amazing apps is easy! Start with our <a href="/guide/about.html">app developer&#39;s
+getting started guide</a>.</p>
+
+<h2>Who is Using SMART?</h2>
+
+<p>See our list of <a href="/container/examples.html">SMART containers</a></p>
 
     </div>
 
