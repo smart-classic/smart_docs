@@ -88,7 +88,7 @@ def type_start_for_nav(t):
     print "\n<li class='nav-type'><a href='#%s'>%s</a></li>" % (name_id, name)
 
 
-def type_start(t):
+def type_start(t, call_class, category):
     name = type_name_string(t)
     if (sp.Code in [x.uri for x in t.parents]):
         name += " code"
@@ -100,6 +100,8 @@ def type_start(t):
     # manually add ids to the type <h3>s
     print "\n<h3 class='model-type' id='%s'><code>%s</code></h3>\n" % (name_id, name)
 
+    print "\n<p><a href='/framework/api/#%s_%s'>Go to the %s API</a></p>" % ('record', name_id.lower(), name)
+
     if len(t.parents) > 0:
         print "<code>%s</code> is a subtype of and inherits properties from:" % type_name_string(t)
 
@@ -107,7 +109,7 @@ def type_start(t):
         for p in sorted(t.parents, key=lambda x: type_name_string(x)):
             parents.append("[%s](#%s)"%(type_name_string(p),type_name_string(p).replace(' ', '_')))
         print ", ".join(parents)
-        print "\n" 
+        print "\n"
 
     if description: print "%s"%description+"\n"
 
@@ -213,8 +215,8 @@ def split_uri(t):
         except:
             return ""
 
-def wiki_payload_for_type(t):
-    type_start(t)
+def wiki_payload_for_type(t, call_class, category):
+    type_start(t, call_class, category)
     wiki_properties_for_type(t)
 
 def wiki_payload_for_type_nav(t):
@@ -364,7 +366,17 @@ if __name__=="__main__":
             if type_sort_order(t) != current_batch:
                 current_batch = type_sort_order(t)
                 wiki_batch_start(current_batch+" Types") # e.g. "Record Items" or "Container Items"
-            wiki_payload_for_type(t)
+
+            # send calls_to_document as well to get api calls
+            for c in calls_to_document:
+                target = SMART_Class[c.target]
+                # if target.name (the class name) == t.name (the model name), pass class
+                call_class = None
+                if target.name == t.name:
+                    call_class = target
+
+            # also pass call category needed to create href
+            wiki_payload_for_type(t, call_class, c.category)
 
     if "models_nav" in sys.argv:
         current_batch = None
