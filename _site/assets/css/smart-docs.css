@@ -40,7 +40,7 @@ h4,
 h5,
 h6 {
     font-family: 'Roboto Slab', Roboto, Calibri, sans-serif;
-    color: #777;
+    color: #888;
     font-weight: 600;
 }
 
@@ -91,7 +91,7 @@ h1,
 h2,
 h3 {
     line-height: 40px;
-    margin: 18px 0 2px 0;
+    margin: 18px 0 8px 0;
     text-rendering: optimizelegibility;
 }
 

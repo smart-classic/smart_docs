@@ -3,31 +3,36 @@ layout: default
 title: SMART Developers Documentation
 ---
 
-# Setting up your Environment
+## Setting up your Environment
 
-A SMART app is a web application that is loaded in an IFRAME hosted by a SMART
-container. That means you need to (a) write a web app, and (b) connect it to a
-SMART container.
+A SMART app is a web application that is loaded into an &lt;IFRAME&gt; hosted
+by a SMART container. That means you need to (1) write a web app, and (2)
+connect it to a SMART container.
 
-You can choose any toolkit you want to write a web app: Java Spring, Ruby on
-Rails, Python/Django, etc. For the purposes of this documentation, we've chosen
-webpy, a very simple, minimalist Python web framework, which helps us show you
-the important SMART-related code more quickly. Also, if you want to get going
-quickly with the more advanced app features, you probably want to stick with
-Java or Python for now, as those are the two programming languages in which
-we've built client libraries. That said, if you're comfortable with OAuth and
-REST, you can use another programming language without fear.
+You can choose any toolkit you want to write your web app: Java Spring, Ruby on
+Rails, Python/Django, etc. For this tutorial, we've chosen webpy, a minimalist
+Python web framework. This simple framework will help you see and understand
+the important SMART-related code more quickly.
 
-We also provide you with a SMART EMR hosted at `sandbox.smartplatforms.org`. We
-call it the SMART Reference EMR, and we've loaded it with 50 patient records on
-which you can try out your app. To get going, you'll need to:
+Also, if you want to get started with more advanced SMART features, you will
+want to use Python or Java since client libraries are currently available for
+those languages. That said, if you're comfortable with OAuth and REST, you can
+comfortably use your preferred programming language.
+
+We also provide you with the hosted SMART Reference EMR at
+<sandbox.smartplatforms.org>. It's loaded with 50 patient records to test your
+apps on.
+
+To get going, you'll need to:
 
 <ol>
-  <li>Navigate to the [developers sandbox](http://sandbox.smartplatforms.org/login")</li>
-  <li>If you haven't done so already, create an account, otherwise just log back in </li>
+  <li>Go to the [developers sandbox](http://sandbox.smartplatforms.org/login")</li>
+  <li>If you haven't done so already, create an account, otherwise log in </li>
   <li>Select a patient </li>
   <li>Run the app called &quot;My App&quot; </li>
 </ol>
 
-This will open a SMART app iframe pointing to `localhost:8000`, which is where
-your app should be running.
+This will open a SMART app iframe pointing to `localhost:8000`, where
+your app will be listening for connections.
+
+Next: [the quickstart example](quickstart.html)
