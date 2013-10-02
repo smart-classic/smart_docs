@@ -1,9 +1,9 @@
 ---
-layout: default
+layout: guide
 title: SMART Developers Documentation
 ---
 
-#Quickstart Example
+## Quickstart Example
 
 Your app needs to serve at least the following URL:
 
@@ -213,3 +213,5 @@ append to it with the name of each drug in our iteration:
 And that's it! In a few lines of HTML and JavaScript code, we've got ourselves
 an app that can request the medications from the current record and display
 them.
+
+Go to [next steps](/guide/nextsteps.html)

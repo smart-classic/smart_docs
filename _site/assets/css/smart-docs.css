@@ -67,7 +67,7 @@ hr {
 /* Font size, line height, and margin adjustments */
 body {
     font-size: 15px;
-    line-height: 1.8;
+    line-height: 1.65;
 }
 
 pre, code {
@@ -633,7 +633,7 @@ strong {
 }
 
 .nav-tabs > li:first-child {
-  margin-left: 0px
+  margin-left: 0px;
   width: 140px;
 }
 

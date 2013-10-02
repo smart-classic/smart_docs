@@ -1,9 +1,9 @@
 ---
-layout: default
+layout: guide
 title: SMART Developers Documentation
 ---
 
-#Where to Go Next
+## Where to Go Next
 
 Now that you are familiar with the basics of writing a SMART app, you may want to:
 
