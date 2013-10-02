@@ -67,9 +67,9 @@
       <div class='row top-row'>
         <div class='hero-left span6'>
           <h1 class='hero-h1'>Revolutionize Health IT!</h1>
-          <div>SMART is a universal platform that supports
-          medical applications development and deployment
-          accross a wide range of health records systems.</div>
+          <div>SMART is a free and open-source platform based on web standards
+          for building substutiable applications on top of a wide range of
+          health records systems.</div>
           <div class='center get-started-btn'>
             <a href="guide/" class="btn btn-primary btn-large">Get Started Now!</a>
           </div>
@@ -78,13 +78,13 @@
         <div class='hero-right span6'>
           <pre class='hero-pre'>
             <code>
+// Output structured medications in just 6 lines of Javascript!
 SMART.get_medications().success(
   function(response){
     $.each(response.objects.of_type.Medication, function(i, med){
       document.write(med.drugName.dcterms__title + "&lt;br/&gt;");
     })
-});
-            </code>
+});</code>
           </pre>
         </div>
       </div> <!-- top-row -->
