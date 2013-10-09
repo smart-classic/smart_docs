@@ -1,10 +1,10 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: guide
+title: SMART - SMART Connect Tutorial
 ---
 
-# SMART Connect Tutorial
-(currently from old documentation site)
+## SMART Connect Tutorial
+(TODO: currently from old documentation site)
 
 ## Index
 

@@ -1,7 +1,7 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: guide
+title: SMART - Standalone App Tutorial
 ---
 
 # SMART Standalone App Tutorial
-(we need content)
+(TODO: we need content)

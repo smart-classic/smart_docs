@@ -16,9 +16,11 @@ develoment skills but no prior familiarity with SMART or medical informatics.
 
 * [Setup](setup.html)
 * [Quickstart Example](quickstart.html)
-* [Extended Tutorials](tutorials/)
 * [Where to Go Next](nextsteps.html)
 
 We recommend following the guide in order.
+
+After going through the guide, check out the extened tutorials on the left
+to learn more about specific types of SMART apps.
 
 Next: [setting up your environment](setup.html)

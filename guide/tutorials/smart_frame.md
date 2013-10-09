@@ -1,10 +1,10 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: guide
+title: SMART - Frame App Tutorial
 ---
 
 # SMART Frame App Tutorial
-(currently from old documentation site)
+(TODO: currently from old documentation site)
 
 # What is a Frame UI App?
 

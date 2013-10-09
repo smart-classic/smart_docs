@@ -1,6 +1,6 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: guide
+title: SMART - REST App Tutorial
 ---
 
 # SMART REST App Tutorial
