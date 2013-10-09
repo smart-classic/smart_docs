@@ -1,9 +1,9 @@
 ---
-layout: default
+layout: framework
 title: Installing SMART on Ubuntu
 ---
 
-# Repositories 
+# Repositories
 
 These instructions apply to each of three github repositories that you'll need
 in order to run the SMART Reference EMR in your own environment:

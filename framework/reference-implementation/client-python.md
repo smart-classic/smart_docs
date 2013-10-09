@@ -1,6 +1,6 @@
 ---
-layout: default
-title: SMART Python Client
+layout: framework
+title: SMART - Python Client
 ---
 
 <div class='simple_box'>

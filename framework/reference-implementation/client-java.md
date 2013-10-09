@@ -1,6 +1,6 @@
 ---
-layout: default
-title: SMART Java Client 
+layout: framework
+title: SMART - Java Client
 ---
 
 <div class='red_box'>Note: This Java client has not been updated to the

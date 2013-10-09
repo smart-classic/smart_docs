@@ -1,6 +1,6 @@
 ---
-layout: default
-title: SMART VM
+layout: framework
+title: SMART - Using the pre-built Virtual Machine
 ---
 
 

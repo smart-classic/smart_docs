@@ -1,9 +1,9 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: framework
+title: SMART - Reference Implementation
 ---
 
-#Reference Implementation
+## Reference Implementation
 
 * Reference container
  * [Architecture](architecture.html)

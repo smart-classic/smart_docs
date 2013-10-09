@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: framework
 title: Installing SMART on OS X
 ---
 

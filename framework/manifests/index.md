@@ -1,9 +1,11 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: framework
+title: SMART - Using Manifest Files
 ---
 
-#Manifests
+## Manifests
+
+TODO
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue urna
 augue, non varius tellus tincidunt et. Class aptent taciti sociosqu ad

@@ -1,6 +1,6 @@
 ---
-layout: default
-title: SMART JS Client 
+layout: framework
+title: SMART - JavaScripe Client
 ---
 
 # What is `smart-api-client.js`?
