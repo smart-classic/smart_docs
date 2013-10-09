@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+      <title>SMART - Architecture Basics</title>
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SMART Developers Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap bootstrap -->
+
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_framework').addClass('active')
+        });
+    </script>
   </head>
-  <body>
+
+  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
 
     <div id='ref-topbar' class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -42,6 +55,7 @@
               </ul>
             </li>
 
+            <li id="tn_framework"><a href="/framework/">Framework</a></li>
             <li id="tn_models"><a href="/framework/models/">Data Models</a></li>
 
             <li id="tn_api"><a href="/framework/api/">API</a></li>
@@ -60,104 +74,149 @@
 
 
 
-    <div style='margin: 30px 130px;'>
-          <h1>Architecture</h1>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='height: auto; padding: 0px 0px 20px 0px; margin-top: 30px; font-family: roboto'>
+            <ul class="nav nav-list">
 
-<h1>Vocabulary and basics</h1>
 
-<p>The first component of the SMART universe is the ecosystem of SMART apps created
-by various software developers eager to bring solutions in the hands of
-clinicians and patients. The apps could include a medication manager, a
-diabetes evaluation suite, or perhaps a lab results visualizer. These
-meaningful apps could be distributed via an app store.</p>
+<li class='nav-header'>Framework</li>
 
-<p>Then we have the containers which play the role of data providers
-in the SMART world. The containers could be personally controlled
-health records systems, electronic medical records systems, health
-data exchanges, or other providers. Either way a container is
-responsible for exposing the SMART API to the apps and providing
-a context in which the apps could run.</p>
+<li class='nav-type'><a href='/framework/architecture/'>Architecture Basics</a></li>
 
-<p>Finally, we have the interface which enables the apps and containers
-to talk to each other the SMART application programming interface (or API).
-The API is what keeps the apps and the containers decoupled from each
-other allowing the users to mix and match.</p>
+<li class='nav-type'><a href='/framework/manifests/'>Using Manifest Files</a></li>
 
-<p>Also, the API enables the substitutability of the SMART apps and
-containers. From the perspective of an app the containers are
-substitutable, because they all expose the same interface and
-the app can run on any one of them. Also from the perspective
-of the container, the apps are substitutable. The container
-administrator is free to pick the apps that he needs. And when
-a better app comes along, he can replace the existing app with
-the new one.</p>
 
-<p>In order to keep things simple, an app runs against one
-container at a time. The container, however, is free to
-connect to multiple data sources and aggregate data as needed.</p>
+<li class='nav-header'>Reference Container</li>
 
-<h2>APIs</h2>
+<li class='nav-type'><a href='/framework/reference-implementation/architecture.html'>Overview</a></li>
 
-<p>At the bottom of the diagram we have the frond end of the container
-and the smart application within a web browser window. The container
-and the app might also have back end server components. For the
-container the back end component might be an EMR system housing
-a large collection of medical records. The app could have a back
-end that helps with elaborate visualizations, data mashing, or
-other complex computations.</p>
+<li class='nav-type'><a href='/framework/reference-implementation/vm.html'>Pre-built VM</a></li>
 
-<p>On front end components use an interface called SMART Connect
-to communicate with each other right inside the browser environment.
-Using it the app can get patient context from the container and
-execute API calls. The back end components can also talk to each
-other. And for that they use an interface called SMART REST.
-Should an app choose to use the SMART REST interface, it simply
-has to obtain an authentication token from the container using
-SMART Connect, and pass it to the back end component, which can
-then use it to issue SMART REST calls to the container&#39;s back end.</p>
+<li class='nav-type'><a href='/framework/reference-implementation/install-ubuntu.html'>Installing on Ubuntu</a></li>
 
-<h2>Architectural Components</h2>
+<li class='nav-type'><a href='/framework/reference-implementation/install-osx.html'>Installing on OS X</a></li>
 
-<p>Now, let&#39;s look at the elements that an app needs in order to provide
-a meaningful service to the end user. First, the app needs a flexible,
-standards-based UI that enables the user to interact with it. Next,
-the app needs to have an authentication mechanism with the container
-to establish thrust. And last but not least, the app needs data in
-order to work with. The data includes patient and provide context
-information, as well as medical record elements such as medications
-and lab results. We will look at each one of these components in more details.</p>
 
-<p>(insert diagram) This diagram illustrates the container&#39;s UI component in a browser window.
-The white portion of the screen is the UI that the container provides,
-which allow the user for instance to choose a patient and launch various
-SMART applications on his data. The main portion of the screen real estate
-is taken by the SMART app. The app is launched by the container in an IFRAME.
-An IFRAME is an in-browser mechanism that enables multiple web pages to open up
-on the same screen. When launched the app establishes a channel to the container
-using the SMART connect JavaScript library. It can then issue SMART API calls such
-as GET MEDICATINS in order to obtain data from the container. Finally, the app
-displays the data to the user and allows him to interact with it.</p>
+<li class='nav-header'>Client Libraries</li>
 
-<p>The next architectural piece is the authentication mechanism. Different EMR systems
-have their own authentication schemas. In order to keep the app agnostic to them,
-it is the container&#39;s responsibility to provide a standard way for establishing
-trust. And for that SMART uses oAuth, which is an open web standard for authentication.
-Thus the app does not have to deal with the underlying system&#39;s  permissions
-schema. All it needs is to speak OAuth. The container uses his internal logic
-to decide what the app can see and what is forbidden.</p>
+<li class='nav-type'><a href='/framework/reference-implementation/client-js.html'>JavaScript</a></li>
 
-<p>The last component of the architecture is the medical data. And for that SMAR
-takes what we call an &quot;80/20&quot; approach.  What this means is that we try to
-pick the 20% of the fields out there that represent 80% of the data about
-the patients. This selectivity of SMART is one thing that makes writing SMART
-apps relatively easy. Also, SMART uses consistent best-of-the-breed coding
-systems for representing medical facts within the SMART data models. For
-example for medications we use RXNORM, for problems we use SNOMED, and labs
-are based on LOINC. The SMART data payloads are expressed in RDF and are extensible.</p>
+<li class='nav-type'><a href='/framework/reference-implementation/client-python.html'>Python</a></li>
 
-    </div>
+<li class='nav-type'><a href='/framework/reference-implementation/client-ios.html'>iOS</a></li>
 
-      
+<li class='nav-type'><a href='/framework/reference-implementation/client-java.html'>Java</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-dotnet.html'>.NET</a></li>
+
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
+          <h2>SMART Architecture Basics</h2>
+
+<h3>The Three Basic Components of the SMART Architecture</h3>
+
+<p>The first component of the SMART universe is the ecosystem of SMART
+<em>applications</em> created by various software developers eager to bring solutions
+in the hands of clinicians and patients. The apps could include a medication
+manager, a diabetes evaluation suite, or perhaps a lab results visualizer.
+These meaningful apps could be distributed via an app store.</p>
+
+<p>Then we have the <em>containers</em> which play the role of data providers in the
+SMART world. The containers could be personally controlled health records
+systems, electronic medical records systems, health data exchanges, or other
+providers. Either way, a container is responsible for exposing the SMART API to
+the apps and providing a context in which the apps could run.</p>
+
+<p>Finally, we have the <em>interface</em> which enables the apps and containers to talk
+to each other using the SMART application programming interface (or API). The
+API is what keeps the apps and the containers decoupled from each other
+allowing the users to mix and match them.</p>
+
+<p>Also, the API enables the substitutability of the SMART apps and containers.
+From the perspective of an app the containers are substitutable, because they
+all expose the same interface and the app can run on any one of them. Also from
+the perspective of the container, the apps are substitutable. The container
+administrator is free to pick the apps that he needs. And when a better app
+comes along, he can replace the existing app with the new one.</p>
+
+<p>In order to keep things simple, an app runs against one container at a time.
+The container, however, is free to connect to multiple data sources and
+aggregate data as needed.</p>
+
+<h3>The Two SMART APIs: Connect and REST</h3>
+
+<p>At the bottom of the diagram we have the front end of the container and the
+smart application within a web browser window. The container and the app might
+also have back end server components. For the container the back end component
+might be an EMR system housing a large collection of medical records. The app
+could have a back end that helps with elaborate visualizations, data mashing,
+or other complex computations.</p>
+
+<p>On front end components use an interface called SMART Connect to communicate
+with each other right inside the browser environment. Using it the app can get
+patient context from the container and execute API calls. The back end
+components can also talk to each other. And for that they use an interface
+called SMART REST.  Should an app choose to use the SMART REST interface, it
+simply has to obtain an authentication token from the container using SMART
+Connect, and pass it to the back end component, which can then use it to issue
+SMART REST calls to the container&#39;s back end.</p>
+
+<h3>Digging Into the Components</h3>
+
+<p>Now, let&#39;s look at the elements that an app needs in order to provide a
+meaningful service to the end user. First, the app needs a flexible,
+standards-based UI that enables the user to interact with it. Next, the app
+needs to have an authentication mechanism with the container to establish
+trust. And last but not least, the app needs data in order to work with. The
+data includes patient and provide context information, as well as medical
+record elements such as medications and lab results. We will look at each one
+of these components in more detail.</p>
+
+<p>(TODO: insert diagram)</p>
+
+<p>This diagram illustrates the container&#39;s UI component in a browser window. The
+white portion of the screen is the UI that the container provides, which allow
+the user to choose a patient and launch various SMART applications on his data.</p>
+
+<p>The main portion of the screen real estate is taken by the SMART app. The app
+is launched by the container in an IFRAME. An IFRAME is an in-browser mechanism
+that enables multiple web pages to open up on the same screen. When launched
+the app establishes a channel to the container using the SMART connect
+JavaScript library. It can then issue SMART API calls such as &quot;GET MEDICATIONS&quot;
+in order to obtain data from the container. Finally, the app displays the data
+to the user and allows him to interact with it.</p>
+
+<p>The next architectural piece is the authentication mechanism. Different EMR
+systems have their own authentication schemes. In order to keep the app
+agnostic to them, it is the container&#39;s responsibility to provide a standard
+way for establishing trust. And for that SMART uses oAuth, which is an open web
+standard for authentication. Thus the app does not have to deal with the
+underlying system&#39;s permissions mechanisms. All it needs is to speak OAuth. The
+container uses its internal logic to decide what the app can see and what is
+forbidden.</p>
+
+<p>The last component of the architecture is the medical data. And for that SMART
+takes what we call an &quot;80/20&quot; approach. What this means is that we try to pick
+the 20% of the fields out there that represent 80% of the data about the
+patients. This selectivity of SMART is one thing that makes writing SMART apps
+relatively easy. Also, SMART uses consistent best-of-the-breed coding systems
+for representing medical facts within the SMART data models. For example for
+medications we use RXNORM, for problems we use SNOMED, and labs are based on
+LOINC. The SMART data payloads are expressed in RDF and are extensible.</p>
+
+        </div><!--span9-->
+      </div><!--row-->
+
+    
 <hr>
 
 <div class='footer-row'>
@@ -166,11 +225,7 @@ are based on LOINC. The SMART data payloads are expressed in RDF and are extensi
 </div>
 
 
-    </div> <!-- /container -->
-
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src='/assets/js/topnav.js'></script>
-
+    </div><!--/.fluid-container-->
   </body>
 </html>
+

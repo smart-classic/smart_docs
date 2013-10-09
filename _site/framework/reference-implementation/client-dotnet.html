@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+      <title>SMART - .Net Client</title>
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SMART .Net Client</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap bootstrap -->
+
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_framework').addClass('active')
+        });
+    </script>
   </head>
-  <body>
+
+  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
 
     <div id='ref-topbar' class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -42,6 +55,7 @@
               </ul>
             </li>
 
+            <li id="tn_framework"><a href="/framework/">Framework</a></li>
             <li id="tn_models"><a href="/framework/models/">Data Models</a></li>
 
             <li id="tn_api"><a href="/framework/api/">API</a></li>
@@ -60,18 +74,63 @@
 
 
 
-    <div style='margin: 30px 130px;'>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='height: auto; padding: 0px 0px 20px 0px; margin-top: 30px; font-family: roboto'>
+            <ul class="nav nav-list">
+
+
+<li class='nav-header'>Framework</li>
+
+<li class='nav-type'><a href='/framework/architecture/'>Architecture Basics</a></li>
+
+<li class='nav-type'><a href='/framework/manifests/'>Using Manifest Files</a></li>
+
+
+<li class='nav-header'>Reference Container</li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/architecture.html'>Overview</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/vm.html'>Pre-built VM</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/install-ubuntu.html'>Installing on Ubuntu</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/install-osx.html'>Installing on OS X</a></li>
+
+
+<li class='nav-header'>Client Libraries</li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-js.html'>JavaScript</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-python.html'>Python</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-ios.html'>iOS</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-java.html'>Java</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-dotnet.html'>.NET</a></li>
+
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
           <p>We don&#39;t have an officially supported .NET library, but Robert at
-<a href="http://USGovXML.com">http://USGovXML.com</a> has been kind enough to share a working sample
-SMART ASP.NET app, packaged in a VS2008 Project. The app is updated for
-the new OAuth for SMART v0.6. See the included readme file for full
-details.</p>
+<a href="http://USGovXML.com">http://USGovXML.com</a> has been kind enough to share a working sample SMART
+ASP.NET app, packaged in a VS2008 Project. The app is updated for the new OAuth
+for SMART v0.6. See the included readme file for full details.</p>
 
 <p>Download the project at <a href="http://usgovxml.com/examples/Public/SMARTWebApp.zip">http://usgovxml.com/examples/Public/SMARTWebApp.zip</a></p>
 
-    </div>
+        </div><!--span9-->
+      </div><!--row-->
 
-      
+    
 <hr>
 
 <div class='footer-row'>
@@ -80,11 +139,7 @@ details.</p>
 </div>
 
 
-    </div> <!-- /container -->
-
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src='/assets/js/topnav.js'></script>
-
+    </div><!--/.fluid-container-->
   </body>
 </html>
+
