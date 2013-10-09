@@ -1,6 +1,6 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: resources
+title: SMART - Frequently Asked Questions
 ---
 
 # Frequently Asked Questions about SMART
