@@ -2,17 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>SMART REST API</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
-    <style type="text/css">
-        body { padding-top: 60px; }
-    </style>
-    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery.js"></script>
+
+    <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <title>SMART REST API</title>
+
+    <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/topnav.js"></script>
+
     <script>
         $(function(){
             // add scrollspy listener
@@ -22,6 +26,13 @@
                 $(e.target).next().show();
             })
         })
+    </script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_api').addClass('active')
+        });
     </script>
   </head>
 
@@ -35,16 +46,15 @@
 
           <ul class="nav" style='text-transform: uppercase; font-size: 14px'>
 
-            <li><a href="/">Home</a></li>
-            <li class="dropdown">
-              <a id="drop1"
-                 href="#"
+            <li id="tn_home"><a href="/">Home</a></li>
+            <li id="tn_resources" class="dropdown">
+              <a href="#"
                  role="button"
                  class="dropdown-toggle"
                  data-toggle="dropdown">Resources <b class="caret"></b>
               </a>
 
-              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+              <ul class="dropdown-menu" role="menu">
                 <li role="presentation">
                   <a role="menuitem" tabindex="-1" href="/faq.html">frequently asked questions</a>
                 </li>
@@ -58,13 +68,13 @@
               </ul>
             </li>
 
-            <li><a href="/framework/models/">Data Models</a></li>
+            <li id="tn_models"><a href="/framework/models/">Data Models</a></li>
 
-            <li><a href="/framework/api/">API</a></li>
+            <li id="tn_api"><a href="/framework/api/">API</a></li>
 
-            <li><a href="/guide/">App Development</a></li>
+            <li id="tn_appdev"><a href="/guide/">App Development</a></li>
 
-            <li><a href="/framework/container">Container Development</a></li>
+            <li id="tn_containerdev"><a href="/framework/container">Container Development</a></li>
 
                   </ul>
                 </li>
@@ -750,9 +760,14 @@ read another&#39;s preferences or add a &quot;global&quot; set of user preferenc
 
       <hr>
 
-      <footer>
-        <p>&copy; <a href='http://smartplatforms.org'>SMARTPlatforms.org 2013</p>
-      </footer>
+    
+<hr>
+
+<div class='footer-row'>
+    <img class='smartbug' src='/assets/img/smart-bug.png' style='height: 20px; width: 22px; padding-right: 4px;'>
+    <a href='http://smartplatforms.org'>SMARTPlatforms.org</a> &copy; 2013
+</div>
+
 
     </div><!--/.fluid-container-->
   </body>

@@ -9,54 +9,6 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script>
-    $(function() {
-        var theTimer = 0;
-        var theElement = null;
-        var theLastPosition = {x:0,y:0};
-        var delay = 200;
-
-        $('[data-toggle]')
-            .closest('li')
-
-            .on('mouseenter', function (inEvent) {
-                if (theElement) theElement.removeClass('open');
-                window.clearTimeout(theTimer);
-                theElement = $(this);
-
-                theTimer = window.setTimeout(function() {
-                    theElement.addClass('open');
-                }, delay);
-            })
-
-            .on('mousemove', function(inEvent) {
-                if (Math.abs(theLastPosition.x - inEvent.ScreenX) > 4 ||
-                    Math.abs(theLastPosition.y - inEvent.ScreenY) > 4) {
-                    theLastPosition.x = inEvent.ScreenX;
-                    theLastPosition.y = inEvent.ScreenY;
-                    return;
-                }
-
-                if (theElement.hasClass('open')) return;
-
-                window.clearTimeout(theTimer);
-                theTimer = window.setTimeout(function () {
-                theElement.addClass('open');
-                }, delay);
-            })
-
-            .on('mouseleave', function (inEvent) {
-                window.clearTimeout(theTimer);
-                theElement = $(this);
-                theTimer = window.setTimeout(function () {
-                    theElement.removeClass('open');
-                }, delay);
-            });
-        });
-    </script>
-
-
   </head>
   <body>
 
@@ -68,16 +20,15 @@
 
           <ul class="nav" style='text-transform: uppercase; font-size: 14px'>
 
-            <li><a href="/">Home</a></li>
-            <li class="dropdown">
-              <a id="drop1"
-                 href="#"
+            <li id="tn_home"><a href="/">Home</a></li>
+            <li id="tn_resources" class="dropdown">
+              <a href="#"
                  role="button"
                  class="dropdown-toggle"
                  data-toggle="dropdown">Resources <b class="caret"></b>
               </a>
 
-              <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+              <ul class="dropdown-menu" role="menu">
                 <li role="presentation">
                   <a role="menuitem" tabindex="-1" href="/faq.html">frequently asked questions</a>
                 </li>
@@ -91,13 +42,13 @@
               </ul>
             </li>
 
-            <li><a href="/framework/models/">Data Models</a></li>
+            <li id="tn_models"><a href="/framework/models/">Data Models</a></li>
 
-            <li><a href="/framework/api/">API</a></li>
+            <li id="tn_api"><a href="/framework/api/">API</a></li>
 
-            <li><a href="/guide/">App Development</a></li>
+            <li id="tn_appdev"><a href="/guide/">App Development</a></li>
 
-            <li><a href="/framework/container">Container Development</a></li>
+            <li id="tn_containerdev"><a href="/framework/container">Container Development</a></li>
 
                   </ul>
                 </li>
@@ -144,7 +95,9 @@
 
     </div> <!-- /container -->
 
+    <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
+    <script src='/assets/js/topnav.js'></script>
 
   </body>
 </html>

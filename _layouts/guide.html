@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+      <title>{{ page.title }}</title>
+
     <meta charset="utf-8">
-    <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
-    <style type="text/css">
-        body { padding-top: 60px; }
-    </style>
-
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
+    <style type="text/css"> body { padding-top: 60px; } </style>
   </head>
 
   <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
@@ -43,6 +40,9 @@
     {% include footer.html %}
 
     </div><!--/.fluid-container-->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
   </body>
 </html>
 
