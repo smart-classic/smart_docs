@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>{{ page.title }}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_framework').addClass('active')
+        });
+    </script>
+  </head>
+
+  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
+
+    {% include topnav.html %}
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='height: auto; padding: 0px 0px 20px 0px; margin-top: 30px; font-family: roboto'>
+            <ul class="nav nav-list">
+
+{% include framework_nav.html %}
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
+          {{ content }}
+        </div><!--span9-->
+      </div><!--row-->
+
+    {% include footer.html %}
+
+    </div><!--/.fluid-container-->
+  </body>
+</html>
+
