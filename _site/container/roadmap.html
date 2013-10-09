@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+      <title>SMART - Roadmap for Container Development</title>
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SMART Developers Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap bootstrap -->
+
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_containerdev').addClass('active')
+        });
+    </script>
   </head>
+
   <body>
 
     <div id='ref-topbar' class="navbar navbar-fixed-top">
@@ -48,7 +60,7 @@
 
             <li id="tn_appdev"><a href="/guide/">App Development</a></li>
 
-            <li id="tn_containerdev"><a href="/framework/container">Container Development</a></li>
+            <li id="tn_containerdev"><a href="/container/">Container Development</a></li>
 
                   </ul>
                 </li>
@@ -60,53 +72,83 @@
 
 
 
-    <div style='margin: 30px 130px;'>
-          <h1>Roadmap for Container Development</h1>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='height: auto; padding: 0px 0px 20px 0px; margin-top: 30px; font-family: roboto'>
+            <ul class="nav nav-list">
 
-<h2>Overview</h2>
 
-<p>In practice, there are a couple alternative approaches
-to the task of SMART-enabling an existing medical system. These
-fall into the categories of reusing the SMART reference container
-as a sidecar for SMART enablement and building a tightly integrated
-container grounds-up. The following is a discussion of the costs and
-benefits of each approach. We try to outline the main steps that you
-will need to follow in order to successfully build your SMART container
-following either approach.</p>
 
-<h2>SMART Reference Container Reuse</h2>
+<li class='nav-header'>Container Development Guide</li>
+
+<li class='nav-type'><a href='/container/roadmap.html'>Roadmap</a></li>
+
+<li class='nav-type'><a href='/container/tutorial.html'>Sample Container Tutorial</a></li>
+
+<li class='nav-type'><a href='/container/reference-container.html'>The Reference Container</a></li>
+
+<li class='nav-type'><a href='/container/examples.html'>Examples of SMART Containers</a></li>
+
+<li class='nav-type'><a href='/container/issues.html'>Container Development Issues</a></li>
+
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
+          <h2>Roadmap for Container Development</h2>
+
+<h3>Overview</h3>
+
+<p>In practice, there are a couple alternative approaches to the task of
+SMART-enabling an existing medical system. These fall into the categories of
+reusing the SMART reference container as a sidecar for SMART enablement and
+building a tightly integrated container grounds-up. The following is a
+discussion of the costs and benefits of each approach. We try to outline the
+main steps that you will need to follow in order to successfully build your
+SMART container following either approach.</p>
+
+<h3>SMART Reference Container Reuse</h3>
 
 <p>The fastest way to get a complete SMART implementation is to deploy the SMART
 Reference Container and replace its data layer and authentication modules with
 implementations specific to the medical records system that will be providing
-the data. The downside of this approach is that it locks the developer into
-a depenency upon an external piece of code that is not necessarily optimal for the
-needs of the particular implementation nor scalable enough. In addition,
-the SMART Reference Container is built upon Python and Django, which may be
-an administrative burden to the deployment site, especially if the medical system
-is based on another technology. Finally, the reference container adds processing
-overhead which can be avoided with a tightly-coupled native implementation of SMART.</p>
+the data. The downside of this approach is that it locks the developer into a
+depenency upon an external piece of code that is not necessarily optimal for
+the needs of the particular implementation nor scalable enough. In addition,
+the SMART Reference Container is built upon Python and Django, which may be an
+administrative burden to the deployment site, especially if the medical system
+is based on another technology. Finally, the reference container adds
+processing overhead which can be avoided with a tightly-coupled native
+implementation of SMART.</p>
 
-<p>The SMART reference container UI server provides a sample web-based UI
-for running SMART apps on top of medical records. However, it most likely is less 
-than ideal for the needs of most containers necessitating a degree of customization
-or complete replacement.</p>
+<p>The SMART reference container UI server provides a sample web-based UI for
+running SMART apps on top of medical records. However, it most likely is less
+than ideal for the needs of most containers necessitating a degree of
+customization or complete replacement.</p>
 
-<p>(add description of the steps for securing the reference container,
-enabling proxy mode, and testing the installation)</p>
+<p>(TODO: add description of the steps for securing the reference container, enabling
+proxy mode, and testing the installation)</p>
 
-<h2>Implementing a SMART Container from Scratch</h2>
+<h3>Implementing a SMART Container from Scratch</h3>
 
-<p>Arguably the best way to SMART-enable your system is through a grounds-up implementation
-specific to your medical records system. Such an implementation has the potential of
-offering the most efficient robust SMART container yet will require more effort than
-the previously described approach. A good starting point for this approach is
-to implement the SMART Connect interface first (or a subset of it) based on our
-<a href="#">Sample Container Tutorial</a>. (add details here)</p>
+<p>Arguably the best way to SMART-enable your system is through a grounds-up
+implementation specific to your medical records system. Such an implementation
+has the potential of offering the most efficient robust SMART container yet
+will require more effort than the previously described approach. A good
+starting point for this approach is to implement the SMART Connect interface
+first (or a subset of it) based on our <a href="#">Sample Container Tutorial</a>. (TODO
+add details here)</p>
 
-    </div>
+        </div><!--span9-->
+      </div><!--row-->
 
-      
+    
 <hr>
 
 <div class='footer-row'>
@@ -115,11 +157,8 @@ to implement the SMART Connect interface first (or a subset of it) based on our
 </div>
 
 
-    </div> <!-- /container -->
-
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src='/assets/js/topnav.js'></script>
+    </div><!--/.fluid-container-->
 
   </body>
 </html>
+

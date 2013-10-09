@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+      <title>SMART - Container Development Issues</title>
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SMART Developers Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap bootstrap -->
+
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_containerdev').addClass('active')
+        });
+    </script>
   </head>
+
   <body>
 
     <div id='ref-topbar' class="navbar navbar-fixed-top">
@@ -48,7 +60,7 @@
 
             <li id="tn_appdev"><a href="/guide/">App Development</a></li>
 
-            <li id="tn_containerdev"><a href="/framework/container">Container Development</a></li>
+            <li id="tn_containerdev"><a href="/container/">Container Development</a></li>
 
                   </ul>
                 </li>
@@ -60,24 +72,53 @@
 
 
 
-    <div style='margin: 30px 130px;'>
-          <h1>Topics of Interest to Container Developers</h1>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='height: auto; padding: 0px 0px 20px 0px; margin-top: 30px; font-family: roboto'>
+            <ul class="nav nav-list">
 
-<h2>Translating between coding systems</h2>
 
-<p>Chances are that your medical data is already encoded in one of the widely available coding
-standards used in the medical community. When exposing your data through the SMART API,
-you will have to provide data about the patient using the coding systems defined by
-SMART (such as SNOMED-CT, RXNORM, LOINC, etc). Thus, you will need to map your local
-data codes into the SMART defined coding systems.</p>
+
+<li class='nav-header'>Container Development Guide</li>
+
+<li class='nav-type'><a href='/container/roadmap.html'>Roadmap</a></li>
+
+<li class='nav-type'><a href='/container/tutorial.html'>Sample Container Tutorial</a></li>
+
+<li class='nav-type'><a href='/container/reference-container.html'>The Reference Container</a></li>
+
+<li class='nav-type'><a href='/container/examples.html'>Examples of SMART Containers</a></li>
+
+<li class='nav-type'><a href='/container/issues.html'>Container Development Issues</a></li>
+
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
+          <h2>Container Development Issues</h2>
+
+<h3>Translating Between Coding Systems</h3>
+
+<p>Chances are that your medical data is already encoded in one of the widely
+available coding standards used in the medical community. When exposing your
+data through the SMART API, you will have to provide data about the patient
+using the coding systems defined by SMART (such as SNOMED-CT, RXNORM, LOINC,
+etc). Thus, you will need to map your local data codes into the SMART defined
+coding systems.</p>
 
 <p>Unfortunately, the problem of generating accurate translations between coding
-systems is an inexact science. Due to differences between the terminology terms,
-it is often times not possible to derive a complete one-to-one map between
-two systems to preclude loss of meaning as result of translation. A good
-practice when generating SMART RDF with translated codes is to include
-provenance information. Here is an example that specifies the provenance for 
-a lab result translation from a local labcode to LOINC:</p>
+systems is an inexact science. Due to differences between the terminology
+terms, it is often times not possible to derive a complete one-to-one map
+between two systems to preclude loss of meaning as result of translation. A
+good practice when generating SMART RDF with translated codes is to include
+provenance information. Here is an example that specifies the provenance for a
+lab result translation from a local labcode to LOINC:</p>
 
 <div class="highlight"><pre><code class="xml"><span class="nt">&lt;sp:labName&gt;</span>
     <span class="nt">&lt;sp:CodedValue&gt;</span>
@@ -94,66 +135,74 @@ a lab result translation from a local labcode to LOINC:</p>
 <span class="nt">&lt;/sp:labName&gt;</span>
 </code></pre></div>
 
-<p>For translating from one system to another, we highly recommend reusing commonly
-available maps. For example, the US National Library of Medicine provides maps for 
-translation between ICD-9-CM and SNOMED-CT 
+<p>For translating from one system to another, we highly recommend reusing
+commonly available maps. For example, the US National Library of Medicine
+provides maps for translation between ICD-9-CM and SNOMED-CT
 (<a href="http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cmv3_to_snomedct.html">http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cmv3_to_snomedct.html</a>,
 <a href="http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cm_to_snomedct.html">http://www.nlm.nih.gov/research/umls/mapping_projects/icd9cm_to_snomedct.html</a>).</p>
 
-<h2>RDF vs JSON</h2>
+<h3>RDF vs JSON</h3>
 
 <p>(add discussion points here)</p>
 
-<h2>Partial implementations</h2>
+<h3>Partial Implementations</h3>
 
-<p>Implementing the complete SMART specification on top of your medical records system
-will allow you and your system&#39;s users to run the full range of standard SMART medical apps
-available on the market. However, a complete implementation may turn out to be a large scale project.
-Some times the objective of a SMART enablement project is to enable running specific
-applications on a medical records system. Under such a scenario, you may want to
-consider a partial implementation of the SMART standard following the least common
-denominator principle. SMART provides for a discovery mechanism that can be used by SMART
-apps to learn about the API calls supported by a container by requesting the container
-manifest through the <code>/manifest</code> REST path. For example, the public sandbox of the SMART
-Platforms project exposes its manifest on the following URL:
+<p>Implementing the complete SMART specification on top of your medical records
+system will allow you and your system&#39;s users to run the full range of standard
+SMART medical apps available on the market. However, a complete implementation
+may turn out to be a large scale project.  Some times the objective of a SMART
+enablement project is to enable running specific applications on a medical
+records system. Under such a scenario, you may want to consider a partial
+implementation of the SMART standard following the least common denominator
+principle. SMART provides for a discovery mechanism that can be used by SMART
+apps to learn about the API calls supported by a container by requesting the
+container manifest through the <code>/manifest</code> REST path. For example, the public
+sandbox of the SMART Platforms project exposes its manifest on the following
+URL:
 <a href="http://sandbox-api.smartplatforms.org/manifest">http://sandbox-api.smartplatforms.org/manifest</a></p>
 
-<p>Even if your end goal is complete SMART support, it may still be a good development
-strategy to start small and implement a few maningful basic API calls and testing 
-your container with some basic apps that rely on them. Since a large majority of the SMART
-apps our there use the SMART Connect interface, it would make sense to focus on implementing
-this interface before tackling the SMART REST interface which requires, amongst the others,
-OAuth support. Starting with the Demographics data model and API a developer may wish to
+<p>Even if your end goal is complete SMART support, it may still be a good
+development strategy to start small and implement a few maningful basic API
+calls and testing your container with some basic apps that rely on them. Since
+a large majority of the SMART apps our there use the SMART Connect interface,
+it would make sense to focus on implementing this interface before tackling the
+SMART REST interface which requires, amongst the others, OAuth support.
+Starting with the Demographics data model and API a developer may wish to
 consider implementing the Medications, Problems, or VitalSigns interfaces.</p>
 
-<h2>Reusing portions of the SMART Reference Container</h2>
+<h3>Reusing Portions of the SMART Reference Container</h3>
 
-<p>As discussed in the <a href="reference-container.html">reference container</a> section, the SMART Platforms
-team maintains an open-source complete medical system that implements the SMART specification.
-The reference container is available under Apache 2 open source license and can serve as a base
-for rapid SMART container implementations. One of the implementation strategies outlined in the
-<a href="roadmap.html">roamap for container developers</a> is replacing the reference contianer&#39;s data
-source and user authentication subsystems with an adapter to your medical data system. The
-downside of reusing the reference container code is that it has not been tested in highly
-scalable environments and will introduce dependencies on Python/Django based code components.</p>
+<p>As discussed in the <a href="reference-container.html">reference container</a> section,
+the SMART Platforms team maintains an open-source complete medical system that
+implements the SMART specification.  The reference container is available under
+Apache 2 open source license and can serve as a base for rapid SMART container
+implementations. One of the implementation strategies outlined in the <a href="roadmap.html">roamap
+for container developers</a> is replacing the reference contianer&#39;s
+data source and user authentication subsystems with an adapter to your medical
+data system. The downside of reusing the reference container code is that it
+has not been tested in highly scalable environments and will introduce
+dependencies on Python/Django based code components.</p>
 
-<h2>Extending the SMART API and data models</h2>
+<h3>Extending the SMART API and Data Models</h3>
 
-<p>While not a common practice, your SMART container implementation can extended the SMART
-specification with new API calls and data models that support the needs of your specific community.
-Apps written to take advantage of these non-standard calls that need to run on a standard
-SMART container will need to degrade gracefully in the absence of the extended API calls.</p>
+<p>While not a common practice, your SMART container implementation can extended
+the SMART specification with new API calls and data models that support the
+needs of your specific community.  Apps written to take advantage of these
+non-standard calls that need to run on a standard SMART container will need to
+degrade gracefully in the absence of the extended API calls.</p>
 
-<h2>Implementing write capabilities</h2>
+<h2>Implementing Write Capabilities</h2>
 
-<p>With the exception of the Clinical Notes, Preferences, and Scratchpad APIs, the SMART standard does
-not provide for write functionality in the container. Therefore the majority of the SMART
-apps presently available assume read-only interactions with the container. However,
-a container may provide write capabilities.</p>
+<p>With the exception of the Clinical Notes, Preferences, and Scratchpad APIs, the
+SMART standard does not provide for write functionality in the container.
+Therefore the majority of the SMART apps presently available assume read-only
+interactions with the container. However, a container may provide write
+capabilities.</p>
 
-    </div>
+        </div><!--span9-->
+      </div><!--row-->
 
-      
+    
 <hr>
 
 <div class='footer-row'>
@@ -162,11 +211,8 @@ a container may provide write capabilities.</p>
 </div>
 
 
-    </div> <!-- /container -->
-
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src='/assets/js/topnav.js'></script>
+    </div><!--/.fluid-container-->
 
   </body>
 </html>
+

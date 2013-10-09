@@ -11,6 +11,16 @@
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_appdev').addClass('active')
+        });
+    </script>
   </head>
 
   <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
@@ -51,7 +61,7 @@
 
             <li id="tn_appdev"><a href="/guide/">App Development</a></li>
 
-            <li id="tn_containerdev"><a href="/framework/container">Container Development</a></li>
+            <li id="tn_containerdev"><a href="/container/">Container Development</a></li>
 
                   </ul>
                 </li>
@@ -313,9 +323,6 @@ them.</p>
 
 
     </div><!--/.fluid-container-->
-
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
   </body>
 </html>
 

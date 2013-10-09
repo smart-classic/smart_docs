@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+      <title>SMART - Other SMART Containers</title>
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SMART Developers Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap bootstrap -->
+
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_containerdev').addClass('active')
+        });
+    </script>
   </head>
+
   <body>
 
     <div id='ref-topbar' class="navbar navbar-fixed-top">
@@ -48,7 +60,7 @@
 
             <li id="tn_appdev"><a href="/guide/">App Development</a></li>
 
-            <li id="tn_containerdev"><a href="/framework/container">Container Development</a></li>
+            <li id="tn_containerdev"><a href="/container/">Container Development</a></li>
 
                   </ul>
                 </li>
@@ -60,11 +72,40 @@
 
 
 
-    <div style='margin: 30px 130px;'>
-          <h1>Other SMART Containers</h1>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='height: auto; padding: 0px 0px 20px 0px; margin-top: 30px; font-family: roboto'>
+            <ul class="nav nav-list">
 
-<p>Besides the SMART reference implementation, there is a growing list of SMART containers.
-The following is a list of containers that are publicly available or open source.</p>
+
+
+<li class='nav-header'>Container Development Guide</li>
+
+<li class='nav-type'><a href='/container/roadmap.html'>Roadmap</a></li>
+
+<li class='nav-type'><a href='/container/tutorial.html'>Sample Container Tutorial</a></li>
+
+<li class='nav-type'><a href='/container/reference-container.html'>The Reference Container</a></li>
+
+<li class='nav-type'><a href='/container/examples.html'>Examples of SMART Containers</a></li>
+
+<li class='nav-type'><a href='/container/issues.html'>Container Development Issues</a></li>
+
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span9">
+          <h2>Other SMART Containers</h2>
+
+<p>Besides the SMART reference implementation, there is a growing list of SMART
+containers. The following is a list of containers that are publicly available
+or open source.</p>
 
 <ul>
 <li><a href="http://community.i2b2.org/wiki/display/smart/">i2b2 SMART</a></li>
@@ -76,9 +117,10 @@ The following is a list of containers that are publicly available or open source
 <li><a href="https://github.com/chb/smart_grails_proxy">Boston Childrens Hospital (Cerner)</a></li>
 </ul>
 
-    </div>
+        </div><!--span9-->
+      </div><!--row-->
 
-      
+    
 <hr>
 
 <div class='footer-row'>
@@ -87,11 +129,8 @@ The following is a list of containers that are publicly available or open source
 </div>
 
 
-    </div> <!-- /container -->
-
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src='/assets/js/topnav.js'></script>
+    </div><!--/.fluid-container-->
 
   </body>
 </html>
+

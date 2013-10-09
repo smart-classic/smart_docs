@@ -11,6 +11,16 @@
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
     <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_appdev').addClass('active')
+        });
+    </script>
   </head>
 
   <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
@@ -51,7 +61,7 @@
 
             <li id="tn_appdev"><a href="/guide/">App Development</a></li>
 
-            <li id="tn_containerdev"><a href="/framework/container">Container Development</a></li>
+            <li id="tn_containerdev"><a href="/container/">Container Development</a></li>
 
                   </ul>
                 </li>
@@ -110,11 +120,13 @@ develoment skills but no prior familiarity with SMART or medical informatics.</p
 <ul>
 <li><a href="setup.html">Setup</a></li>
 <li><a href="quickstart.html">Quickstart Example</a></li>
-<li><a href="tutorials/">Extended Tutorials</a></li>
 <li><a href="nextsteps.html">Where to Go Next</a></li>
 </ul>
 
 <p>We recommend following the guide in order.</p>
+
+<p>After going through the guide, check out the extened tutorials on the left
+to learn more about specific types of SMART apps.</p>
 
 <p>Next: <a href="setup.html">setting up your environment</a></p>
 
@@ -131,9 +143,6 @@ develoment skills but no prior familiarity with SMART or medical informatics.</p
 
 
     </div><!--/.fluid-container-->
-
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
   </body>
 </html>
 
