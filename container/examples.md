@@ -1,12 +1,13 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: container
+title: SMART - Other SMART Containers
 ---
 
-#Other SMART Containers
+## Other SMART Containers
 
-Besides the SMART reference implementation, there is a growing list of SMART containers.
-The following is a list of containers that are publicly available or open source.
+Besides the SMART reference implementation, there is a growing list of SMART
+containers. The following is a list of containers that are publicly available
+or open source.
 
 * [i2b2 SMART](http://community.i2b2.org/wiki/display/smart/)
 * [Indivo](http://indivohealth.org/)

@@ -1,29 +1,29 @@
 ---
-layout: default
-title: SMART Developers Documentation
+layout: container
+title: SMART - Sample Container Tutorial
 ---
 
-#Sample Container - Tutorial
+## Sample Container Tutorial
 
-## What is smart-api-container.js?
+### What is smart-api-container.js?
 
 `smart-api-container.js` enables a SMART container to talk with SMART apps,
 establishing inter-frame messaging to pass data and notifications between
 application and container.
 
 <div class='simple_box'>
-  N.B. <code>smart-api-container.js</code> is for SMART container developers, not SMART
-  app developers!
+  N.B. <code>smart-api-container.js</code> is for SMART container developers,
+  not SMART app developers!
 </div>
 
 `smart-api-container.js` is used by SMART containers such as electronic medical
 records platforms. It is a key component that helps turn ordinary EMRs into
-SMART containers. If you're a SMART app developer, you don't need to worry about
-the api-container, since it sits on the other side of the interface between your
-SMART Connect app and the data it consumes.
+SMART containers. If you're a SMART app developer, you don't need to worry
+about the api-container, since it sits on the other side of the interface
+between your SMART Connect app and the data it consumes.
 
 
-## Using `smart-api-container.js`
+### Using `smart-api-container.js`
 
 There are two broad steps involved in turning your ordinary EMR into a SMART
 container:
@@ -34,12 +34,12 @@ container:
 This document focuses on #2.
 
 
-## Including the Javascript Files
+### Including the Javascript Files
 
 SMART containers the provide SMART Connect API on their Web site by including
 (or otherwise loading) three key javascript files: jQuery, jschannel, and
-`smart-api-container`. The simplest way is to include the following script tags in
-your HTML:
+`smart-api-container`. The simplest way is to include the following script tags
+in your HTML:
 
 {% highlight html %}
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -48,8 +48,8 @@ your HTML:
 {% endhighlight  %}
 
 
-If your existing JavaScript codebase employs the '$' variable and you don't want
-jQuery to clobber that namespace, you might also want to call:
+If your existing JavaScript codebase employs the '$' variable and you don't
+want jQuery to clobber that namespace, you might also want to call:
 
 {% highlight html %}
   <script type="text/javascript">jQuery.noConflict();</script>
@@ -70,9 +70,9 @@ that SMART Connect apps require. To get things started, first instantiate a
 
 ### Override `SMART_HOST.get_credentials(app_instance, callback)`
 
-`get_credentials` is called automatically when a new app launches. Its job is to
-provide the fledgling app with SMART REST tokens, formatted as an App Instances
-Credential object (details below).
+`get_credentials` is called automatically when a new app launches. Its job is
+to provide the fledgling app with SMART REST tokens, formatted as an App
+Instances Credential object (details below).
 
 * Input: App Instance object with UUID, context (details below)
 * Callback with: App Instance Credentials object (details below)
@@ -132,8 +132,8 @@ creation of an `app_instance` with a unique ID. The `SMART_CONNECT_HOST` uses
 
 ### Subscribe to App Notifications
 
-Apps that you've launch may send notifications and requests. For example, an app
-that desires more screen real estate may sent a `request_fullscreen`
+Apps that you've launch may send notifications and requests. For example, an
+app that desires more screen real estate may sent a `request_fullscreen`
 notification. To subscribe to a notification, call `SMART_HOST.on` as in the
 example below:
 
@@ -141,10 +141,10 @@ example below:
   SMART_HOST.on("request_fullscreen", function(app_instance) {
     $(app_instance.iframe)
       .css({
-        position: 'fixed', 
-        width: '100%', 
-        height: '100%', 
-        left:0, 
+        position: 'fixed',
+        width: '100%',
+        height: '100%',
+        left:0,
         top:0
       });
   });
