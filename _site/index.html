@@ -27,7 +27,12 @@
         font-weight: 200;
         line-height: 30px;
       }
-      .hero-h1 { font-size: 40px; margin-bottom: 16px; color: #555; }
+      .hero-h1 {
+        font-size: 38px;
+        margin-bottom: 16px;
+        color: #555;
+        text-align: center;
+      }
       .hero-right {
         font-size: 14px;
         font-family: consolas, monospace;
@@ -37,6 +42,12 @@
         background: lavender;
         border: 1px solid #f5f5f5;
         padding: 3px 3px 3px 26px;
+        overflow: scroll;
+        margin-top: 35px;
+      }
+      .hero-sample {
+        white-space: pre;
+        word-wrap: normal !important;
       }
       .links-row { text-align: center;
         margin: 40px 0px 30px 0px;
@@ -51,6 +62,7 @@
         background: #f0f0f2;
         border-radius: 12px;
         padding-bottom: 18px;
+        margin-right: -20px;
       }
 
     </style>
@@ -79,7 +91,7 @@
 
         <div class='hero-right span6'>
           <pre class='hero-pre'>
-            <code>
+            <code class='hero-sample'>
 // Output structured medications in just 6 lines of Javascript!
 SMART.get_medications().success(
   function(response){
@@ -102,7 +114,7 @@ SMART.get_medications().success(
         &nbsp;<span class='weight500'>&middot;</span>&nbsp;
         <a href='/container/roadmap.html'>Container Development Guide</a>
         &nbsp;<span class='weight500'>&middot;</span>&nbsp;
-        <a href='http://github.com/chb/'>Source on Github</a>
+        <a href='http://github.com/chb/'>Github</a>
       </div> <!-- row -->
 
       <!-- Example row of columns -->
