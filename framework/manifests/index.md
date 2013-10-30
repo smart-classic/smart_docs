@@ -3,7 +3,7 @@ layout: framework
 title: SMART - Using Manifest Files
 ---
 
-## Manifests
+## Using SMART Manifest Files
 
 TODO
 
