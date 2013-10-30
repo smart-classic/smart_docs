@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Best Practices for SMART Data</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_framework').addClass('active')
+        });
+    </script>
+  </head>
+
+  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
+
+    <div id='ref-topbar' class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="brand" href="/"><img class='smartbug' src='/assets/img/smart-bug.png' /></a>
+        <div class="nav-collapse collapse">
+
+          <ul class="nav" style='text-transform: uppercase; font-size: 14px'>
+
+            <li id="tn_home"><a href="/">Home</a></li>
+
+            <li id="tn_resources"><a href="/resources.html">Resources</a></li>
+
+            <li id="tn_framework"><a href="/framework/architecture/">Framework</a></li>
+
+            <li id="tn_models"><a href="/framework/models/">Data Models</a></li>
+
+            <li id="tn_api"><a href="/framework/api/">API</a></li>
+
+            <li id="tn_appdev"><a href="/guide/">App Development</a></li>
+
+            <li id="tn_containerdev"><a href="/container/">Container Development</a></li>
+
+                  </ul>
+                </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='height: auto; padding: 0px 0px 20px 0px; margin-top: 30px; font-family: roboto'>
+            <ul class="nav nav-list">
+
+
+<li class='nav-header'>Framework Overview</li>
+
+<li class='nav-type'><a href='/framework/architecture/'>Architecture Basics</a></li>
+
+
+<li class='nav-header'>Framework Details</li>
+
+<li class='nav-type'><a href='/framework/oauth/'>OAuth</a></li>
+
+<li class='nav-type'><a href='/framework/data-best-practices.html'>Data Best Practices</a></li>
+
+
+<li class='nav-header'>Reference Container</li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/architecture.html'>Overview</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/vm.html'>Pre-built VM</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/install-ubuntu.html'>Installing on Ubuntu</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/install-osx.html'>Installing on OS X</a></li>
+
+
+<li class='nav-header'>Client Libraries</li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-js.html'>JavaScript</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-python.html'>Python</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-ios.html'>iOS</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-java.html'>Java</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-dotnet.html'>.NET</a></li>
+
+
+<li class='nav-header'>Technical Backgrounders</li>
+
+<li class='nav-type'><a href='/framework/manifests/'>todo</a></li>
+
+
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span8">
+          <h1>Best Practices for Consuming SMART RDF Data</h1>
+
+<h2>Treat SMART data payloads as RDF</h2>
+
+<p>SMART Containers supply your app with medical record data in the form of an RDF
+graph, with the structured specified in our data model. It&#39;s important to keep
+in mind that this graph is a logical structure containing medical record data.
+Yes, it&#39;s serialized as RDF/XML --- but the appropriate way to work with this
+graph is by using purpose-built RDF processing tools, not generic XML processing
+tools. The important concept here is you can&#39;t count on details like element
+order, blank node IDs, or even XML structure to be consistent. So you shouldn&#39;t
+try to use xpath or DOM manipulation to pull data out of this graph.</p>
+
+<p>But you can count on the logical structure: the RDF triples asserted in the
+graph. So the appropriate way to pull data from a graph is using an RDF library.
+For javascript, we recommend <a href="http://code.google.com/p/rdfquery/">rdfquery</a>. For
+Java there are several options including
+<a href="http://www.openrdf.org/">openrdf-sesame</a> and
+<a href="http://jena.sourceforge.net/">Jena</a>. For Python we recommend
+<a href="http://www.rdflib.net/">rdflib</a>. For a more comprehensive list of language
+bindings, see the <a href="http://www.w3.org/2001/sw/wiki/Category:Programming_Environment">w3c wiki</a>.</p>
+
+<h2>Use SPARQL queries to interact with SMART RDF graphs</h2>
+
+<p>When you retrieve data from a SMART Container, you can use SPARQL queries to
+loop through results and extract relevant fields. For example, to obtain the
+title and LOINC code for each lab test in the patient record, you could do</p>
+
+<div class="highlight"><pre><code class="javascript">    <span class="nx">SELECT</span>  <span class="o">?</span><span class="nx">lab</span> <span class="o">?</span><span class="nx">labTitle</span> <span class="o">?</span><span class="nx">loincCode</span>
+    <span class="nx">WHERE</span> <span class="p">{</span>
+      <span class="o">?</span><span class="nx">lab</span> <span class="nx">rdf</span><span class="o">:</span><span class="nx">type</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">LabResult</span><span class="p">.</span>
+      <span class="o">?</span><span class="nx">lab</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">labName</span> <span class="o">?</span><span class="nx">labName</span> <span class="p">.</span>
+      <span class="o">?</span><span class="nx">labName</span> <span class="nx">dcterms</span><span class="o">:</span><span class="nx">title</span> <span class="o">?</span><span class="nx">labTitle</span> <span class="p">.</span>
+      <span class="o">?</span><span class="nx">labName</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">code</span> <span class="o">?</span><span class="nx">loincCode00</span><span class="p">.</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<h2>Build flexible queries to focus on the data you need</h2>
+
+<p>The query above works pretty well, but it doesn&#39;t do much. Let&#39;s build on it!
+For example, say we want to pull out the &quot;abnormal interpretation&quot; flag for a
+lab result. We could augment our query as follows</p>
+
+<div class="highlight"><pre><code class="javascript">    <span class="nx">SELECT</span>  <span class="o">?</span><span class="nx">lab</span> <span class="o">?</span><span class="nx">labTitle</span> <span class="o">?</span><span class="nx">loincCode</span> <span class="o">?</span><span class="nx">abnormalInterpretation</span>
+    <span class="nx">WHERE</span> <span class="p">{</span>
+      <span class="o">?</span><span class="nx">lab</span> <span class="nx">rdf</span><span class="o">:</span><span class="nx">type</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">LabResult</span><span class="p">.</span>
+      <span class="o">?</span><span class="nx">lab</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">labName</span> <span class="o">?</span><span class="nx">labName</span> <span class="p">.</span>
+      <span class="o">?</span><span class="nx">labName</span> <span class="nx">dcterms</span><span class="o">:</span><span class="nx">title</span> <span class="o">?</span><span class="nx">labTitle</span> <span class="p">.</span>
+      <span class="o">?</span><span class="nx">labName</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">code</span> <span class="o">?</span><span class="nx">loincCode00</span><span class="p">.</span>
+      <span class="o">?</span><span class="nx">lab</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">abnormalInterpretation</span> <span class="o">?</span><span class="nx">abnormalInterpretation</span><span class="p">.</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>But now something funny happens: if some lab results are missing the &quot;abnormal
+interpretation&quot; flag, this SPARQL query won&#39;t find them! That&#39;s because we&#39;ve
+build a rigid query that requires each field to be present. If we want to query
+in a more flexible way, we can use the OPTIONAL keyword</p>
+
+<div class="highlight"><pre><code class="javascript">    <span class="nx">SELECT</span>  <span class="o">?</span><span class="nx">lab</span> <span class="o">?</span><span class="nx">labTitle</span> <span class="o">?</span><span class="nx">loincCode</span> <span class="o">?</span><span class="nx">abnormalInterpretation</span>
+    <span class="nx">WHERE</span> <span class="p">{</span>
+      <span class="o">?</span><span class="nx">lab</span> <span class="nx">rdf</span><span class="o">:</span><span class="nx">type</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">LabResult</span><span class="p">.</span>
+      <span class="o">?</span><span class="nx">lab</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">labName</span> <span class="o">?</span><span class="nx">labName</span> <span class="p">.</span>
+      <span class="o">?</span><span class="nx">labName</span> <span class="nx">dcterms</span><span class="o">:</span><span class="nx">title</span> <span class="o">?</span><span class="nx">labTitle</span> <span class="p">.</span>
+      <span class="o">?</span><span class="nx">labName</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">code</span> <span class="o">?</span><span class="nx">loincCode00</span><span class="p">.</span>
+      <span class="nx">OPTIONAL</span> <span class="p">{</span> <span class="o">?</span><span class="nx">lab</span> <span class="nx">sp</span><span class="o">:</span><span class="nx">abnormalInterpretation</span> <span class="o">?</span><span class="nx">abnormalInterpretation</span><span class="p">.}</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>Now if some labs have an &quot;abnormal interpretation&quot; flag, we&#39;ll find it. But we
+won&#39;t ignore labs that happen to be missing that field: we&#39;ll still get their
+LOINC codes and be able to keep track of them.</p>
+
+<p>Because not every SMART data element will provide a value for every field, it&#39;s
+important to keep your queries flexible with OPTIONAL blocks, focusing on the
+data you need and layering on additional data that might be useful, but isn&#39;t
+essential.</p>
+
+<h2>Parse date fields as <a href="http://www.w3.org/TR/NOTE-datetime">W3C datetime / ISO-8601  strings</a></h2>
+
+<p>Let&#39;s say you&#39;re building a timeline application that displays the dates of
+medication fulfillments. You make a SMART API call to get a list of
+fulfillments, you write a SPARQL query to pull out the dates, and now you&#39;re
+ready to plot them. It&#39;s important to treat dates as <a href="http://www.w3.org/TR/NOTE-datetime">W3C datetime / ISO-8601</a> strings without making further
+assumptions about their format. For example, depending on the granularity of
+data available, one fulfillment might have the date &quot;2011-06-12&quot;, while another
+might have the date &quot;2011-06-12T18:30Z&quot;. If you try to parse SMART date fields
+with a simple regular expression or by substring-matching, you&#39;ll have trouble
+maintaining the flexibility you need. Instead, you should use a library that
+handles ISO8601 dates. For javascript we&#39;d recommend reading <a href="http://delete.me.uk/2005/03/iso8601.html">this for background</a>. And we&#39;d recommend trying
+the <a href="http://arshaw.com/xdate/">xdate.js</a> library for a powerful set of
+cross-platform date-parsing and arithmetic tools. Most other languages have
+standard libraries for parsing ISO8601 dates.</p>
+
+        </div><!--span8-->
+
+        <div class="span1">
+            <!-- empty column for right margin -->
+            &nbsp;
+        </div><!--span1-->
+      </div><!--row-->
+
+    
+<hr>
+
+<div class='footer-row'>
+    <img class='smartbug' src='/assets/img/smart-bug.png' style='height: 20px; width: 22px; padding-right: 4px;'>
+    <a href='http://smartplatforms.org'>SMARTPlatforms.org</a> &copy; 2013
+</div>
+
+
+    </div><!--/.fluid-container-->
+  </body>
+</html>
+
