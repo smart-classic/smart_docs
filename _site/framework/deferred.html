@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>SMART - Using $.deferred with SMART Connect</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        // highlight the <li> in the topbar
+        $(function(){
+            $('#ref-topbar ul.nav').removeClass('active')
+            $('#ref-topbar ul.nav #tn_framework').addClass('active')
+        });
+    </script>
+  </head>
+
+  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
+
+    <div id='ref-topbar' class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+
+      <a class="brand" href="/"><img class='smartbug' src='/assets/img/smart-bug.png' /></a>
+
+      <ul class="nav" style='text-transform: uppercase; font-size: 14px'>
+        <li id="tn_home"><a href="/">Home</a></li>
+        <li id="tn_resources"><a href="/resources.html">Resources</a></li>
+        <li id="tn_models"><a href="/framework/models/">Data Models</a></li>
+        <li id="tn_api"><a href="/framework/api/">API</a></li>
+        <li id="tn_appdev"><a href="/guide/">App Development</a></li>
+        <li id="tn_containerdev"><a href="/container/">Container Development</a></li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='font-family: roboto'>
+            <ul class="nav nav-list">
+
+
+<li class='nav-header'>Framework Overview</li>
+
+<li class='nav-type'><a href='/framework/architecture/'>Architecture Basics</a></li>
+
+
+<li class='nav-header'>Framework Details</li>
+
+<li class='nav-type'><a href='/framework/manifests/'>Manifest Files</a></li>
+
+<li class='nav-type'><a href='/framework/oauth/'>OAuth</a></li>
+
+<li class='nav-type'><a href='/framework/json-ld.html'>JSON-LD API</a></li>
+
+<li class='nav-type'><a href='/framework/filters-and-pages.html'>Query Filtering &amp; Pagination</a></li>
+
+<li class='nav-type'><a href='/framework/data-best-practices.html'>Data Best Practices</a></li>
+
+
+<li class='nav-header'>Reference Container</li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/architecture.html'>Overview</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/vm.html'>Pre-built VM</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/install-ubuntu.html'>Installing on Ubuntu</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/install-osx.html'>Installing on OS X</a></li>
+
+
+<li class='nav-header'>Client Libraries</li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-js.html'>JavaScript</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-python.html'>Python</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-ios.html'>iOS</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-java.html'>Java</a></li>
+
+<li class='nav-type'><a href='/framework/reference-implementation/client-dotnet.html'>.NET</a></li>
+
+
+<li class='nav-header'>Technical Backgrounders</li>
+
+<li class='nav-type'><a href='/framework/deferred.html'>$.Deferred for Parallel Queries</a></li>
+
+<li class='nav-type'><a href='/framework/rdf-sparql-intro.html'>Intro to RDF &amp; SPARQL</a></li>
+
+
+
+            </ul>
+          </div>
+        </div><!--span3-->
+
+        <div class="span8">
+          <h2>Using the jQuery Deferred Object with SMART Connect</h2>
+
+<p>When using the SMART Javascript API you frequently want to make multiple
+requests for data (for instance to get both demographics and labs for a lab
+viewer app) and then do something with the result of both calls. In pure
+Javascript, the typical pattern is for a deeply nested and serial chain of
+callback functions. Using the jQuery Deferred objects you can easily make
+faster parallel requests in a well organized way without confusing and messy
+nested callbacks.</p>
+
+<p>The <a href="http://api.jquery.com/category/deferred-object/">Deferred Object</a> is
+utility object in jQuery to define sets of callbacks that can signal a observer
+function allowing the observer to conditionally execute code based on differing
+success or failures states.</p>
+
+<p>What this means in practice is that you can now easily make concurrent,
+asynchronous function calls to the SMART Connect API and have those functions
+signal an observer function at the moment when they are both complete along
+with simple error handling in case of failures. This is useful for increasing
+the performance of your app with parallel ajax calls and, once you are familiar
+with the pattern, to avoid messy code structures like deeply nested callbacks.</p>
+
+<p>Using this pattern is similar to attaching multiple callback functions to
+<a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax&#39;s</a> <code>.success</code>, <code>.error</code>, and
+<code>.complete</code> handlers, in fact, those handlers use Deferred Object under the
+hood.</p>
+
+<h3>Mapping jQuery.ajax handlers to Deferred Object handlers</h3>
+
+<ul>
+<li><code>.complete()</code> is analogous to <code>.then() or .always()</code></li>
+<li><code>.success()</code> is analogous to <code>.done()</code></li>
+<li><code>.error()</code> is analogous to <code>.fail()</code></li>
+</ul>
+
+<h3>A Real-World Example</h3>
+
+<p><a href="https://github.com/chb/smart_sample_apps/blob/master/static/framework/cardi%0Ao_risk_viz/load_data.js">The Cardiac Risk Visualiztion
+App</a> requires both demographics (gender and age) and also
+lab results (hsCRP, cholesterol, and HDL values) to compute a risk score. This
+requires two calls to the SMART Connect API:
+<a href="http://wiki.chip.org/smart-project/index.php/Developers_Docum%0Aentation:_SMART_App_Javascript_Libraries#SMART.get_demographics">get_demographcis</a> and
+<a href="http://wiki.chip.org/smart-project/index.php/Developers_Docume%0Antation:_SMART_App_Javascript_Libraries#SMART.get_lab_results">get_lab_results</a>.</p>
+
+<p>In the code below each of these calls is wrapped in a function that is
+registered with $.when. Once all the registered functions signal they have now
+successfully completed <code>(by calling .resolve())</code> or have failed <code>(by calling
+.reject())</code> on their Deferred object the function attached to the <code>.then()</code>
+handler is executed. Which in this example draws the full visualization being
+safe in the knowledge that all the required data is available.</p>
+
+<p>One detail to note is that both functions return the Deferred&#39;s promise object
+to the observer. A promise object is the read-only object that is used by the
+observer function to query the current state of the function and therefore is
+the required return value of the callbacks.</p>
+
+<h3>Error Handling</h3>
+
+<p>The failure case is not handled in the code below, but a <code>.fail()</code> handler
+could be added after the <code>.then()</code> handler. In that case, if the attached
+functions would signal a failure state by calling <code>.reject()</code> on their Deferred
+object, the code attached to the <code>.fail()</code> handler would be executed.</p>
+
+<h3>The Code</h3>
+
+<div class="highlight"><pre><code class="javascript">    <span class="c1">// note: code simplified</span>
+    <span class="kd">var</span> <span class="nx">get_demographics</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="c1">// create an instance of the jQuery Deferred object in the </span>
+          <span class="c1">// initial &quot;pending&quot; state</span>
+          <span class="kd">var</span> <span class="nx">dfd</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+          <span class="c1">// do the SMART Connect Call and execute the associated callback</span>
+          <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_demographics</span><span class="p">().</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">demos</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="c1">// extend the global object &quot;p&quot; with the returned data</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">demos</span><span class="p">.</span><span class="nx">graph</span><span class="p">.</span><span class="nx">prefix</span><span class="p">(</span><span class="s1">&#39;foaf&#39;</span><span class="p">,</span> <span class="s1">&#39;http://xmlns.com/foaf/0.1/&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">prefix</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.w3.org/2006/vcard/ns#&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">prefix</span><span class="p">(</span><span class="s1">&#39;rdf&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?r v:n ?n&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?n rdf:type v:Name&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?n v:given-name ?givenName&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?n v:family-name ?familyName&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?r foaf:gender ?gender&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?r v:bday ?birthday&#39;</span><span class="p">)</span>
+                             <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+            <span class="c1">// signal that this Deferred object is now &quot;resolved&quot;</span>
+            <span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+          <span class="p">});</span>
+
+          <span class="c1">// return a Promise object used by the observer </span>
+          <span class="k">return</span> <span class="nx">dfd</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+      <span class="p">};</span>
+
+      <span class="kd">var</span> <span class="nx">get_labs</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">dfd</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+          <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_lab_results</span><span class="p">().</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">labs</span><span class="p">){</span>
+              <span class="nx">labs</span><span class="p">.</span><span class="nx">graph</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?l rdf:type sp:LabResult&quot;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?l sp:labName ?ln&quot;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?ln sp:code &lt;http://loinc.org/codes/30522-7&gt;&quot;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?l sp:quantitativeResult ?qr&quot;</span><span class="p">)</span> <span class="c1">// predicate</span>
+                  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?qr rdf:type sp:QuantitativeResult&quot;</span><span class="p">)</span> <span class="c1">// type</span>
+                  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?qr sp:valueAndUnit ?vu&quot;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?vu sp:value ?v&quot;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hsCRP</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">v</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="p">})</span>
+
+              <span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+          <span class="p">});</span>
+
+          <span class="k">return</span> <span class="nx">dfd</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+      <span class="p">}</span>
+
+      <span class="p">...</span>
+
+      <span class="nx">SMART</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="c1">// when the Promise objects of these two asynchronous functions</span>
+          <span class="c1">// report that they both are in either the &quot;resolved&quot; or &quot;rejected&quot;</span>
+          <span class="c1">// state, execute the callback function to draw the visualization</span>
+          <span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">get_demographics</span><span class="p">(),</span> <span class="nx">get_labs</span><span class="p">()).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">draw_visualization</span><span class="p">();</span>
+          <span class="p">});</span>
+      <span class="p">});</span>
+</code></pre></div>
+
+<h3>A Shorter Syntax</h3>
+
+<p>The get_demographics() and get_labs() functions above can also be written using
+a more compact (but equivalent) syntax:</p>
+
+<div class="highlight"><pre><code class="javascript"> <span class="kd">var</span> <span class="nx">get_demographics</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// using the shorter $.Deferred(fn).promise() signature</span>
+  <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">dfd</span><span class="p">){</span>
+    <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_demographics</span><span class="p">().</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">demos</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">demos</span><span class="p">.</span><span class="nx">graph</span><span class="p">.</span><span class="nx">prefix</span><span class="p">(</span><span class="s1">&#39;foaf&#39;</span><span class="p">,</span> <span class="s1">&#39;http://xmlns.com/foaf/0.1/&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">prefix</span><span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.w3.org/2006/vcard/ns#&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">prefix</span><span class="p">(</span><span class="s1">&#39;rdf&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?r v:n ?n&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?n rdf:type v:Name&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?n v:given-name ?givenName&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?n v:family-name ?familyName&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?r foaf:gender ?gender&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;?r v:bday ?birthday&#39;</span><span class="p">)</span>
+                     <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+      <span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+    <span class="p">});</span>
+  <span class="p">}).</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<h3>Further Reading</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/category/deferred-object/">Deferred Object</a> in jQuery&#39;s API docs</li>
+<li><a href="http://www.erichynds.com/jquery/using-deferreds-in-jquery/">Eric Hynds&#39; article</a> for a further explanation and examples</li>
+</ul>
+
+        </div><!--span8-->
+
+        <div class="span1">
+            <!-- empty column for right margin -->
+            &nbsp;
+        </div><!--span1-->
+      </div><!--row-->
+
+    
+<hr>
+
+<div class='footer-row'>
+    <img class='smartbug' src='/assets/img/smart-bug.png' style='height: 20px; width: 22px; padding-right: 4px;'>
+    <a href='http://smartplatforms.org'>SMARTPlatforms.org</a> &copy; 2013
+</div>
+
+
+    </div><!--/.fluid-container-->
+  </body>
+</html>
+
