@@ -242,7 +242,7 @@
         </div><!--span3-->
 
         <div class="span9">
-          <h2>SMART REST API</h2>
+          <h1>SMART REST API Overview</h1>
 
 <div class="well">
   <p>N.B. This is highly preliminary, not a commitment or final
@@ -250,13 +250,11 @@
   for internal collaboration and preview purposes.</p>
 </div>
 
-<h3>Overview</h3>
-
 <p>The SMART API provides access to individual resources (medications, fulfillment
 events, prescription events, problems, etc.) and groups of these resources in a
 <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> API.</p>
 
-<h3>REST Design Principles</h3>
+<h2>REST Design Principles</h2>
 
 <p>In general you can interact with a:</p>
 
@@ -273,14 +271,14 @@ events, prescription events, problems, etc.) and groups of these resources in a
 </ul></li>
 </ul>
 
-<h3>OWL Ontology File</h3>
+<h2>OWL Ontology File</h2>
 
 <p>The API calls listed below, as well as the RDF/XML payloads, are also
 defined in a machine-readable OWL file. The OWL file has been used to
 generate the documentation below, as well as our client-side REST
 libraries and API Playground app.</p>
 
-<h3>Call Scopes</h3>
+<h2>Call Scopes</h2>
 
 <p>Each <code>GET</code> call in the SMART REST API is listed below and grouped by the
 &quot;scope&quot; or &quot;access control category&quot; the SMART container applies to the
@@ -310,12 +308,165 @@ access token. (Future versions of the SMART API may allow an app to
 read another&#39;s preferences or add a &quot;global&quot; set of user preferences.) </p></li>
 </ol>
 
-<hr>
+<h2>Filters</h2>
+
+<p>The SMART API offers a basic filtering capability to narrow down large clinical
+statement result sets on the server before returning data to the client. As of
+SMART 0.6, for all API calls that return multiple SMART Clinical Statements
+(e.g. <code>GET /records/xxx/lab_results</code>), you can attach date filters if relevant
+to the returned data type, and in a few select cases other datatype specific
+filters (such as LOINC codes on lab results) as URL parameters.</p>
+
+<h3>Common Date Filters</h3>
+
+<p>All SMART API calls for clinical statements that have a <code>date</code> or <code>startDate</code>
+attribute can now be filtered on those attributes by sending the following
+query parameters in the request.</p>
+
+<p>Note: even if the data includes an <code>endDate</code>, it is not used by any of
+the current filters.</p>
 
 <ul>
-<li>Query Filters</li>
-<li>OAuth Guide</li>
+<li><code>date_from</code></li>
+<li><code>date_from_excluding</code></li>
+<li><code>date_from_including</code></li>
+<li><code>date_to</code></li>
+<li><code>date_to_excluding</code></li>
+<li><code>date_to_including</code></li>
 </ul>
+
+<h3>Statement Specific Filters</h3>
+
+<p>The following calls have additional filters:</p>
+
+<ul>
+<li><p><a href="/framework/models/#Lab_Result">Lab Results</a>: <code>loinc</code> &mdash; a
+pipe-separated LOINC codes. e.g. <code>loinc=29571-7|38478-4</code></p></li>
+<li><p><a href="/framework/models/#Vital_Sign_Set">Vital Sign Sets</a>: <code>encounter_type</code>
+&mdash; a pipe-separated encounter types. e.g. <code>encounter_type=ambulatory</code></p></li>
+<li><p><a href="/framework/models/#Medication">Medications</a>: <code>rxnorm</code> &mdash; a
+pipe-separated list of RXNORM codes. e.g. <code>rxnorm=856845</code></p></li>
+<li><p><a href="/framework/models/#Problem">Problems</a>: <code>snomed</code> &mdash; a pipe-seperated
+list of SNOMED codes. e.g. <code>snomed=161891005</code></p></li>
+<li><p><a href="/framework/models/#Procedure">Procedures</a>: <code>snomed</code> &mdash; a
+pipe-seperated list of SNOMED codes. e.g. <code>snomed=161891005</code></p></li>
+</ul>
+
+<h3>Default Sort Order and Paginating Results</h3>
+
+<p>Each SMART API call that returns sets of Clinical Statements now have a default
+sort order defined for them based on either the <code>date</code> or <code>startDate</code>
+attribute. The previously defined <code>offset</code> parameter has been removed. This
+requires a change in an app&#39;s pagination strategy to use date filters, the
+<code>limit</code> parameter, and the metadata in the <code>ResponseSummary</code> to paginate
+results.  See also <code>resultsReturned</code> and <code>totalResultCount</code> in the
+<code>ResponseSummary</code> object in the next section.</p>
+
+<p>The default behavior of any call is to return all results, if no limit is
+supplied in the request.</p>
+
+<h3>Response Summary</h3>
+
+<p>To complement the filtering and pagination API, each query response
+includes a simple <code>api:ResponseSummary</code> object that looks like this:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;rdf:Description rdf:nodeID=&quot;Naa3f4ca7b6024d6ab616aa31fa5ab528&quot;&gt;
+    &lt;api:processingTimeMs rdf:datatype=&quot;http://www.w3.org/2001/XMLSchema#integer&quot;&gt;19&lt;/api:processingTimeMs&gt;
+    &lt;rdf:type rdf:resource=&quot;http://smartplatforms.org/terms/api#ResponseSummary&quot;/&gt;
+    &lt;api:resultsReturned rdf:datatype=&quot;http://www.w3.org/2001/XMLSchema#integer&quot;&gt;2&lt;/api:resultsReturned&gt;
+    &lt;api:totalResultCount rdf:datatype=&quot;http://www.w3.org/2001/XMLSchema#integer&quot;&gt;2&lt;/api:totalResultCount&gt;
+    &lt;api:resultOrder rdf:nodeID=&quot;Nff3cac65263543dfa82450b51355c031&quot;/&gt;
+  &lt;/rdf:Description&gt;
+</code></pre></div>
+<h3>An Javascript Example for Filtering Lab Results</h3>
+
+<p>For this example, we&#39;ll be using the SMART JSON-LD interface described
+<a href="/framework/json-ld.html">here</a> to the SMART Connect Javascript library.</p>
+
+<p>To start let&#39;s set up a query with the following parameters:</p>
+
+<ul>
+<li><p>Filter the labs to find this patient&#39;s LDL results. LDL&#39;s have three
+LOINC codes that differ only in the method used to find the result. We&#39;ll
+make a pipe (|) seperated string of these codes: <code>&quot;13457-7|2089-1|18262-6&quot;</code></p></li>
+<li><p>Find the results from 2010-01-01 to 2012-01-01 using the <code>&quot;date_from&quot;</code>
+and <code>&quot;date_to&quot;</code> parameters.</p></li>
+<li><p>Lastly, let&#39;s restrict the number of returned results to a &quot;page&quot; of
+10 results by setting the <code>limit</code> parameter to <code>10</code>. To fetch the next
+&quot;page&quot; of ten results, your code would update the <code>date_from</code> query
+parameter to the value of the last result returned from the previous
+call and keep the limit at <code>10</code>.</p></li>
+</ul>
+
+<p>The parameters above are passed to the <code>get_lab_results</code> call as
+a standard Javascript object and the results are passed to your
+callback function in the same way as the other API calls:</p>
+
+<div class="highlight"><pre><code class="javascript">    <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_lab_results</span><span class="p">({</span>
+        <span class="s1">&#39;date_from&#39;</span><span class="o">:</span> <span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date_to&#39;</span><span class="o">:</span>   <span class="s1">&#39;2012-01-01&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;loinc&#39;</span><span class="o">:</span>     <span class="s1">&#39;13457-7|2089-1|18262-6&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;limit&#39;</span><span class="o">:</span>     <span class="mi">10</span><span class="p">,</span>
+        <span class="s1">&#39;offset&#39;</span><span class="o">:</span>    <span class="mi">0</span>
+    <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">r</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">ldls</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">objects</span><span class="p">.</span><span class="nx">of_type</span><span class="p">.</span><span class="nx">LabResult</span><span class="p">;</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">ldls</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">ldl</span><span class="p">){</span>
+            <span class="c1">// ouput each lab to the console</span>
+            <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">ldl</span><span class="p">.</span><span class="nx">dcterms__date</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">ldl</span><span class="p">.</span><span class="nx">quantitativeResult</span><span class="p">.</span><span class="nx">valueAndUnit</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">unit</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">quantitativeResult</span><span class="p">.</span><span class="nx">valueAndUnit</span><span class="p">.</span><span class="nx">unit</span><span class="p">;</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;LDL result: &#39;</span><span class="p">,</span> <span class="nx">date</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">unit</span><span class="p">);</span>
+        <span class="p">})</span>
+
+        <span class="c1">// view the responseSummary object</span>
+        <span class="kd">var</span> <span class="nx">rs</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">objects</span><span class="p">.</span><span class="nx">of_type</span><span class="p">.</span><span class="nx">ResponseSummary</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;resultsReturned&#39;</span><span class="p">,</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">resultsReturned</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;totalResultCount&#39;</span><span class="p">,</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">totalResultCount</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;nextPageURL&#39;</span><span class="p">,</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">nextPageURL</span><span class="p">);</span>
+    <span class="p">})</span>
+</code></pre></div>
+
+<h2>Preferences and Scratchpad API</h2>
+
+<p>The SMART preferences and scratchpad APIs provide a facility that SMART apps
+can use to persist data about the application and user preferences, notes about
+the patient record, and other pertinant data. While the two APIs are similar,
+they have different intent and therefore a different scope. In both instances,
+SMART does not mandate a speific format for the data stored, only that it can
+be serialized in unicode. Each app is responsible for choosing an appropriate
+serialization format for its data.</p>
+
+<h3>Preferences API</h3>
+
+<p>The preferences API provides a way for your app to store data within the SMART
+container automatically scoped on per user and app basis. The data can be
+stored in any format that makes sense to the app. In the SMART Connect client,
+you can now call the <code>get_user_preferences</code>, <code>put_user_preferences</code>, and
+<code>delete_user_preferences</code> methods. For the put methods you will have to provide
+a MIME content type for the data that you are storing within the container.</p>
+
+<h3>Scratchpad API</h3>
+
+<p>The SMART 0.6 Scratchpad API enables SMART apps to store data pertaining to a
+patient record in free form format. This is, the app decides on the format of
+the data that it wants to store (self-structured) making the data opaque to the
+container. All SMART apps are allowed read access to the scratchpad data for
+the in-scope patient of all other apps, which provides a basic interoperability
+facility accross apps.</p>
+
+<p>Because a SMART app has access to the scratchpad that it owns regardless of the
+user who runs it, there is always the possibility that a user overwrites the
+data stored by another user. A container is free to implement collision
+detection support for its scratchpad facilities.</p>
+
+<p><em>Note:</em> The SMART reference implementation scratchpad is not collision-safe.
+Data may be lost by multiple copies of an app trying to write in parallel.
+Production implementations are encouraged to implement a system that will, for
+example, provide locks and dirty-state notification via HTTP error codes to
+apps writing to the scratchpad.</p>
+
+<p><br> <br> <br></p>
+
+<h1>The API</h1>
 
 
           <hr>

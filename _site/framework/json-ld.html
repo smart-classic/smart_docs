@@ -111,13 +111,13 @@
         </div><!--span3-->
 
         <div class="span8">
-          <h1>The SMART JSON-LD API</h1>
+          <h2>The SMART JSON-LD API</h2>
 
 <p>The SMART JSON-LD API provides an additional interface to the SMART datamodel
 based on Javascript objects in addition to the RDF/XML and the SPARQL
 interface. SMART&#39;s RDF-based interface will remain available for use as well.</p>
 
-<h1>What is JSON?</h1>
+<h3>What is JSON?</h3>
 
 <p><a href="http://json.org">JSON</a> is the highly popular lightweight data serialization and
 interchange format based on a simplified subset of Javascript objects.  It&#39;s a
@@ -126,7 +126,7 @@ valid Javascript objects so all Javascript tools and libraries &mdash;
 including tools already built into most browsers &mdash; can be used to examine
 and manipulate them. We&#39;ll see examples of this below.</p>
 
-<h1>What is JSON-LD?</h1>
+<h3>What is JSON-LD?</h3>
 
 <p><a href="http://en.wikipedia.org/wiki/Linked_data">Linked Data</a> is the idea that to be truly useful data should be
 described in 1) standardized formats and 2) should be linked to other
@@ -139,7 +139,7 @@ JSON-LD objects or even querying for them, since the SMART JavaScript
 client library will provide you with JSON-LD objects automatically
 each time you make usual API calls like <code>get_MEDICATIONS()</code>.</p>
 
-<h1>A SMART JSON-LD Object</h1>
+<h3>A SMART JSON-LD Object</h3>
 
 <p>Here is a simplified example of the SMART <code>get_medications</code> API call
 returning a JSON-LD Object as used by the SMART Diabetes Monograph app:</p>
@@ -191,7 +191,7 @@ to the SMART data model for a <a href="http://dev.smartplatforms.org/reference/d
     <span class="p">}</span>
 </code></pre></div>
 
-<h2>The SMART Convention for Property Names</h2>
+<h3>The SMART Convention for Property Names</h3>
 
 <p>There is a strict correspondence between the <a href="http://dev.smartplatforms.org/reference/data_model/">SMART datamodel</a> and the
 naming of the properties of SMART JSON-LD objects. In the example above,
@@ -220,7 +220,7 @@ coding system that defines the <code>identifier</code>. In this case the
 <code>system</code> is a URI for the RXNORM drug vocabulary.</li>
 </ol>
 
-<h1>A Complete Example: Got Statins? with JSON-LD</h1>
+<h3>A Complete Example: Got Statins? with JSON-LD</h3>
 
 <p>Here is a rewrite of the <a href="/howto/got_statins">Got Statins?</a> app using the SMART JSON-LD API
 improvements from the original RDF/XML and SPARQL version are noted in
@@ -286,7 +286,7 @@ the comments.</p>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre></div>
 
-<h1>Learning More</h1>
+<h3>Learning More</h3>
 
 <p>SMART&#39;s JSON-LD API gives you as a web developer an natural, familiar,
 and interactively discoverable interface to SMART patient data. You can
