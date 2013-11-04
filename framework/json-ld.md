@@ -3,13 +3,13 @@ layout: framework
 title: The SMART JSON-LD API
 ---
 
-# The SMART JSON-LD API
+## The SMART JSON-LD API
 
 The SMART JSON-LD API provides an additional interface to the SMART datamodel
 based on Javascript objects in addition to the RDF/XML and the SPARQL
 interface. SMART's RDF-based interface will remain available for use as well.
 
-# What is JSON?
+### What is JSON?
 
 [JSON][] is the highly popular lightweight data serialization and
 interchange format based on a simplified subset of Javascript objects.  It's a
@@ -21,7 +21,7 @@ and manipulate them. We'll see examples of this below.
 [JSON]: http://json.org
 
 
-# What is JSON-LD?
+### What is JSON-LD?
 
 [Linked Data][] is the idea that to be truly useful data should be
 described in 1) standardized formats and 2) should be linked to other
@@ -38,7 +38,7 @@ each time you make usual API calls like `get_MEDICATIONS()`.
 [JSON-LD]:     http://json-ld.org
 
 
-# A SMART JSON-LD Object
+### A SMART JSON-LD Object
 
 Here is a simplified example of the SMART `get_medications` API call
 returning a JSON-LD Object as used by the SMART Diabetes Monograph app:
@@ -94,7 +94,7 @@ to the SMART data model for a [medication][].
     }
 {% endhighlight %}
 
-## The SMART Convention for Property Names
+### The SMART Convention for Property Names
 
 There is a strict correspondence between the [SMART datamodel][] and the
 naming of the properties of SMART JSON-LD objects. In the example above,
@@ -126,7 +126,7 @@ required properties:
 [code]: http://dev.smartplatforms.org/reference/data_model/#Code
 
 
-# A Complete Example: Got Statins? with JSON-LD
+### A Complete Example: Got Statins? with JSON-LD
 
 Here is a rewrite of the [Got Statins?][] app using the SMART JSON-LD API
 improvements from the original RDF/XML and SPARQL version are noted in
@@ -196,7 +196,7 @@ the comments.
 [Got Statins?]: /howto/got_statins
 
 
-# Learning More
+### Learning More
 
 SMART's JSON-LD API gives you as a web developer an natural, familiar,
 and interactively discoverable interface to SMART patient data. You can
