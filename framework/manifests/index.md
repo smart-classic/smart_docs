@@ -97,7 +97,7 @@ tutorial](/guide/tutorials/smart_rest.html)
 
 The API Verifier app has a facility for validating SMART manifests. You can
 either launch the app on the sandbox container or in standalone mode from this
-URL `http://apiverifier.smartplatforms.org/smartapp/index.html`. Click on the
+URL <http://apiverifier.smartplatforms.org/smartapp/index.html>. Click on the
 "Manifest" tab, copy in your manifest's text, then click the "Validate" button
 to validate.
 
