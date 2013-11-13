@@ -46,7 +46,25 @@ provides maps for translation between ICD-9-CM and SNOMED-CT
 
 ### RDF vs JSON
 
-(add discussion points here)
+RDF is the insternal format in which SMART structures the patient records data.
+A SMART server instance responds to REST API calls for medical data with RDF
+serialized as RDF-XML. The XML data received from SMART is typically non-deterministic
+in nature (i.e. it can change with each request on the same data element, even
+when the underlying patient data remains constant). This is because RDF-XML is 
+a projection (flat representation) of a the RDF graph structure expressing the 
+patient record. In the SMART reference container the patient RDF graph is stored in a
+specialized triple store engine. Because the serialization of the RDF as RDF-XML
+is perfomed at the triple store level, it is the result of the store's graph walk
+algorithm which favors speed over predictive order of results. Thus, every time
+the RDF-XML is produced by the server, it will be different from the preceeding runs.
+
+Developers used to working with XML may be tempted to view the RDF-XML as a typical
+XML payload and apply pattern recognition strategies (XPath, XQuery, XSLT, etc) to
+extract data from it. Unfortunately, the non-deterministic nature of this XML payload
+breaks the assumptions of these approaches rendering them useless. The correct way to
+work with RDF-XML is to use an RDF parser which reconstructs the patient graph in a data
+structure that can be querried with SPARQL, the query language for RDF graphs. This approach
+requires a non-cursory level of understnading of RDF that is not common amongst developers.
 
 ### Partial Implementations
 
