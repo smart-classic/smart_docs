@@ -3,6 +3,7 @@ layout: framework
 title: SMART - iOS Client
 ---
 
-TODO
+## SMART iOS Client Framework
 
-Lorem ipsum dolor sit amet.
+See the README file of the [SMART iOS Framework
+repository](https://github.com/chb/SMARTFramework-ios)
