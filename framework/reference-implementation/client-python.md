@@ -14,7 +14,6 @@ title: SMART - Python Client
     <a href='/guide/tutorials/smart_rest.html'>SMART REST App tutorial</a>
     to understand when you might want to use this library.
   </p>
-    {% include githublink %}
 </div>
 
 
