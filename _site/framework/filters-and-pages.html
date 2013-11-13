@@ -111,49 +111,47 @@
         </div><!--span3-->
 
         <div class="span8">
-          <h1>Query Filtering and Pagination</h1>
+          <h2>Query Filtering and Pagination</h2>
 
-<p>(TODO: check links)</p>
+<p>Note: Read the filtering and pagination section of the <a href="/framework/api/">API
+reference</a> before reading this tutorial to get familiar with
+it first.</p>
 
-<p>Note: Read the filtering and pagination <a href="/reference/filters/">reference</a>
-before reading this tutorial to familiarize youself with the details.</p>
+<p>The SMART API now has the ability to return filtered and paginated data for all
+clinical statement data types. Both the SMART REST and SMART Connect APIs
+expose this functionality, and adding filtering and paging to your queries is a
+simple matter of adding a few query parameters to your SMART API calls. By
+default all results of the requested type in the record are returned in the
+default sort order based on the <code>date</code> or <code>startDate</code> attribute of the data. In
+addition, a <code>responseSummary</code> object provides your callback functions a set of
+useful metadata that can be used to make further calls.</p>
 
-<p>The SMART API now has the ability to return filtered and paginated data
-for all clinical statement data types. Both the SMART REST and SMART
-Connect APIs expose this functionality, and adding filtering and paging
-to your queries is a simple matter of adding a few query parameters to
-your SMART API calls. By default all results of the requested type in
-the record are returned in the default sort order based on the <code>date</code> or
-<code>startDate</code> attribute of the data. In addition, a <code>responseSummary</code>
-object provides your callback functions a set of useful metadata that
-can be used to make further calls.</p>
+<p>We&#39;ll demonstrate this using the SMART Connect JSON-LD API and give an brief
+code sample for the SMART REST Python client as well.</p>
 
-<p>We&#39;ll demonstrate this using the SMART Connect JSON-LD API and give an
-brief code sample for the SMART REST Python client as well.</p>
+<h2>A Javascript Example for Filtering Lab Results</h2>
 
-<h2>An Javascript Example for Filtering Lab Results</h2>
-
-<p>For this example, we&#39;ll be using the SMART JSON-LD interface described
-<a href="../intro_to_jsonld/">here</a> to the SMART Connect Javascript library.</p>
+<p>For this example, we&#39;ll be using the SMART <a href="/framework/json-ld.html">JSON-LD
+interface</a> to the SMART Connect Javascript library.</p>
 
 <p>To start let&#39;s set up a query with the following parameters:</p>
 
 <ul>
-<li><p>Filter the labs to find this patient&#39;s LDL results. LDL&#39;s have three
-LOINC codes that differ only in the method used to find the result. We&#39;ll
-make a pipe (|) seperated string of these codes: <code>&quot;13457-7|2089-1|18262-6&quot;</code></p></li>
-<li><p>Find the results from 2010-01-01 to 2012-01-01 using the <code>&quot;date_from&quot;</code>
-and <code>&quot;date_to&quot;</code> parameters.</p></li>
-<li><p>Lastly, let&#39;s restrict the number of returned results to a &quot;page&quot; of
-10 results by setting the <code>limit</code> parameter to <code>10</code>. To fetch the next
-&quot;page&quot; of ten results, your code would update the <code>date_from</code> query
-parameter to the value of the last result returned from the previous
-call and keep the limit at <code>10</code>.</p></li>
+<li><p>Filter the labs to find this patient&#39;s LDL results. LDL&#39;s have three LOINC
+codes that differ only in the method used to find the result. We&#39;ll make a
+pipe (|) seperated string of these codes: <code>&quot;13457-7|2089-1|18262-6&quot;</code></p></li>
+<li><p>Find the results from 2010-01-01 to 2012-01-01 using the <code>&quot;date_from&quot;</code> and
+<code>&quot;date_to&quot;</code> parameters.</p></li>
+<li><p>Lastly, let&#39;s restrict the number of returned results to a &quot;page&quot; of 10
+results by setting the <code>limit</code> parameter to <code>10</code>. To fetch the next &quot;page&quot; of
+ten results, your code would update the <code>date_from</code> query parameter to the
+value of the last result returned from the previous call and keep the limit
+at <code>10</code>.</p></li>
 </ul>
 
-<p>The parameters above are passed to the <code>get_lab_results</code> call as
-a standard Javascript object and the results are passed to your
-callback function in the same way as the other API calls:</p>
+<p>The parameters above are passed to the <code>get_lab_results</code> call as a standard
+Javascript object and the results are passed to your callback function in the
+same way as the other API calls:</p>
 
 <div class="highlight"><pre><code class="javascript">    <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_lab_results</span><span class="p">({</span>
         <span class="s1">&#39;date_from&#39;</span><span class="o">:</span> <span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span>
@@ -170,7 +168,7 @@ callback function in the same way as the other API calls:</p>
             <span class="kd">var</span> <span class="nx">unit</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">quantitativeResult</span><span class="p">.</span><span class="nx">valueAndUnit</span><span class="p">.</span><span class="nx">unit</span><span class="p">;</span>
             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;LDL result: &#39;</span><span class="p">,</span> <span class="nx">date</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">unit</span><span class="p">);</span>
         <span class="p">})</span>
-      
+
         <span class="c1">// view the responseSummary object</span>
         <span class="kd">var</span> <span class="nx">rs</span> <span class="o">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">objects</span><span class="p">.</span><span class="nx">of_type</span><span class="p">.</span><span class="nx">ResponseSummary</span><span class="p">;</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;resultsReturned&#39;</span><span class="p">,</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">resultsReturned</span><span class="p">);</span>
