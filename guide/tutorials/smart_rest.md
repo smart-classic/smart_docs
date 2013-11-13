@@ -4,7 +4,7 @@ title: SMART - REST App Tutorial
 ---
 
 # SMART REST App Tutorial
-(currently from old documentation site)
+(TODO: currently from old documentation site)
 
 # Server to Server Authentication
 
