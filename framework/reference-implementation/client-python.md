@@ -11,8 +11,8 @@ title: SMART - Python Client
   </p>
   <p>
     You will want to read the
-    <a href='/howto/build_a_rest_app/'>SMART REST HOWTO</a> to understand when
-    you might want to use this library.
+    <a href='/guide/tutorials/smart_rest.html'>SMART REST App tutorial</a>
+    to understand when you might want to use this library.
   </p>
     {% include githublink %}
 </div>
@@ -130,8 +130,8 @@ Reference EMR Sandbox, you'll want to use:
 }
 {% endhighlight  %}
 
-See the warning about setting a strong `consumer_secret`
-[here](/howto/build_a_rest_app)
+See the warning about setting a strong `consumer_secret` in
+production [here](/guide/tutorials/smart_rest.html#consumer_secret_warning)
 
 
 ## Call Authorization

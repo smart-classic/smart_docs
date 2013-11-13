@@ -128,9 +128,9 @@ required properties:
 
 ### A Complete Example: Got Statins? with JSON-LD
 
-Here is a rewrite of the [Got Statins?][] app using the SMART JSON-LD API
-improvements from the original RDF/XML and SPARQL version are noted in
-the comments.
+Here is a rewrite of the Got Statins? sample app using the SMART JSON-LD API
+improvements from the original RDF/XML and SPARQL version are noted in the
+comments.
 
 {% highlight html %}
 <!DOCTYPE html>
@@ -192,8 +192,6 @@ the comments.
   </body>
 </html>
 {% endhighlight %}
-
-[Got Statins?]: /howto/got_statins
 
 
 ### Learning More

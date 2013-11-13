@@ -13,7 +13,8 @@ API.</div>
 This document describes the SMART Java Client Library, which you can use from a
 Java application to make authenticated REST calls into a SMART container.
 
-You probably want to read the [SMART REST HOWTO][] to better understand when you
+You probably want to read the [SMART REST
+tutorial](/guide/tutorials/smart_rest.html) first to better understand when you
 might want to use this library.
 
 
@@ -118,7 +119,7 @@ approach is to define these parameters in your servlet's `web.xml` (with the
 consumer token and secret set to our pre-defined "My App" values):
 
 (but be sure to heed the warning about using the consumer_secret in
-production [here](/howto/build_a_rest_app/#consumer_secret_warning))
+production [here](/guide/tutorials/smart_rest.html#consumer_secret_warning))
 
 {% highlight xml %}
 
@@ -174,7 +175,7 @@ Then, in your app's code you can say:
 In order to get data from a patient record, you'll need to obtain a record-based
 access token and secret. For background details about how an access token and
 secret are supplied to your app in the `oauth_header` URL parameter see
-the [SMART REST HOWTO][].
+the [SMART REST tutorial](/guide/tutorials/smart_rest.html).
 
 If you're responding to a `javax.servlet.doGet()` method, you can use the
 following method to extract an access token and secret from the request:

@@ -122,7 +122,8 @@ API.</div>
 <p>This document describes the SMART Java Client Library, which you can use from a
 Java application to make authenticated REST calls into a SMART container.</p>
 
-<p>You probably want to read the [SMART REST HOWTO][] to better understand when you
+<p>You probably want to read the <a href="/guide/tutorials/smart_rest.html">SMART REST
+tutorial</a> first to better understand when you
 might want to use this library.</p>
 
 <h2>Setting Up Your Environment</h2>
@@ -219,7 +220,7 @@ approach is to define these parameters in your servlet&#39;s <code>web.xml</code
 consumer token and secret set to our pre-defined &quot;My App&quot; values):</p>
 
 <p>(but be sure to heed the warning about using the consumer_secret in
-production <a href="/howto/build_a_rest_app/#consumer_secret_warning">here</a>)</p>
+production <a href="/guide/tutorials/smart_rest.html#consumer_secret_warning">here</a>)</p>
 
 <div class="highlight"><pre><code class="xml">    <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
     <span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">&quot;http://java.sun.com/xml/ns/javaee&quot;</span>
@@ -268,7 +269,7 @@ production <a href="/howto/build_a_rest_app/#consumer_secret_warning">here</a>)<
 <p>In order to get data from a patient record, you&#39;ll need to obtain a record-based
 access token and secret. For background details about how an access token and
 secret are supplied to your app in the <code>oauth_header</code> URL parameter see
-the [SMART REST HOWTO][].</p>
+the <a href="/guide/tutorials/smart_rest.html">SMART REST tutorial</a>.</p>
 
 <p>If you&#39;re responding to a <code>javax.servlet.doGet()</code> method, you can use the
 following method to extract an access token and secret from the request:</p>

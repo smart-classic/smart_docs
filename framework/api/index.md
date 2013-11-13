@@ -42,10 +42,8 @@ libraries and API Playground app.
 Each `GET` call in the SMART REST API is listed below and grouped by the
 "scope" or "access control category" the SMART container applies to the
 call. The SMART container implements this access control using the OAuth
-tokens passed in with each API request as described in the [build a REST
-App howto][]. TODO
-
-[build a REST app howto]: /howto/build_a_rest_app/
+tokens passed in with each API request as described in the [SMART REST
+App tutorial](/guide/tutorials/smart_rest.html).
 
 Currently there are three "scopes" or access control categories:
 
