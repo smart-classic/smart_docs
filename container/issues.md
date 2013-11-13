@@ -46,7 +46,7 @@ provides maps for translation between ICD-9-CM and SNOMED-CT
 
 ### RDF vs JSON
 
-RDF is the insternal format in which SMART structures the patient records data.
+RDF is the internal format in which SMART structures the patient records data.
 A SMART server instance responds to REST API calls for medical data with RDF
 serialized as RDF-XML. The XML data received from SMART is typically non-deterministic
 in nature (i.e. it can change with each request on the same data element, even
@@ -65,6 +65,16 @@ breaks the assumptions of these approaches rendering them useless. The correct w
 work with RDF-XML is to use an RDF parser which reconstructs the patient graph in a data
 structure that can be querried with SPARQL, the query language for RDF graphs. This approach
 requires a non-cursory level of understnading of RDF that is not common amongst developers.
+
+As an alternative to RDF SMART when using the SMART Connect JavaScript client, the SMART
+app developers have the option of fetching the patient data in JSON fromat which could
+be a more familiar structure to many. One advantage of JSON over RDF is that the JSON
+representation of the patient record is predictable (i.e. deterministic). Also,
+by using the JSON structure available in the SMART Connect client response objects,
+there is no need to learn SPARQL. The disadvantage over RDF though is that the JSON
+object is not as well adapted to use with logic reasoners as the RDF graph would be
+and also not as flexible to extend. This said, developers should try both approaches
+and pick the one which works better for their needs and style.
 
 ### Partial Implementations
 
