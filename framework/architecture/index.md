@@ -67,7 +67,9 @@ data includes patient and provide context information, as well as medical
 record elements such as medications and lab results. We will look at each one
 of these components in more detail.
 
-(TODO: insert diagram)
+<div style='text-align: center'>
+  <img src="/assets/img/ui-components.png" style="width: 70%;height: 70%;">
+</div>
 
 This diagram illustrates the container's UI component in a browser window. The
 white portion of the screen is the UI that the container provides, which allow
