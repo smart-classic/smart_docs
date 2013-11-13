@@ -5,11 +5,7 @@ title: SMART - Container Development
 
 ## Container Development
 
-TODO
-
-- need to write about ref cont / ref imp in context of container dev
-- need to add page about manifests?
-- add new ref imp page?
+TODO: need to add page about container manifests
 
 * [Roadmap for development](roadmap.html)
 * [Sample container tutorial](tutorial.html)
