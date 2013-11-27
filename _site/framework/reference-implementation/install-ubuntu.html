@@ -215,7 +215,7 @@ tomcat configuration changes:</p>
 
 <ul>
 <li><p>in <code>/var/lib/tomcat7/conf/context.xml</code> add within the <code>&lt;Context&gt;</code> element:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;Valve className=&quot;org.apache.catalina.valves.RemoteHostValve&quot; allow=&quot;localhost&quot;/&gt;
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;Valve className=&quot;org.apache.catalina.valves.RemoteHostValve&quot; allow=&quot;localhost|ip6\-localhost|127\.0\.0\.1&quot;/&gt;
 </code></pre></div></li>
 <li><p>and in <code>/var/lib/tomcat7/conf/server.xml</code> next to the other <code>&lt;Connector&gt;</code> elements:</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; enableLookups=&quot;true&quot;&gt;
