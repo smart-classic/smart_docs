@@ -111,7 +111,7 @@ tomcat configuration changes:
 
 * in `/var/lib/tomcat7/conf/context.xml` add within the `<Context>` element:
 
-        <Valve className="org.apache.catalina.valves.RemoteHostValve" allow="localhost"/>
+        <Valve className="org.apache.catalina.valves.RemoteHostValve" allow="localhost|ip6\-localhost|127\.0\.0\.1"/>
 
 * and in `/var/lib/tomcat7/conf/server.xml` next to the other `<Connector>` elements:
 
