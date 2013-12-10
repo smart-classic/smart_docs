@@ -74,63 +74,75 @@
 <li class='nav-type'><a href='/guide/tutorials/smart_standalone.html'>SMART Standalone Apps</a></li>
 
 
+<li class='nav-header'>Client Libraries</li>
+
+<li class='nav-type'><a href='/guide/client-libs/client-js.html'>JavaScript</a></li>
+
+<li class='nav-type'><a href='/guide/client-libs/client-python.html'>Python</a></li>
+
+<li class='nav-type'><a href='/guide/client-libs/client-ios.html'>iOS</a></li>
+
+<li class='nav-type'><a href='/guide/client-libs/client-java.html'>Java</a></li>
+
+<li class='nav-type'><a href='/guide/client-libs/client-dotnet.html'>.NET</a></li>
+
 
             </ul>
           </div>
         </div><!--span3-->
 
         <div class="span8">
-          <h1>SMART REST App Tutorial</h1>
+          <p>TODO: being re-worked -- AKS</p>
 
-<p>(TODO: currently from old documentation site)</p>
+<p>This tutorial will walk you through creating a SMART app that communicates
+with a SMART container over the REST API.</p>
 
-<h1>Server to Server Authentication</h1>
+<h2>SMART Connect vs. SMART REST</h2>
 
-<p>When your app was making JavaScript API calls, authentication and authorization
-were entirely transparent to you, the app builder, because the SMART Container
-was able to take care of it all: the JavaScript API call simply notified the
-outer frame of the data request, and the outer frame knows who the logged-in
-user is and what medical record they&#39;re currently considering.</p>
+<p>When you were using the SMART Connect JavaScript API most of the low level work
+of authentication and authorization was done for you by the container.  The
+container already knew that the user using the app was properly logged in and
+that they had the right to access the current medical record. But what about
+(server) apps that aren&#39;t embedded in the UI of the container? That&#39;s where
+SMART REST (and this tutorial) comes in.</p>
 
-<p>Now, we consider the case where you want the backend of your app to obtain data
-directly from the SMART Container, e.g. the SMART Reference EMR, using the REST
-API. In that case, the SMART Container doesn&#39;t know a-priori who is making the
-call and whether they&#39;re authorized to do so. We need to authenticate the call
-somehow, and you, the app builder, need to know how to ensure that your calls
-are properly authenticated.</p>
+<p>Making a call from such an app requires more work on your part: the container
+needs to know that the call is coming from a specific pre-registered app, XXX</p>
 
-<h1>Choosing the Right Tools</h1>
+<h1>Get an OAuth Library for Your Language</h1>
 
-<p>Since you can write a SMART REST app in any language using any toolkit,
-you have a lot of flexibility. In general, you&#39;ll want to look for a
-language with existing OAuth libraries to handle the details of signing
-requests to the SMART container. Here we&#39;ll illustrate the highlights
-with a simple Python-based SMART REST demo app called unimaginatively
-called <a href="https://github.com/chb/smart_rest_minimal">smart_rest_minimal</a>.  This app is written using the <a href="http://flask.pocoo.org/">Flask</a>
-web microframework. This won&#39;t be a tutorial on Flask, but to get
-started all you&#39;ll need to understand is that Flask provides a simple
+<p>The standard for authentication that SMART uses for REST calls is OAuth.
+Unless you want to implement your own <a href="http://tools.ietf.org/html/rfc5849">OAuth</a> library for your language of
+choice (unlikely), you should find one off-the-shelf.</p>
+
+<hr>
+
+<p>Here we&#39;ll illustrate the highlights with a simple Python-based SMART REST demo
+app called unimaginatively called <a href="https://github.com/chb/smart_rest_minimal">smart_rest_minimal</a>.  This app is written
+using the <a href="http://flask.pocoo.org/">Flask</a> web microframework. This won&#39;t be a tutorial on Flask, but
+to get started all you&#39;ll need to understand is that Flask provides a simple
 mechanism to map HTTP URLs to Python functions.</p>
 
-<h1>Getting to know OAuth</h1>
-
-<p>To authenticate your apps&#39; calls to the SMART Container, SMART uses
-<a href="http://tools.ietf.org/html/rfc5849">OAuth</a>, an open standard for access delegation.</p>
+<h2>Get to know OAuth</h2>
 
 <p>OAuth bundles two important features:</p>
 
 <ol>
-<li><p>a way to label and sign HTTP requests using an identifier token and a
-secret string</p></li>
-<li><p>a dance involving the user&#39;s browser, the data server,
-and the server that wishes to consume the data, which, when the user
-approves the exchange, provides the data consumer with the token and
-secret needed to perform the authenticated API calls as per (1).</p></li>
+<li><p>A way to label and sign HTTP requests using an identifier token and a secret
+string</p></li>
+<li><p>A dance involving the user&#39;s browser, the data server, and the server that
+wishes to consume the data, which, when the user approves the exchange,
+provides the data consumer with the token and secret needed to perform the
+authenticated API calls as per (1).</p></li>
 </ol>
 
-<p>SMART employs (1) and, as of SMART v0.6, (2) the full OAuth
-authentication &quot;dance&quot;.</p>
+<p>SMART uses both of these features and we will be walking through the code
+needed for your app to implement (2).</p>
 
-<h1>Change Your App&#39;s OAuth Consumer Secret in Production (Important!)</h1>
+<p>Here is a helpful diagram of the OAuth 1.0 flow for you visual learners:
+<a href="http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html">http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html</a></p>
+
+<h2>Important! Change Your App&#39;s OAuth Consumer Secret in Production</h2>
 
 <p>Each SMART container your app runs against must first &quot;install&quot; your app
 by inserting your app&#39;s manifest into it&#39;s database. This data includes
@@ -156,19 +168,9 @@ OAuth-signed REST API calls.</p>
 container with the following command:</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">$ manage.py load_app &lt;manifest-location&gt; &lt;secret&gt;
 </code></pre></div>
-<h1>OAuth</h1>
+<h2>Authentication Flow</h2>
 
-<p>SMART REST apps now perform the standard OAuth 1.0a dance including
-providing authorization callback URLs instead of the previous
-&quot;simplified&quot; dance. This allows developers to use more standard
-libraries and methods write native apps (including mobile apps).</p>
-
-<p>Here is a diagram of the OAuth 1.0 flow for you visual learners:
-<a href="http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html">http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html</a></p>
-
-<h1>Authentication Flow</h1>
-
-<h2>Initializing the SMARTClient</h2>
+<h3>Initializing the SMARTClient</h3>
 
 <p>First, initialize the SMARTClient with the URL of the SMART container
 you are attempting to access (the <code>api_base</code>) and your app&#39;s
