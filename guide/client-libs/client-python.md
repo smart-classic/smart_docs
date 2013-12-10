@@ -1,7 +1,9 @@
 ---
-layout: framework
+layout: guide
 title: SMART - Python Client
 ---
+
+## SMART Python Client
 
 <div class='simple_box'>
   <p>

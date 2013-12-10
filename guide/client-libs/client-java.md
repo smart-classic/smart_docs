@@ -1,7 +1,9 @@
 ---
-layout: framework
+layout: guide
 title: SMART - Java Client
 ---
+
+## SMART Java Client
 
 <div class='red_box'>Note: This Java client has not been updated to the
 SMART v0.6 API yet. You can continue to use it with version v0.5 of the

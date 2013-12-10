@@ -1,9 +1,13 @@
 ---
-layout: framework
-title: SMART - JavaScripe Client
+layout: guide
+title: SMART - JavaScript Client
 ---
 
-# What is `smart-api-client.js`?
+(TODO: rdf vs. json discussion needed here)
+
+## SMART Javascript Client
+
+### What is `smart-api-client.js`?
 
 Every SMART UI app includes an `index.html` page that loads the
 `smart-api-client.js` Javascript library to provide the app's functionality.
@@ -11,7 +15,7 @@ This page describes the functionality that including `smart-api-client.js`
 provides.
 
 
-# Including `smart-api-client.js`
+### Including `smart-api-client.js`
 
 You include this file in every additional page of your app, e.g. via the
 HTML `<script>` tag:
@@ -25,7 +29,7 @@ called `SMART`, which can be used to interact with the SMART container via the
 calls described below.
 
 
-# Interacting With the SMART Container via Javascript
+### Interacting With the SMART Container via Javascript
 
 Inside your `index.html` file, you'll need to be sure the SMART library has
 finished loading before you can use it. Just put your code inside a call to
@@ -55,14 +59,14 @@ Or you can get the complete SMART OAuth header for your app with:
 * `SMART.credentials.oauth_header`
 
 
-# Calling Another App: A Hint of Inter-Application Workflow
+### Calling Another App: A Hint of Inter-Application Workflow
 
 SMART 0.5 introduces a primitive to support in-browser inter-application
 workflow: one app can `call` another, passing along some launch data and
 receiving a response when the called app finishes.  The basic flow looks like
 this:
 
-## In the Call_ing_ App
+#### In the Call_ing_ App
 
 To start, you'll need a copy of the manifest for the app you want to call.
 Then you call it with `SMART.call_app`, passing along the manifest and any
@@ -80,7 +84,7 @@ launch data you'd like the called app to receive:
  });
 {% endhighlight %}
 
-## In the Call_ed_ App
+#### In the Call_ed_ App
 
 The called app launches just like any SMART app.  If your apps expects any
 custom data at launch time, these should be available in: `SMART.ready_data`
@@ -95,9 +99,9 @@ any return data to be provided for the calling app.
 {% endhighlight %}
 
 
-# Notifications To and From the SMART Container
+### Notifications To and From the SMART Container
 
-## Subscribe to Notifications From the SMART Container
+#### Subscribe to Notifications From the SMART Container
 
 A container will notify an app when important events occur. Today the SMART API
 defines three Container-to-app notifications that your app can subscribe to:
@@ -115,7 +119,7 @@ Your app can use the `on` directive to take action when a notification arrives:
   });
 {% endhighlight  %}
 
-## Send Notifications To the SMART Container
+#### Send Notifications To the SMART Container
 
 Your app can also send notifications to the container. Today the SMART API
 defines only a single App-to-Container notification, which allows an app to
@@ -129,7 +133,7 @@ Please keep in mind that these app->container and container-->app notifications
 are "fire and forget"; they don't provide a callback mechanism.
 
 
-# Making API Calls
+### Making API Calls
 
 You can also use the SMART javascript object to make any [API][] by calling its
 `api_call` method, which takes two parameters:
@@ -159,7 +163,7 @@ calling:
 {% endhighlight  %}
 
 
-# Convenience Wrappers Around Common API Calls
+### Convenience Wrappers Around Common API Calls
 
 But you shouldn't need to use the raw `.api_call` method very often,
 because the SMART javascript object also provides convenience wrappers
@@ -168,7 +172,7 @@ function of one argument: the RDF graph that holds the response data,
 parsed from raw RDF/XML via
 [rdfquery](http://code.google.com/p/rdfquery/).
 
-# Understanding Error Handling in SMART Connect
+### Understanding Error Handling in SMART Connect
 
 The API call methods in SMART Connect support jQuery-style callback
 handlers. You can register two separate callbacks:  one for successful
@@ -207,7 +211,7 @@ Putting all of this together we get the following code example:
 
 [API]: /reference/rest_api
 
-# A Quick Example
+## A Quick Example
 
 {% highlight javascript %}
   SMART.ready(function() {

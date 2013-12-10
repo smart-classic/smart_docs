@@ -1,5 +1,5 @@
 ---
-layout: framework
+layout: guide
 title: SMART - iOS Client
 ---
 

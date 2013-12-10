@@ -1,7 +1,9 @@
 ---
-layout: framework
+layout: guide
 title: SMART - .Net Client
 ---
+
+## SMART .NET Client
 
 We don't have an officially supported .NET library, but Robert at
 <http://USGovXML.com> has been kind enough to share a working sample SMART

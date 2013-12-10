@@ -1,6 +1,6 @@
 ---
-layout: framework
-title: SMART - Reference Implementation
+layout: guide
+title: SMART - Client Libraries
 ---
 
 ## Client Libraries
@@ -8,7 +8,7 @@ title: SMART - Reference Implementation
 To make accessing the SMART API as easy as possible, here are client libaries
 for several popular languages:
 
- * [JavaScript](client-js.html) (TODO: we need RDF vs JSON-LD discussion here)
+ * [JavaScript](client-js.html)
  * [Python](client-python.html)
  * [Java](client-java.html)
  * [.Net](client-dotnet.html)
