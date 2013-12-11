@@ -94,13 +94,19 @@
         <div class="span8">
           <h2>SMART Connect Tutorial</h2>
 
-<p>(TODO: currently from old documentation site)</p>
+<p>As described in the <a href="/framework/architecture">framework architecture</a> document,
+<em>SMART Connect</em> is the JavaScript interface (provided by the SMART JavaScript
+Client) that the frontend of your webapp uses to communicate with a SMART
+container inside the user&#39;s browser. See the full documentation of the <a href="/guide/client-libs/client-js.html">SMART
+JavaScript client</a> for details and a listing
+of all the API calls you can make with it. This tutorial will walk you through
+getting started using SMART Connect and the JavaScript Client.</p>
 
 <h2>Index</h2>
 
-<p>The index file, served at
+<p>The index file of your app, served at
 <a href="http://localhost:8000/smartapp/index.html">http://localhost:8000/smartapp/index.html</a>
-is where all the fun happens! Make sure to include the SMART page script:</p>
+is where all the fun happens! Include the SMART JavaScript client like this:</p>
 
 <div class="highlight"><pre><code class="html">    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre></div>
@@ -116,8 +122,8 @@ SMART JavaScript object that provides some basic context:</p>
   <li>`SMART.record`, which provides the name and ID of the patient whose record is loaded.</li>
 </ul>
 
-<p>For a complete reference of the app context, check out the JavaScript Library
-reference.</p>
+<p>For a complete reference of the app context, check out the <a href="/guide/client-libs/client-js.html">JavaScript Library
+reference</a></p>
 
 <p>A more complete index file that displays the current patient&#39;s name might thus
 look like:</p>
@@ -125,11 +131,10 @@ look like:</p>
 <div class="highlight"><pre><code class="html">    <span class="cp">&lt;!DOCTYPE html&gt;</span>
     <span class="nt">&lt;html&gt;</span>
      <span class="nt">&lt;head&gt;</span>
-      <span class="nt">&lt;script </span>
-<span class="na">src=</span><span class="s">&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-cli</span>
-<span class="s">ent.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+      <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
      <span class="nt">&lt;/head&gt;</span>
-     <span class="nt">&lt;body&gt;&lt;h1&gt;</span>Hello <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/span&gt;&lt;/h1&gt;</span>
+     <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Hello <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/span&gt;&lt;/h1&gt;</span>
 
      <span class="nt">&lt;script&gt;</span>
        <span class="nx">SMART</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
@@ -170,6 +175,15 @@ for a couple of seconds. Instead, your app gets control back from the SMART
 library call almost immediately and is free to display some pretty progress bar
 or, more substantively, make additional API calls to obtain a few data points in
 parallel.</p>
+
+<h2>Two data formats: RDF and JSON-LD</h2>
+
+<p>The API calls you make with SMART Connect return data in two formats: RDF and
+JSON-LD. Both formats provide the full set of data available, you can choose
+which one suits your development style best. If you have experience working with
+JSON data rather than RDF data, it will probably make sense to try it first. See
+the <a href="/frameworkd/json-ld.html">SMART JSON-LD</a> document for details and code
+examples.</p>
 
 <h2>Data in RDF form</h2>
 
@@ -229,7 +243,7 @@ append to it with the name of each drug in our iteration:</p>
      <span class="nt">&lt;body&gt;&lt;h1&gt;</span>Hello <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/span&gt;&lt;/h1&gt;</span>
 
      <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;med_list&quot;</span><span class="nt">&gt;&lt;/ul&gt;</span>
-     
+
      <span class="nt">&lt;script&gt;</span>
        <span class="nx">SMART</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
          <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">SMART</span><span class="p">.</span><span class="nx">record</span><span class="p">.</span><span class="nx">full_name</span><span class="p">;</span>

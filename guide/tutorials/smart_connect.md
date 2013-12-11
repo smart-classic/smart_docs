@@ -4,13 +4,21 @@ title: SMART - SMART Connect Tutorial
 ---
 
 ## SMART Connect Tutorial
-(TODO: currently from old documentation site)
+
+As described in the [framework architecture](/framework/architecture) document,
+_SMART Connect_ is the JavaScript interface (provided by the SMART JavaScript
+Client) that the frontend of your webapp uses to communicate with a SMART
+container inside the user's browser. See the full documentation of the [SMART
+JavaScript client](/guide/client-libs/client-js.html) for details and a listing
+of all the API calls you can make with it. This tutorial will walk you through
+getting started using SMART Connect and the JavaScript Client.
+
 
 ## Index
 
-The index file, served at
+The index file of your app, served at
 [http://localhost:8000/smartapp/index.html](http://localhost:8000/smartapp/index.html)
-is where all the fun happens! Make sure to include the SMART page script:
+is where all the fun happens! Include the SMART JavaScript client like this:
 
 {% highlight html %}
     <script src="http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js"></script>
@@ -27,8 +35,8 @@ SMART JavaScript object that provides some basic context:
   <li>`SMART.record`, which provides the name and ID of the patient whose record is loaded.</li>
 </ul>
 
-For a complete reference of the app context, check out the JavaScript Library
-reference.
+For a complete reference of the app context, check out the [JavaScript Library
+reference](/guide/client-libs/client-js.html)
 
 A more complete index file that displays the current patient's name might thus
 look like:
@@ -37,11 +45,10 @@ look like:
     <!DOCTYPE html>
     <html>
      <head>
-      <script 
-src="http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-cli
-ent.js"></script>
+      <script src="http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-client.js"></script>
      </head>
-     <body><h1>Hello <span id="name"></span></h1>
+     <body>
+      <h1>Hello <span id="name"></span></h1>
 
      <script>
        SMART.ready(function(){
@@ -85,6 +92,16 @@ for a couple of seconds. Instead, your app gets control back from the SMART
 library call almost immediately and is free to display some pretty progress bar
 or, more substantively, make additional API calls to obtain a few data points in
 parallel.
+
+
+## Two data formats: RDF and JSON-LD
+
+The API calls you make with SMART Connect return data in two formats: RDF and
+JSON-LD. Both formats provide the full set of data available, you can choose
+which one suits your development style best. If you have experience working with
+JSON data rather than RDF data, it will probably make sense to try it first. See
+the [SMART JSON-LD](/frameworkd/json-ld.html) document for details and code
+examples.
 
 
 ## Data in RDF form
@@ -150,7 +167,7 @@ append to it with the name of each drug in our iteration:
      <body><h1>Hello <span id="name"></span></h1>
 
      <ul id="med_list"></ul>
-     
+
      <script>
        SMART.ready(function(){
          document.getElementById('name').innerHTML = SMART.record.full_name;
