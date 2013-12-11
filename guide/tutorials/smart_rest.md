@@ -4,70 +4,78 @@ title: SMART - REST App Tutorial
 ---
 
 # SMART REST App Tutorial
-(TODO: currently from old documentation site)
 
-# Server to Server Authentication
+For many app you may want to build the [SMART Connect JavaScript
+interface](/guide/tutorials/smart_connect.html) will be all that you will need
+to access the data you want. However if your app has a backend that requires
+access to the data in a SMART container, you will need to use the SMART REST
+API. This tutorial will show you how to achieve that type of "server-to-server"
+communication.
 
-When your app was making JavaScript API calls, authentication and authorization
-were entirely transparent to you, the app builder, because the SMART Container
-was able to take care of it all: the JavaScript API call simply notified the
-outer frame of the data request, and the outer frame knows who the logged-in
-user is and what medical record they're currently considering.
 
-Now, we consider the case where you want the backend of your app to obtain data
-directly from the SMART Container, e.g. the SMART Reference EMR, using the REST
-API. In that case, the SMART Container doesn't know a-priori who is making the
-call and whether they're authorized to do so. We need to authenticate the call
-somehow, and you, the app builder, need to know how to ensure that your calls
-are properly authenticated.
+## Authentication and Authorization is Required
+
+When your app was making JavaScript API calls using SMART Connect,
+authentication and authorization were entirely transparent to you, the app
+builder, because the SMART Container was able to take care of it all. The
+JavaScript API call simply notified the outer frame of the data request, and the
+outer frame knows who the logged-in user is and what medical record they're
+currently considering. This all happened inside the user's browser without
+any extra effort required.
+
+Now consider a case where you want the backend of your app to obtain data
+directly from the SMART Container. In that case, the SMART Container doesn't
+know in advance who is making the call and if they're authorized to do so.  The
+container needs to authenticate the call somehow, and you need to know how to
+prove to the container that your calls have been pre-authenticated.
 
 
 # Choosing the Right Tools
 
-Since you can write a SMART REST app in any language using any toolkit,
-you have a lot of flexibility. In general, you'll want to look for a
-language with existing OAuth libraries to handle the details of signing
-requests to the SMART container. Here we'll illustrate the highlights
-with a simple Python-based SMART REST demo app called unimaginatively
-called [smart_rest_minimal][].  This app is written using the [Flask][]
-web microframework. This won't be a tutorial on Flask, but to get
-started all you'll need to understand is that Flask provides a simple
+You have a lot of flexibility is choosing the tools to work with since you can
+write a SMART REST app in many languages and frameworks. In general, you'll want
+to look for a language with existing OAuth libraries to handle the details of
+signing requests to the SMART container.
+
+Here we'll illustrate the highlights with a simple Python-based SMART REST
+app called unimaginatively called [smart_rest_minimal][]. This app is written
+using the [Flask][] web microframework. This won't be a tutorial on Flask, but
+to get started all you'll need to understand is that Flask provides a simple
 mechanism to map HTTP URLs to Python functions.
 
 [smart_rest_minimal]: https://github.com/chb/smart_rest_minimal
 [flask]: http://flask.pocoo.org/
 
 
-# Getting to know OAuth
+# Getting to Know OAuth
 
-To authenticate your apps' calls to the SMART Container, SMART uses
-[OAuth][], an open standard for access delegation.
+To authenticate your apps' calls to the SMART Container, SMART uses [OAuth][],
+an open standard for access delegation.
 
 [oauth]: http://tools.ietf.org/html/rfc5849
 
 
-OAuth bundles two important features:
+OAuth bundles two features essential in using SMART REST:
 
-1. a way to label and sign HTTP requests using an identifier token and a
-secret string
+1. A way to label and sign HTTP requests using an identifier token and a secret
+   string
 
-2. a dance involving the user's browser, the data server,
-and the server that wishes to consume the data, which, when the user
-approves the exchange, provides the data consumer with the token and
-secret needed to perform the authenticated API calls as per (1).
+2. A dance involving the user's browser, the data server, and the server that
+   wishes to consume the data, which, when the user approves the exchange,
+   provides the data consumer with the token and secret needed to perform the
+   authenticated API calls as per (1).
 
-SMART employs (1) and, as of SMART v0.6, (2) the full OAuth
+SMART employs both (1) the signing features of OAuth and (2) the full OAuth
 authentication "dance".
 
 
 # Change Your App's OAuth Consumer Secret in Production (Important!)
 
-Each SMART container your app runs against must first "install" your app
-by inserting your app's manifest into it's database. This data includes
-your app's OAuth `consumer-secret` which is the shared secret between
-your app and the container that __ALL SECURITY__ of your app's
-communication with the server relies on and is a basic requirement of
-OAuth-signed REST API calls.
+Each SMART container your app runs against must first "install" your app by
+inserting your app's manifest into it's database. This data includes your app's
+OAuth `consumer-secret` which is the shared secret between your app and the
+container that __ALL SECURITY__ of your app's communication with the server
+relies on and is a basic requirement of OAuth-signed REST API calls.
 
 <div id='consumer_secret_warning' class='red_box'>
   If this secret is revealed to or guessed by a 3rd party, the security of
@@ -82,50 +90,47 @@ OAuth-signed REST API calls.
   </strong>
 </div>
 
-This secret is provisioned when your app is loaded into the smart
-container with the following command:
+This secret is provisioned when your app is loaded into the smart container with
+the following command:
 
     $ manage.py load_app <manifest-location> <secret>
 
 
 # OAuth
 
-SMART REST apps now perform the standard OAuth 1.0a dance including
-providing authorization callback URLs instead of the previous
-"simplified" dance. This allows developers to use more standard
-libraries and methods write native apps (including mobile apps).
+[Here](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) is a diagram
+of the OAuth 1.0 flow for visual learners.
 
-Here is a diagram of the OAuth 1.0 flow for you visual learners:
-<http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html>
+Note that SMART REST apps _must_ perform the standard OAuth 1.0a dance including
+providing authorization callback URLs.
 
 
 # Authentication Flow
 
 ## Initializing the SMARTClient
 
-First, initialize the SMARTClient with the URL of the SMART container
-you are attempting to access (the `api_base`) and your app's
-`consumer_key` and `consumer_secret` which you registered with the
-container previously so the container can authenticate your app's
-requests. This may be on you app's users first hit of your app's `index`
-page. You may or may not have a patient's `record_id` at this point.
+First, initialize the SMARTClient with the URL of the SMART container you are
+attempting to access (the `api_base`) and your app's `consumer_key` and
+`consumer_secret` which you registered with the container previously so the
+container can authenticate your app's requests. This may be on you app's users
+first hit of your app's `index` page. You may or may not have a patient's
+`record_id` at this point.
 
 
 ## Getting the `record_id`
 
-If you don't have a `record_id`, you will be able to redirect to the
-container's record selection page (the `smart.launch_url`) which will
-redirect back to your app's `index` page with the user selected
-`record_id` in the URL parameters for you to read.
+If you don't have a `record_id`, you will be able to redirect to the container's
+record selection page (the `smart.launch_url`) which will redirect back to your
+app's `index` page with the user selected `record_id` in the URL parameters for
+you to read.
 
 
 ## Requesting the Request Token
 
-The next step in the OAuth dance is for your app to request the
-request_token to allow access to a specific patient record. This is done
-simply by initializing the SMARTClient with the `api_base` and desired
-`record_id`. Assuming your initialized SMARTClient is stored in a
-variable named `smart`:
+The next step in the OAuth dance is for your app to request the request_token to
+allow access to a specific patient record. This is done simply by initializing
+the SMARTClient with the `api_base` and desired `record_id`. Assuming your
+initialized SMARTClient is stored in a variable named `smart`:
 
 
     smart.fetch_request_token()
@@ -180,7 +185,7 @@ The result is an SMARTResponse object containing an RDF graph of data,
 which we can query for just the fields we want which you can query with
 SPARQL e.g.:
 
-    
+ 
     sparql = """
         PREFIX vc: <http://www.w3.org/2006/vcard/ns#>
         SELECT ?given ?family
