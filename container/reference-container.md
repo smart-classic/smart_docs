@@ -24,4 +24,5 @@ apps
 * SMART Sample Patient Generator, which generates a set of sample patients
 to be used for demonstration purposes
 
-Installation instructions can be found [here](#).
+Installation instructions can be found
+[here](/framework/reference-implementation/architecture.html)
