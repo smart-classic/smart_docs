@@ -3,8 +3,6 @@ layout: guide
 title: SMART - JavaScript Client
 ---
 
-(TODO: rdf vs. json discussion needed here)
-
 ## SMART Javascript Client
 
 ### What is `smart-api-client.js`?
@@ -66,7 +64,7 @@ workflow: one app can `call` another, passing along some launch data and
 receiving a response when the called app finishes.  The basic flow looks like
 this:
 
-#### In the Call_ing_ App
+#### In the Calling App
 
 To start, you'll need a copy of the manifest for the app you want to call.
 Then you call it with `SMART.call_app`, passing along the manifest and any
@@ -84,7 +82,7 @@ launch data you'd like the called app to receive:
  });
 {% endhighlight %}
 
-#### In the Call_ed_ App
+#### In the Called App
 
 The called app launches just like any SMART app.  If your apps expects any
 custom data at launch time, these should be available in: `SMART.ready_data`
@@ -167,10 +165,19 @@ calling:
 
 But you shouldn't need to use the raw `.api_call` method very often,
 because the SMART javascript object also provides convenience wrappers
-around common API calls. The functions below all take a callback
-function of one argument: the RDF graph that holds the response data,
-parsed from raw RDF/XML via
+around common API calls allowing a more friendly way to access the API.
+
+The results of the API calls are returns in two ways: 1) as a RDF graph and 2)
+as a JSON-LD object. The use of callback functions is the same for both formats.
+You might find JSON-LD easier to work with if you are not familiar with using
+RDF and SPARQL. For this document we'll use RDF, but see the [JSON-LD
+document](/framework/json-ld.html) for details and code examples using the
+JSON-LD interface.
+
+The functions below all take a callback function of one argument: the RDF graph
+that holds the response data, parsed from raw RDF/XML via
 [rdfquery](http://code.google.com/p/rdfquery/).
+
 
 ### Understanding Error Handling in SMART Connect
 

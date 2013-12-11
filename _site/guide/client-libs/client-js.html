@@ -92,9 +92,7 @@
         </div><!--span3-->
 
         <div class="span8">
-          <p>(TODO: rdf vs. json discussion needed here)</p>
-
-<h2>SMART Javascript Client</h2>
+          <h2>SMART Javascript Client</h2>
 
 <h3>What is <code>smart-api-client.js</code>?</h3>
 
@@ -156,7 +154,7 @@ workflow: one app can <code>call</code> another, passing along some launch data 
 receiving a response when the called app finishes.  The basic flow looks like
 this:</p>
 
-<h4>In the Call_ing_ App</h4>
+<h4>In the Calling App</h4>
 
 <p>To start, you&#39;ll need a copy of the manifest for the app you want to call.
 Then you call it with <code>SMART.call_app</code>, passing along the manifest and any
@@ -173,7 +171,7 @@ launch data you&#39;d like the called app to receive:</p>
  <span class="p">});</span>
 </code></pre></div>
 
-<h4>In the Call_ed_ App</h4>
+<h4>In the Called App</h4>
 
 <p>The called app launches just like any SMART app.  If your apps expects any
 custom data at launch time, these should be available in: <code>SMART.ready_data</code></p>
@@ -259,9 +257,17 @@ calling:</p>
 
 <p>But you shouldn&#39;t need to use the raw <code>.api_call</code> method very often,
 because the SMART javascript object also provides convenience wrappers
-around common API calls. The functions below all take a callback
-function of one argument: the RDF graph that holds the response data,
-parsed from raw RDF/XML via
+around common API calls allowing a more friendly way to access the API.</p>
+
+<p>The results of the API calls are returns in two ways: 1) as a RDF graph and 2)
+as a JSON-LD object. The use of callback functions is the same for both formats.
+You might find JSON-LD easier to work with if you are not familiar with using
+RDF and SPARQL. For this document we&#39;ll use RDF, but see the <a href="/framework/json-ld.html">JSON-LD
+document</a> for details and code examples using the
+JSON-LD interface.</p>
+
+<p>The functions below all take a callback function of one argument: the RDF graph
+that holds the response data, parsed from raw RDF/XML via
 <a href="http://code.google.com/p/rdfquery/">rdfquery</a>.</p>
 
 <h3>Understanding Error Handling in SMART Connect</h3>
