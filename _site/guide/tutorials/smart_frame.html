@@ -94,25 +94,21 @@
         <div class="span8">
           <h1>SMART Frame App Tutorial</h1>
 
-<p>(TODO: currently from old documentation site)</p>
-
-<h1>What is a Frame UI App?</h1>
-
-<p><a href="/images/frame_ui_screenshot.png" target="_blank">
-    <img src="/images/frame_ui_screenshot.png"
-    style="width: 100%; display: block; margin: 20px auto;">
+<p><a href="/assets/img/frame_ui_screenshot.png" target="_blank">
+    <img src="/assets/img/frame_ui_screenshot.png"
+    style="width: 100%; display: block; margin: 20px auto; border: 2px solid gray">
 </a></p>
 
-<p>SMART v0.4 allows developers to build a kind of meta-app, or &quot;Frame UI App&quot; that
-can lay out multiple traditional UI Apps at the same time. For example, let&#39;s
-say you&#39;d like to display a medication list app right alongside a medication
-adherence app. You can accomplish this by writing a Frame UI app that lays them
-both out on the screen simultaneously.</p>
+<p>SMART allows developers to build a kind of &quot;meta-app&quot;, called a &quot;Frame UI App&quot;
+that can lay out multiple traditional UI Apps at the same time. For example,
+let&#39;s say you&#39;d like to display a medication list app right alongside a
+medication adherence app. You can accomplish this by writing a Frame UI app that
+lays them both out on the screen simultaneously.</p>
 
 <p>For example, the Frame UI app in this screenshot allows a user to select two
 apps to display side-by-side:</p>
 
-<h2>What can Frame UI Apps do?</h2>
+<h2>What can Frame UI Apps Do?</h2>
 
 <ul>
 <li>Present an HTML5 user-interface in-browser</li>
@@ -129,7 +125,7 @@ fact, a Frame UI app include the following line in its SMART Manifest:</p>
 <div class="highlight"><pre><code class="javascript">  <span class="s2">&quot;mode&quot;</span> <span class="o">:</span> <span class="s2">&quot;frame_ui&quot;</span>
 </code></pre></div>
 
-<h2>Building blocks</h2>
+<h2>Building Blocks</h2>
 
 <p>Frame UI apps occupy a unique place in the SMART architecture, since they&#39;re
 <em>apps</em> that also have some capabilities of <em>containers</em>. In other words,
@@ -149,7 +145,7 @@ SMART apps a time, and allows the user to select these apps. First off, let&#39;
 see what apps are available to launch and load them into a &quot;Carousel&quot; of choices
 to display:</p>
 
-<h3>Displaying a &quot;carousel&quot; of available apps:</h3>
+<h3>Displaying a &quot;Carousel&quot; of Available Apps</h3>
 
 <div class="highlight"><pre><code class="javascript">  <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_manifests</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
              <span class="nx">manifests</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">;</span>
@@ -173,7 +169,7 @@ SMART_HOST.launch_app to initiate the launch of this new app. We pass in the
 app&#39;s manifests <code>m</code> and our current context <code>SMART.context</code>, which specifies the
 user and record.</p>
 
-<h3>Handling an app launch:</h3>
+<h3>Handling an App Launch</h3>
 
 <p>When a user clicks on an app icon and SMART_HOST.launch_app is called, the
 SMART libraries take care of most details of the app launch process. But the
@@ -193,10 +189,10 @@ beginning when they&#39;re all full.</p>
      <span class="p">};</span>
 </code></pre></div>
 
-<h2>See it live</h2>
+<h2>See It Live</h2>
 
 <p>You can view the example app at:
-<a href="http://sandbox-dev.smartplatforms.org">http://sandbox-dev.smartplatforms.org</a>
+<a href="http://sandbox.smartplatforms.org">http://sandbox.smartplatforms.org</a>
 (just create an account and add the &quot;Frame UI Example&quot; app.)</p>
 
 <p>You can see the code at:

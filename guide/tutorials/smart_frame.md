@@ -4,27 +4,25 @@ title: SMART - Frame App Tutorial
 ---
 
 # SMART Frame App Tutorial
-(TODO: currently from old documentation site)
 
-# What is a Frame UI App?
 
-<a href="{{BASE_PATH}}/images/frame_ui_screenshot.png" target="_blank">
-    <img src="{{BASE_PATH}}/images/frame_ui_screenshot.png"
-    style="width: 100%; display: block; margin: 20px auto;">
+<a href="/assets/img/frame_ui_screenshot.png" target="_blank">
+    <img src="/assets/img/frame_ui_screenshot.png"
+    style="width: 100%; display: block; margin: 20px auto; border: 2px solid gray">
 </a>
 
 
-SMART v0.4 allows developers to build a kind of meta-app, or "Frame UI App" that
-can lay out multiple traditional UI Apps at the same time. For example, let's
-say you'd like to display a medication list app right alongside a medication
-adherence app. You can accomplish this by writing a Frame UI app that lays them
-both out on the screen simultaneously.
+SMART allows developers to build a kind of "meta-app", called a "Frame UI App"
+that can lay out multiple traditional UI Apps at the same time. For example,
+let's say you'd like to display a medication list app right alongside a
+medication adherence app. You can accomplish this by writing a Frame UI app that
+lays them both out on the screen simultaneously.
 
 For example, the Frame UI app in this screenshot allows a user to select two
 apps to display side-by-side:
 
 
-## What can Frame UI Apps do?
+## What can Frame UI Apps Do?
 
 * Present an HTML5 user-interface in-browser
 * Obtain a list of apps that are installed in this container
@@ -42,7 +40,7 @@ fact, a Frame UI app include the following line in its SMART Manifest:
 {% endhighlight  %}
 
 
-## Building blocks
+## Building Blocks
 
 Frame UI apps occupy a unique place in the SMART architecture, since they're
 _apps_ that also have some capabilities of _containers_. In other words,
@@ -62,7 +60,7 @@ see what apps are available to launch and load them into a "Carousel" of choices
 to display:
 
 
-### Displaying a "carousel" of available apps:
+### Displaying a "Carousel" of Available Apps
 
 {% highlight javascript %}
   SMART.get_manifests(function(response) {
@@ -88,7 +86,7 @@ app's manifests `m` and our current context `SMART.context`, which specifies the
 user and record.
 
 
-### Handling an app launch:
+### Handling an App Launch
 
 When a user clicks on an app icon and SMART_HOST.launch_app is called, the
 SMART libraries take care of most details of the app launch process. But the
@@ -110,11 +108,12 @@ beginning when they're all full.
 {% endhighlight  %}
 
 
-## See it live
+## See It Live
 
 You can view the example app at:
-[http://sandbox-dev.smartplatforms.org](http://sandbox-dev.smartplatforms.org)
+[http://sandbox.smartplatforms.org](http://sandbox.smartplatforms.org)
 (just create an account and add the "Frame UI Example" app.)
 
 You can see the code at:
 [https://github.com/chb/smart_sample_apps/tree/dev/static/framework/frame_ui_example](https://github.com/chb/smart_sample_apps/tree/dev/static/framework/frame_ui_example) 
+
