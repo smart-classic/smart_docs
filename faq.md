@@ -8,11 +8,11 @@ title: SMART - Frequently Asked Questions
 ## What is SMART?
 
 SMART is a specification of a open source platform based on web standards for
-building substutiable apps on medical data systems such as electronic health
-records, personal health records, clinical data systems and health information
-exchanges. The SMART specification is designed to help solve the problems in
-both exposing medical data to apps and the creation of innovative substutiable
-apps for these systems.
+building substitutable apps on medical data systems such as electronic health
+records, personal health records, clinical data systems and health
+information exchanges. The SMART specification is designed to help solve the
+problems in both exposing medical data to apps and the creation of innovative
+substitutable apps for these systems.
 
 The SMART platform defines four main components:
 
