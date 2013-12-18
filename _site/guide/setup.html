@@ -102,31 +102,34 @@
 by a SMART container. That means you need to (1) write a web app, and (2)
 connect it to a SMART container.</p>
 
-<p>You can choose any toolkit you want to write your web app: Java Spring, Ruby on
-Rails, Python/Django, etc. For this tutorial, we&#39;ve chosen webpy, a minimalist
-Python web framework. This simple framework will help you see and understand
-the important SMART-related code more quickly.</p>
+<p>You can choose any toolkit you want to write your web app: Java Spring, Ruby
+on Rails, Python/Django, etc. For this tutorial, we&#39;ve chosen
+<a href="http://webpy.org/">webpy</a>, a minimalist Python web framework. Using this
+simple micro-framework will help you see and understand the important
+SMART-related code more quickly without a lot of framework code getting in
+the way.</p>
 
 <p>Also, if you want to get started with more advanced SMART features, you will
 want to use Python or Java since client libraries are currently available for
-those languages. That said, if you&#39;re comfortable with OAuth and REST, you can
+those languages. (Note that the Java client may not as up-to-date as the
+Python client). That said, if you&#39;re comfortable with OAuth and REST, you can
 comfortably use your preferred programming language.</p>
 
 <p>We also provide you with the hosted SMART Reference EMR at
-<sandbox.smartplatforms.org>. It&#39;s loaded with 50 patient records to test your
-apps on.</p>
+<sandbox.smartplatforms.org>. It&#39;s loaded with 50 patient records on which to
+test your apps.</p>
 
-<p>To get going, you&#39;ll need to:</p>
+<p>The process to run your app on the Reference EMR is:</p>
 
 <ol>
   <li>Go to the [developers sandbox](http://sandbox.smartplatforms.org/login")</li>
-  <li>If you haven't done so already, create an account, otherwise log in </li>
+  <li>Create an account or log in </li>
   <li>Select a patient </li>
   <li>Run the app called &quot;My App&quot; </li>
 </ol>
 
-<p>This will open a SMART app iframe pointing to <code>localhost:8000</code>, where
-your app will be listening for connections.</p>
+<p>That will open a SMART app &lt;IFRAME&gt; pointing to your own local system
+e.g. <code>localhost:8000</code>, where your app will then be listening for connections.</p>
 
 <p>Next: <a href="quickstart.html">the quickstart example</a></p>
 
