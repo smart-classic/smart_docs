@@ -36,6 +36,6 @@ The process to run your app on the Reference EMR is:
 </ol>
 
 That will open a SMART app &lt;IFRAME&gt; pointing to your own local system
-e.g. `localhost:8000`, where your app will then be listening for connections.
+e.g. `localhost:8000`, where your app will be listening for connections.
 
 Next: [the quickstart example](quickstart.html)
