@@ -9,18 +9,19 @@ Your app needs to serve, at a minimum, the following URL:
 
    * <http://localhost:8000/smartapp/index.html>
 
-For this tutorial we simply use webpy to serve the static `index.html` file.  In
-a real system you would typically use a webserver such as Apache to serve static
-files, but `webpy's` built-in webserver works fine for demonstration purposes.
+For this tutorial we simply use [web.py](http://webpy.org) to serve the static
+`index.html` file.  In a real system you would typically use a webserver such as
+Apache to serve static files, but `web.py's` built-in webserver works fine for
+demonstration purposes.
 
 
-### Install Python and webpy
+### Install Python and web.py
 
 Depending on your environment you may need to install Python and web.py.  Follow
 the [install web.py guide](http://webpy.org/install) if you need to do this.
 
 
-### webpy Server Script
+### web.py Server Script
 
 {% highlight python %}
 import web
@@ -42,7 +43,7 @@ if __name__ == "__main__":
 {% endhighlight  %}
 
 Save this script in file named `app.py` and then run it with `python app.py
-8000`. It will launch a webpy's simple webserver responding to the
+8000`. It will launch a web.py's simple webserver responding to the
 `http://localhost:8000/smartapp/index.html` URL by serving the content of the
 `index.html` file stored in the same directory as the script. All you then need
 to do is create an `index.html` file in the same directory and put the content
@@ -51,7 +52,7 @@ of your first SMART Connect app in it.
 
 ## Your First `index.html` file
 
-The index file, served at <http://localhost:8000/smartapp/index.html> is where
+The index file, served at <http://localhost:8000/smartapp/index.html>, is where
 all the fun happens! The first thing you need to do is to include the SMART
 Javascript client library script like this:
 
@@ -121,43 +122,44 @@ that will be invoked when the results are ready:
     SMART.get_medications().success(function(meds) {
       // do something with those meds
     }).error(function(err) {
-      // handle the error
+      // handle any errors
     });
 {% endhighlight  %}
 
-Why did we design the API this way? Because, in most cases, the SMART container
-will need to make a call to a server to obtain the requested data. That could
-take some time, and it would be very unfortunate if your app was forced to block
-for a couple of seconds. Instead, your app gets control back from the SMART
-library call almost immediately and is free to display some pretty progress bar
-or, more substantively, make additional API calls to obtain a few data points in
-parallel.
+Why is the API designed this way? Because typically the SMART container will
+need to make a call to a server to get the requested data which could take some
+time. It would be less than ideal if your app was forced to freeze for a couple
+of seconds while waiting for the data to be returned. Instead, your app gets
+back control from the SMART library call immediately and is free to display a
+pretty progress bar or make additional calls to obtain more data in parallel.
 
 
-## Data in RDF form
+## Data in RDF Form
 
-When data becomes available, the SMART framework invokes your callback function,
-passing it the resulting medications as a parameter. This result is in the form
-of an SMARTResponse object containing the RDF graph. RDF (Resource Description
-Framework) is an open and flexible approach to modeling all kinds of data in a
-graph structure. If you haven't used RDF, you should read our Quick Introduction
-to RDF and SPARQL.
+When data becomes available the SMART framework calls your callback function,
+passing it the returned medications as a parameter. The results are in the form
+of an SMARTResponse object containing the RDF graph of the data. RDF (Resource
+Description Framework) is a standard and flexible approach to modeling all kinds
+of data in a graph structure. If you haven't used RDF, read our [Quick
+Introduction to RDF and SPARQL](/framework/rdf-sparql-intro.html) for a brief
+primer.
 
-The bottom line is a SMART medication list is an RDF graph that can be easily
-navigated and queried. For example, if meds is an RDF graph, then:
+Simply stated, a SMART medication list is an RDF graph that can be easily
+navigated and queried. For example, if `meds` is an RDF graph, then:
 
 {% highlight javascript %}
   meds.graph.where("?medication rdf:type sp:Medication")
 {% endhighlight  %}
 
-selects all of "objects" in the graph that have a datatype sp:Medication, where
-sp stands for [http://smartplatforms.org/ns#](http://smartplatforms.org/ns#),
-the location of the SMART vocabulary.
+selects all of "objects" in the graph that have a `datatype sp:Medication`,
+where `sp` stands for
+[http://smartplatforms.org/ns#](http://smartplatforms.org/ns#) which is the
+location of the SMART vocabulary.
 
-Of course, we want more than just the raw "objects," we want their properties,
-in particular the name of the drug. The following selects the drug names, which
-are coded-values, and then the value of those coded values, which are the actual
-drug-name strings:
+Of course, you want more than just the raw "objects": you want their properties.
+In particular you want the name of the drug. The following selects the drug
+names, which are coded values, and then the value of those coded values which
+are the actual drug name strings:
 
 {% highlight javascript %}
     meds.graph
@@ -167,9 +169,9 @@ drug-name strings:
 {% endhighlight  %}
 
 This is effectively a JavaScript query on the RDF graph, and it returns a set of
-JavaScript objects with properties we're interested in, in particular drugname.
-We can then iterate over the list of returned objects and extract the drugname
-property for each one:
+JavaScript objects with properties you're interested in, in particular
+`drugname`. You can then iterate over the list of returned objects and extract
+the `drugname` property for each one:
 
 {% highlight javascript %}
     var med_names = meds.graph
@@ -185,8 +187,9 @@ property for each one:
 
 ## The Complete App
 
-So, to display the patient's medications, we set up an HTML list, \<ul>, and we
-append to it with the name of each drug in our iteration:
+To display the patient's medications you first set up an HTML unorderd list
+&lt;ul&gt;, and then you append list items (&lt;li&gt;s) to it with the name of
+each drug:
 
 {% highlight html %}
     <!DOCTYPE html>
@@ -197,7 +200,7 @@ append to it with the name of each drug in our iteration:
      <body><h1>Hello <span id="name"></span></h1>
 
      <ul id="med_list"></ul>
-     
+
      <script>
        SMART.ready(function(){
          document.getElementById('name').innerHTML = SMART.record.full_name;
@@ -218,8 +221,7 @@ append to it with the name of each drug in our iteration:
     </html>
 {% endhighlight  %}
 
-And that's it! In a few lines of HTML and JavaScript code, we've got ourselves
-an app that can request the medications from the current record and display
-them.
+And that's it! In a few lines of HTML and JavaScript code, you have an app that
+can request the medications from the current record and display them.
 
 Go to [next steps](/guide/nextsteps.html)

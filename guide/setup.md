@@ -11,7 +11,7 @@ connect it to a SMART container.
 
 You can choose any toolkit you want to write your web app: Java Spring, Ruby
 on Rails, Python/Django, etc. For this tutorial, we've chosen
-[webpy](http://webpy.org/), a minimalist Python web framework. Using this
+[web.py](http://webpy.org/), a minimalist Python web framework. Using this
 simple micro-framework will help you see and understand the important
 SMART-related code more quickly without a lot of framework code getting in
 the way.
@@ -23,13 +23,13 @@ Python client). That said, if you're comfortable with OAuth and REST, you can
 comfortably use your preferred programming language.
 
 We also provide you with the hosted SMART Reference EMR at
-<sandbox.smartplatforms.org>. It's loaded with 50 patient records on which to
+<http://sandbox.smartplatforms.org>. It's loaded with 50 patient records on which to
 test your apps.
 
 The process to run your app on the Reference EMR is:
 
 <ol>
-  <li>Go to the <a href='http://sandbox.smartplatforms.org/login'>developer's sandbox</a> </li>
+  <li>Go to the developer's sandbox at <a href='http://sandbox.smartplatforms.org'>http://sandbox.smartplatforms.org</a> </li>
   <li>Create an account or log in </li>
   <li>Select a patient </li>
   <li>Run the app called &quot;My App&quot; </li>

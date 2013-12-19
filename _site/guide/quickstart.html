@@ -104,16 +104,17 @@
 <li><a href="http://localhost:8000/smartapp/index.html">http://localhost:8000/smartapp/index.html</a></li>
 </ul>
 
-<p>For this tutorial we simply use webpy to serve the static <code>index.html</code> file.  In
-a real system you would typically use a webserver such as Apache to serve static
-files, but <code>webpy&#39;s</code> built-in webserver works fine for demonstration purposes.</p>
+<p>For this tutorial we simply use <a href="http://webpy.org">web.py</a> to serve the static
+<code>index.html</code> file.  In a real system you would typically use a webserver such as
+Apache to serve static files, but <code>web.py&#39;s</code> built-in webserver works fine for
+demonstration purposes.</p>
 
-<h3>Install Python and webpy</h3>
+<h3>Install Python and web.py</h3>
 
 <p>Depending on your environment you may need to install Python and web.py.  Follow
 the <a href="http://webpy.org/install">install web.py guide</a> if you need to do this.</p>
 
-<h3>webpy Server Script</h3>
+<h3>web.py Server Script</h3>
 
 <div class="highlight"><pre><code class="python"><span class="kn">import</span> <span class="nn">web</span>
 
@@ -134,7 +135,7 @@ the <a href="http://webpy.org/install">install web.py guide</a> if you need to d
 </code></pre></div>
 
 <p>Save this script in file named <code>app.py</code> and then run it with <code>python app.py
-8000</code>. It will launch a webpy&#39;s simple webserver responding to the
+8000</code>. It will launch a web.py&#39;s simple webserver responding to the
 <code>http://localhost:8000/smartapp/index.html</code> URL by serving the content of the
 <code>index.html</code> file stored in the same directory as the script. All you then need
 to do is create an <code>index.html</code> file in the same directory and put the content
@@ -142,7 +143,7 @@ of your first SMART Connect app in it.</p>
 
 <h2>Your First <code>index.html</code> file</h2>
 
-<p>The index file, served at <a href="http://localhost:8000/smartapp/index.html">http://localhost:8000/smartapp/index.html</a> is where
+<p>The index file, served at <a href="http://localhost:8000/smartapp/index.html">http://localhost:8000/smartapp/index.html</a>, is where
 all the fun happens! The first thing you need to do is to include the SMART
 Javascript client library script like this:</p>
 
@@ -207,41 +208,42 @@ that will be invoked when the results are ready:</p>
 <div class="highlight"><pre><code class="javascript">    <span class="nx">SMART</span><span class="p">.</span><span class="nx">get_medications</span><span class="p">().</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">meds</span><span class="p">)</span> <span class="p">{</span>
       <span class="c1">// do something with those meds</span>
     <span class="p">}).</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">// handle the error</span>
+      <span class="c1">// handle any errors</span>
     <span class="p">});</span>
 </code></pre></div>
 
-<p>Why did we design the API this way? Because, in most cases, the SMART container
-will need to make a call to a server to obtain the requested data. That could
-take some time, and it would be very unfortunate if your app was forced to block
-for a couple of seconds. Instead, your app gets control back from the SMART
-library call almost immediately and is free to display some pretty progress bar
-or, more substantively, make additional API calls to obtain a few data points in
-parallel.</p>
+<p>Why is the API designed this way? Because typically the SMART container will
+need to make a call to a server to get the requested data which could take some
+time. It would be less than ideal if your app was forced to freeze for a couple
+of seconds while waiting for the data to be returned. Instead, your app gets
+back control from the SMART library call immediately and is free to display a
+pretty progress bar or make additional calls to obtain more data in parallel.</p>
 
-<h2>Data in RDF form</h2>
+<h2>Data in RDF Form</h2>
 
-<p>When data becomes available, the SMART framework invokes your callback function,
-passing it the resulting medications as a parameter. This result is in the form
-of an SMARTResponse object containing the RDF graph. RDF (Resource Description
-Framework) is an open and flexible approach to modeling all kinds of data in a
-graph structure. If you haven&#39;t used RDF, you should read our Quick Introduction
-to RDF and SPARQL.</p>
+<p>When data becomes available the SMART framework calls your callback function,
+passing it the returned medications as a parameter. The results are in the form
+of an SMARTResponse object containing the RDF graph of the data. RDF (Resource
+Description Framework) is a standard and flexible approach to modeling all kinds
+of data in a graph structure. If you haven&#39;t used RDF, read our <a href="/framework/rdf-sparql-intro.html">Quick
+Introduction to RDF and SPARQL</a> for a brief
+primer.</p>
 
-<p>The bottom line is a SMART medication list is an RDF graph that can be easily
-navigated and queried. For example, if meds is an RDF graph, then:</p>
+<p>Simply stated, a SMART medication list is an RDF graph that can be easily
+navigated and queried. For example, if <code>meds</code> is an RDF graph, then:</p>
 
 <div class="highlight"><pre><code class="javascript">  <span class="nx">meds</span><span class="p">.</span><span class="nx">graph</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication rdf:type sp:Medication&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-<p>selects all of &quot;objects&quot; in the graph that have a datatype sp:Medication, where
-sp stands for <a href="http://smartplatforms.org/ns#">http://smartplatforms.org/ns#</a>,
-the location of the SMART vocabulary.</p>
+<p>selects all of &quot;objects&quot; in the graph that have a <code>datatype sp:Medication</code>,
+where <code>sp</code> stands for
+<a href="http://smartplatforms.org/ns#">http://smartplatforms.org/ns#</a> which is the
+location of the SMART vocabulary.</p>
 
-<p>Of course, we want more than just the raw &quot;objects,&quot; we want their properties,
-in particular the name of the drug. The following selects the drug names, which
-are coded-values, and then the value of those coded values, which are the actual
-drug-name strings:</p>
+<p>Of course, you want more than just the raw &quot;objects&quot;: you want their properties.
+In particular you want the name of the drug. The following selects the drug
+names, which are coded values, and then the value of those coded values which
+are the actual drug name strings:</p>
 
 <div class="highlight"><pre><code class="javascript">    <span class="nx">meds</span><span class="p">.</span><span class="nx">graph</span>
         <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication rdf:type sp:Medication&quot;</span><span class="p">)</span>
@@ -250,9 +252,9 @@ drug-name strings:</p>
 </code></pre></div>
 
 <p>This is effectively a JavaScript query on the RDF graph, and it returns a set of
-JavaScript objects with properties we&#39;re interested in, in particular drugname.
-We can then iterate over the list of returned objects and extract the drugname
-property for each one:</p>
+JavaScript objects with properties you&#39;re interested in, in particular
+<code>drugname</code>. You can then iterate over the list of returned objects and extract
+the <code>drugname</code> property for each one:</p>
 
 <div class="highlight"><pre><code class="javascript">    <span class="kd">var</span> <span class="nx">med_names</span> <span class="o">=</span> <span class="nx">meds</span><span class="p">.</span><span class="nx">graph</span>
              <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s2">&quot;?medication rdf:type sp:Medication&quot;</span><span class="p">)</span>
@@ -266,8 +268,9 @@ property for each one:</p>
 
 <h2>The Complete App</h2>
 
-<p>So, to display the patient&#39;s medications, we set up an HTML list, &lt;ul&gt;, and we
-append to it with the name of each drug in our iteration:</p>
+<p>To display the patient&#39;s medications you first set up an HTML unorderd list
+&lt;ul&gt;, and then you append list items (&lt;li&gt;s) to it with the name of
+each drug:</p>
 
 <div class="highlight"><pre><code class="html">    <span class="cp">&lt;!DOCTYPE html&gt;</span>
     <span class="nt">&lt;html&gt;</span>
@@ -277,7 +280,7 @@ append to it with the name of each drug in our iteration:</p>
      <span class="nt">&lt;body&gt;&lt;h1&gt;</span>Hello <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;/span&gt;&lt;/h1&gt;</span>
 
      <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;med_list&quot;</span><span class="nt">&gt;&lt;/ul&gt;</span>
-     
+
      <span class="nt">&lt;script&gt;</span>
        <span class="nx">SMART</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
          <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">SMART</span><span class="p">.</span><span class="nx">record</span><span class="p">.</span><span class="nx">full_name</span><span class="p">;</span>
@@ -298,9 +301,8 @@ append to it with the name of each drug in our iteration:</p>
     <span class="nt">&lt;/html&gt;</span>
 </code></pre></div>
 
-<p>And that&#39;s it! In a few lines of HTML and JavaScript code, we&#39;ve got ourselves
-an app that can request the medications from the current record and display
-them.</p>
+<p>And that&#39;s it! In a few lines of HTML and JavaScript code, you have an app that
+can request the medications from the current record and display them.</p>
 
 <p>Go to <a href="/guide/nextsteps.html">next steps</a></p>
 
