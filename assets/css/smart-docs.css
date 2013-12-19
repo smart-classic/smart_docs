@@ -92,9 +92,14 @@ h1,
 h2,
 h3 {
     line-height: 40px;
-    margin: 18px 0 8px 0;
     text-rendering: optimizelegibility;
 }
+
+h1 { margin: 26px 0 8px 0; }
+h2 { margin: 26px 0 4px 0; }
+h3 { margin: 26px 0 0px 0; }
+
+
 
 h4,
 h5,
