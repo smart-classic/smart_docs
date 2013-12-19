@@ -3,7 +3,7 @@ layout: guide
 title: SMART Developers Documentation
 ---
 
-## Quickstart Example
+# Quickstart Example
 
 Your app needs to serve, at a minimum, the following URL:
 
@@ -15,13 +15,13 @@ Apache to serve static files, but `web.py's` built-in webserver works fine for
 demonstration purposes.
 
 
-### Install Python and web.py
+## Install Python and web.py
 
 Depending on your environment you may need to install Python and web.py.  Follow
 the [install web.py guide](http://webpy.org/install) if you need to do this.
 
 
-### web.py Server Script
+## web.py Server Script
 
 {% highlight python %}
 import web
@@ -101,7 +101,7 @@ If you can see the name of the current patient in the body of your app,
 congratulations, you have just written your first SMART app!
 
 
-# Using the SMART API
+## Using the SMART API
 
 At this point your SMART app is ready to make API calls to obtain health data.
 Remember your app is contained in an IFRAME meant to access single, specific
@@ -110,7 +110,7 @@ patient context because the medical record has already determined by the
 Javascript context.
 
 
-## Asynchronous Calls
+### Asynchronous Calls
 
 Let's load the patient's medications using `SMART.get_medications()`. The most
 important thing you need to know about all SMART Javascript APIs is that they
@@ -134,7 +134,7 @@ back control from the SMART library call immediately and is free to display a
 pretty progress bar or make additional calls to obtain more data in parallel.
 
 
-## Data in RDF Form
+### Data in RDF Form
 
 When data becomes available the SMART framework calls your callback function,
 passing it the returned medications as a parameter. The results are in the form

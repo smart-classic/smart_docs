@@ -96,7 +96,7 @@
         </div><!--span3-->
 
         <div class="span8">
-          <h2>Quickstart Example</h2>
+          <h1>Quickstart Example</h1>
 
 <p>Your app needs to serve, at a minimum, the following URL:</p>
 
@@ -109,12 +109,12 @@
 Apache to serve static files, but <code>web.py&#39;s</code> built-in webserver works fine for
 demonstration purposes.</p>
 
-<h3>Install Python and web.py</h3>
+<h2>Install Python and web.py</h2>
 
 <p>Depending on your environment you may need to install Python and web.py.  Follow
 the <a href="http://webpy.org/install">install web.py guide</a> if you need to do this.</p>
 
-<h3>web.py Server Script</h3>
+<h2>web.py Server Script</h2>
 
 <div class="highlight"><pre><code class="python"><span class="kn">import</span> <span class="nn">web</span>
 
@@ -189,7 +189,7 @@ run it from <code>MyApp</code> in the developer sandbox.</p>
 <p>If you can see the name of the current patient in the body of your app,
 congratulations, you have just written your first SMART app!</p>
 
-<h1>Using the SMART API</h1>
+<h2>Using the SMART API</h2>
 
 <p>At this point your SMART app is ready to make API calls to obtain health data.
 Remember your app is contained in an IFRAME meant to access single, specific
@@ -197,7 +197,7 @@ medical record. This means you can request medical data without specifying the
 patient context because the medical record has already determined by the
 Javascript context.</p>
 
-<h2>Asynchronous Calls</h2>
+<h3>Asynchronous Calls</h3>
 
 <p>Let&#39;s load the patient&#39;s medications using <code>SMART.get_medications()</code>. The most
 important thing you need to know about all SMART Javascript APIs is that they
@@ -219,7 +219,7 @@ of seconds while waiting for the data to be returned. Instead, your app gets
 back control from the SMART library call immediately and is free to display a
 pretty progress bar or make additional calls to obtain more data in parallel.</p>
 
-<h2>Data in RDF Form</h2>
+<h3>Data in RDF Form</h3>
 
 <p>When data becomes available the SMART framework calls your callback function,
 passing it the returned medications as a parameter. The results are in the form
