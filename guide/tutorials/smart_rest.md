@@ -158,49 +158,9 @@ After that comes a few lines of configuration for Flask:
 
 In the next section comes four internal helper functions for the OAuth and
 SMARTClient. (Internal helper functions and variables are indicated with a
-leading underscore.)
+leading underscore.). We'll come back to them as they are used below.
 
-#### `_init_smart_client`
-
-The first function, `_init_smart_client`, simply wraps the call initalizing
-the SMARTClient in a `try/expect` block so that any errors thrown by the
-client will be logged and handled appropriately. Note that a valid `record_id`
-is not needed to initalize the client. This is to support the use case where
-you don't know in advance the record you want to access and you want your user
-to be presented with a UI for selecting a record.
-
-#### `_test_acc_token`
-
-Then comes a simple test function: `_test_acc_token`.
-
-#### `_request_token_for_record`
-
-The next function, `_request_token_for_record`, wraps the client's request to
-the Container for the OAuth "request" token. This is the first step in the
-OAuth "dance". See step (2) in the [Yahoo OAuth
-diagram](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) to make
-this clearer.
-
-This line executes the request and, if there were no errors, saves the
-returned token in the Flask session store.
-
-        flask.session['req_token'] = client.fetch_request_token()
-
-#### `_exchange_token`
-
-The final helper function, `_exchange_token`, wraps step (4) in the OAuth
-diagram above. After the Container is satisfied that the client's request is
-authentic and confirms that it is authorized to request the requested record,
-it sends a OAuth `verifier` back to the client by redirecting to the
-"authorize" URL. The `verifier` is a temporary token tied to the request token
-that then must be exchanged for the "access token". Once the client receives
-the "access token" the OAuth dance is completed and the app can now access the
-record until the token expires.
-
-    acc_token = client.exchange_token(verifier)
-
-
-## The "index" Route
+## The /index Route
 
 Now we get to the heart of the app. The app is not quite as simple as it could
 be if it was purely a demonstration of SMART REST and OAuth, but it has more
@@ -208,7 +168,7 @@ code to cover a range of typical use cases (e.g. showing a record selection
 page to the user) and be used as a base for real-world apps.
 
 
-### Setting up `api_base` and `record_id`
+### Setting up api_base and record_id
 
 First, we define `api_base` as the Container URL we set before in `_ENDPOINT`
 and save it in Flask's session storage:
@@ -228,7 +188,7 @@ switch between records it's required:
 
 If we didn't get a `record_id` in the arguments of the URL (`args_record_id`),
 we need to redirect the user to a record selection UI. The URL for this UI is
-the `launch_url` and is a property of the client (`client.launch_url). If it
+the `launch_url` and is a property of the client (`client.launch_url`). If it
 is found, we redirect to it here.
 
         logging.debug('Redirecting to app launch_url: ' + client.launch_url)
@@ -251,6 +211,45 @@ Now we can initialize the client with the line:
 
     client = _init_smart_client(record_id)
 
+
+#### _init_smart_client
+
+The first function, `_init_smart_client`, simply wraps the call initalizing
+the SMARTClient in a `try/expect` block so that any errors thrown by the
+client will be logged and handled appropriately. Note that a valid `record_id`
+is not needed to initalize the client. This is to support the use case where
+you don't know in advance the record you want to access and you want your user
+to be presented with a UI for selecting a record.
+
+#### _test_acc_token
+
+Then comes a simple test function: `_test_acc_token`.
+
+#### _request_token_for_record
+
+The next function, `_request_token_for_record`, wraps the client's request to
+the Container for the OAuth "request" token. This is the first step in the
+OAuth "dance". See step (2) in the [Yahoo OAuth
+diagram](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) to make
+this clearer.
+
+This line executes the request and, if there were no errors, saves the
+returned token in the Flask session store.
+
+        flask.session['req_token'] = client.fetch_request_token()
+
+#### _exchange_token
+
+The final helper function, `_exchange_token`, wraps step (4) in the OAuth
+diagram above. After the Container is satisfied that the client's request is
+authentic and confirms that it is authorized to request the requested record,
+it sends a OAuth `verifier` back to the client by redirecting to the
+"authorize" URL. The `verifier` is a temporary token tied to the request token
+that then must be exchanged for the "access token". Once the client receives
+the "access token" the OAuth dance is completed and the app can now access the
+record until the token expires.
+
+    acc_token = client.exchange_token(verifier)
 
 
 
