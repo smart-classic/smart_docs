@@ -5,44 +5,43 @@ title: SMART - REST App Tutorial
 
 # SMART REST App Tutorial
 
-For many apps you may want to build, the [SMART Connect JavaScript
+For many apps you may want to build the [SMART Connect JavaScript
 library](/guide/tutorials/smart_connect.html) will be the only interface you
 will need to get the data you require from a SMART container. But if your app
 has a backend that needs access to the data as well, you will need to use the
-SMART REST API. This tutorial will show you how to setup and use that type of
-"server-to-server" data flow.
+SMART REST API. This tutorial will show you how to setup and use the REST API
+to enable that type of "server-to-server" data flow.
 
 
 ## Authentication and Authorization is Required
 
-With SMART Connect, authentication and authorization are handled for you by the
+With SMART Connect authentication and authorization are handled for you by the
 SMART Connect library and the SMART Container. Specifically, the JS API call
-notified the outer frame (supplied by the SMART Container) of the data request,
-and the outer frame already knows the identity of the logged in user and what
-medical record that user was currently accessing. Authentication and
+notified the outer frame (supplied by the SMART Container) of the data
+request, and the outer frame already knows the identity of the logged in user
+and what medical record currently being accessed. Authentication and
 authorization of that request happened inside the user's browser without any
-effort required of you, the app writer.
+effort required of you as the app writer.
 
 Now consider a case where you want the backend of your app to obtain data
 directly from the SMART Container. In this case, the SMART Container doesn't
 know in advance who is making the call and what data they are authorized to
 access. The calls the backend of your app makes must contain information that
-proves to the Container that they come from a trusted and pre-authenticated
-source.
+proves to the Container they come from a trusted and authenticated source.
 
 
 ## Choosing the Right Tools
 
-Since you can write a SMART REST app in many languages and frameworks, you have
-great flexibility in choosing the tools you work with. Generally you'll want to
-look for a language with existing [OAuth][] libraries to handle the details of
-signing requests to the SMART container.
+You can write a SMART REST app in many languages and frameworks so you have
+great flexibility in choosing the tools you work with. Generally, you'll want
+to look for a language with existing [OAuth][] libraries to handle the details
+of signing requests to the SMART container.
 
-We'll illustrate the highlights of the REST API with a simple Python-based SMART
-app called (unimaginatively) [smart_rest_minimal][]. This app is written using
-the excellent [Flask][] web microframework. This isn't a tutorial on Flask, but
-to get started all you'll need to understand is that Flask provides a simple
-mechanism to map HTTP URLs to Python functions.
+We'll illustrate the highlights of the REST API with a simple Python-based
+SMART app called (unimaginatively) [smart_rest_minimal][]. This app is written
+using the excellent [Flask][] web microframework. This isn't a tutorial on
+Flask, but to get started all you'll need to understand is that Flask provides
+a simple mechanism to map HTTP URLs to Python functions.
 
 [smart_rest_minimal]: https://github.com/chb/smart_sample_apps/tree/master/rest_minimal
 [flask]: http://flask.pocoo.org/
@@ -67,6 +66,13 @@ OAuth bundles two features essential in using SMART REST:
 
 SMART employs both (1) the signing features of OAuth and (2) the full OAuth
 authentication "dance".
+
+### OAuth Authentication Flow
+
+[Here](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) is a
+diagram of the OAuth 1.0 flow for visual learners. SMART REST apps _must_
+perform the standard OAuth 1.0a dance including providing authorization
+callback URLs.
 
 
 ## Important: Change Your Consumer Secret in Production!
@@ -97,11 +103,159 @@ the following command:
     $ manage.py load_app <manifest-location> <secret>
 
 
-## OAuth Authentication Flow
 
-[Here](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) is a diagram
-of the OAuth 1.0 flow for visual learners.  SMART REST apps _must_ perform the
-standard OAuth 1.0a dance including providing authorization callback URLs.
+## The "Minimal" SMART REST App
+
+The code for the [here][] for you to follow along. It is a
+single python file and we'll start from the top and work our way down
+explaining the code as we go.
+
+[here]: https://github.com/chb/smart_sample_apps/blob/master/rest_minimal/wsgi.py
+
+
+### Import the SMARTClient
+
+First, we import the `flask`, `logging` and the SMART Python client into the
+app:
+
+    import flask
+    import logging
+    from smart_client.client import SMARTClient
+
+
+### Configure the OAuth "Endpoint"
+
+Next we set up an object that contains all the information needed to talk to
+the Container with OAuth.
+
+    # SMART Container OAuth Endpoint Configuration
+    _ENDPOINT = {
+        "url": "http://sandbox-api-v06.smartplatforms.org",
+        "name": "SMART Sandbox API v0.6",
+        "app_id": "my-app@apps.smartplatforms.org",
+        "consumer_key": "my-app@apps.smartplatforms.org",
+        "consumer_secret": "smartapp-secret"
+    }
+
+
+### Configure Flask
+
+After that comes a few lines of configuration for Flask:
+
+    # Other Configuration (you shouldn't need to change this)
+    logging.basicConfig(level=logging.DEBUG)  # cf. .INFO; default is WARNING
+    application = app = flask.Flask(  # Some PaaS need "application"
+        'wsgi',
+        template_folder='app',
+        static_folder='app/static',
+        static_url_path='/static'
+    )
+    app.debug = True
+    app.secret_key = 'mySMARTrestAPPrules!!'  # only for encrypting the session
+
+
+### Some Helper Functions
+
+In the next section comes four internal helper functions for the OAuth and
+SMARTClient. (Internal helper functions and variables are indicated with a
+leading underscore.)
+
+#### `_init_smart_client`
+
+The first function, `_init_smart_client`, simply wraps the call initalizing
+the SMARTClient in a `try/expect` block so that any errors thrown by the
+client will be logged and handled appropriately. Note that a valid `record_id`
+is not needed to initalize the client. This is to support the use case where
+you don't know in advance the record you want to access and you want your user
+to be presented with a UI for selecting a record.
+
+#### `_test_acc_token`
+
+Then comes a simple test function: `_test_acc_token`.
+
+#### `_request_token_for_record`
+
+The next function, `_request_token_for_record`, wraps the client's request to
+the Container for the OAuth "request" token. This is the first step in the
+OAuth "dance". See step (2) in the [Yahoo OAuth
+diagram](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) to make
+this clearer.
+
+This line executes the request and, if there were no errors, saves the
+returned token in the Flask session store.
+
+        flask.session['req_token'] = client.fetch_request_token()
+
+#### `_exchange_token`
+
+The final helper function, `_exchange_token`, wraps step (4) in the OAuth
+diagram above. After the Container is satisfied that the client's request is
+authentic and confirms that it is authorized to request the requested record,
+it sends a OAuth `verifier` back to the client by redirecting to the
+"authorize" URL. The `verifier` is a temporary token tied to the request token
+that then must be exchanged for the "access token". Once the client receives
+the "access token" the OAuth dance is completed and the app can now access the
+record until the token expires.
+
+    acc_token = client.exchange_token(verifier)
+
+
+## The "index" Route
+
+Now we get to the heart of the app. The app is not quite as simple as it could
+be if it was purely a demonstration of SMART REST and OAuth, but it has more
+code to cover a range of typical use cases (e.g. showing a record selection
+page to the user) and be used as a base for real-world apps.
+
+
+### Setting up `api_base` and `record_id`
+
+First, we define `api_base` as the Container URL we set before in `_ENDPOINT`
+and save it in Flask's session storage:
+
+    api_base = flask.session['api_base'] = _ENDPOINT.get('url')
+
+
+Next we check if we already have a `record_id` in the session store. This is
+not needed in the most trivial cases, but for real apps that may want to
+switch between records it's required:
+
+    current_record_id = flask.session.get('record_id')
+    args_record_id = flask.request.args.get('record_id')
+
+
+### Conditional Redirect to Record Selection
+
+If we didn't get a `record_id` in the arguments of the URL (`args_record_id`),
+we need to redirect the user to a record selection UI. The URL for this UI is
+the `launch_url` and is a property of the client (`client.launch_url). If it
+is found, we redirect to it here.
+
+        logging.debug('Redirecting to app launch_url: ' + client.launch_url)
+        return flask.redirect(client.launch_url)
+
+Once the user has selected a record, it will return to the `index` URL above,
+now sending the `record_id` as an URL argument.
+
+
+### Check for Record Switch
+
+The next section is some housekeeping that checks if the passed in `record_id`
+is different from the `record_id` saved in the Flask session. If it is, we've
+had a record switch and need to update our session information.
+
+
+### Initialize the SMARTClient
+
+Now we can initialize the client with the line:
+
+    client = _init_smart_client(record_id)
+
+
+
+
+------------
+
 
 ### Initializing the SMARTClient
 
@@ -196,3 +350,7 @@ SPARQL e.g.:
     if len(results) > 0:
         res = list(results)[0]
         record_name = '%s %s' % (res[0], res[1])
+
+And that's it! You now have the ability to create apps that access SMART
+Container via the REST API and so can work with records outside of the
+Container's web UI allowing the creating of mobile and server apps!
