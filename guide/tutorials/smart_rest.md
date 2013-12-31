@@ -67,7 +67,7 @@ OAuth bundles two features essential in using SMART REST:
 SMART employs both (1) the signing features of OAuth and (2) the full OAuth
 authentication "dance".
 
-### OAuth Authentication Flow
+## OAuth Authentication Flow Visualized
 
 [Here](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) is a
 diagram of the OAuth 1.0 flow for visual learners. SMART REST apps _must_
@@ -101,7 +101,6 @@ This secret is provisioned when your app is loaded into the smart container with
 the following command:
 
     $ manage.py load_app <manifest-location> <secret>
-
 
 
 ## The "Minimal" SMART REST App
@@ -160,12 +159,19 @@ In the next section comes four internal helper functions for the OAuth and
 SMARTClient. (Internal helper functions and variables are indicated with a
 leading underscore.). We'll come back to them as they are used below.
 
+
 ## The /index Route
 
-Now we get to the heart of the app. The app is not quite as simple as it could
-be if it was purely a demonstration of SMART REST and OAuth, but it has more
-code to cover a range of typical use cases (e.g. showing a record selection
-page to the user) and be used as a base for real-world apps.
+We designed this app to handle most of the typical use cases for SMART REST,
+therefore it's not as simple as it could possibily be. These use cases include
+showing the user a record selection page and record change within the app.
+This adds much of the extra complexity, however we think the extra complexity
+is worth it since this code can be used the basis for your real-world REST
+app.
+
+The `index` function is the core of the app. It responds to both the `/index`
+and `/smartapp/index.html` URLs. The second URL is the default URL used by the
+SMART reference Container's "MyApp" app.
 
 
 ### Setting up api_base and record_id
@@ -175,10 +181,9 @@ and save it in Flask's session storage:
 
     api_base = flask.session['api_base'] = _ENDPOINT.get('url')
 
-
 Next we check if we already have a `record_id` in the session store. This is
-not needed in the most trivial cases, but for real apps that may want to
-switch between records it's required:
+not needed in trivial cases, but for real apps that may want to switch between
+records it's required:
 
     current_record_id = flask.session.get('record_id')
     args_record_id = flask.request.args.get('record_id')
@@ -189,7 +194,8 @@ switch between records it's required:
 If we didn't get a `record_id` in the arguments of the URL (`args_record_id`),
 we need to redirect the user to a record selection UI. The URL for this UI is
 the `launch_url` and is a property of the client (`client.launch_url`). If it
-is found, we redirect to it here.
+is found, we redirect to it here. (We'll describe the `init_smart_client()`
+call shortly.)
 
         logging.debug('Redirecting to app launch_url: ' + client.launch_url)
         return flask.redirect(client.launch_url)
@@ -211,113 +217,84 @@ Now we can initialize the client with the line:
 
     client = _init_smart_client(record_id)
 
-
-#### _init_smart_client
-
-The first function, `_init_smart_client`, simply wraps the call initalizing
-the SMARTClient in a `try/expect` block so that any errors thrown by the
-client will be logged and handled appropriately. Note that a valid `record_id`
-is not needed to initalize the client. This is to support the use case where
-you don't know in advance the record you want to access and you want your user
-to be presented with a UI for selecting a record.
-
-#### _test_acc_token
-
-Then comes a simple test function: `_test_acc_token`.
-
-#### _request_token_for_record
-
-The next function, `_request_token_for_record`, wraps the client's request to
-the Container for the OAuth "request" token. This is the first step in the
-OAuth "dance". See step (2) in the [Yahoo OAuth
-diagram](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html) to make
-this clearer.
-
-This line executes the request and, if there were no errors, saves the
-returned token in the Flask session store.
-
-        flask.session['req_token'] = client.fetch_request_token()
-
-#### _exchange_token
-
-The final helper function, `_exchange_token`, wraps step (4) in the OAuth
-diagram above. After the Container is satisfied that the client's request is
-authentic and confirms that it is authorized to request the requested record,
-it sends a OAuth `verifier` back to the client by redirecting to the
-"authorize" URL. The `verifier` is a temporary token tied to the request token
-that then must be exchanged for the "access token". Once the client receives
-the "access token" the OAuth dance is completed and the app can now access the
-record until the token expires.
-
-    acc_token = client.exchange_token(verifier)
-
-
-
-------------
-
-
-### Initializing the SMARTClient
-
-First, initialize the SMARTClient with the URL of the SMART container you are
-attempting to access (the `api_base`) and your app's `consumer_key` and
-`consumer_secret` which you registered with the container previously so the
-container can authenticate your app's requests. This may be on you app's users
-first hit of your app's `index` page. You may or may not have a patient's
-`record_id` at this point.
-
-
-### Getting the `record_id`
-
-If you don't have a `record_id`, you will be able to redirect to the container's
-record selection page (the `smart.launch_url`) which will redirect back to your
-app's `index` page with the user selected `record_id` in the URL parameters for
-you to read.
+`_init_smart_client()`, simply wraps the call initalizing the SMARTClient in a
+`try/expect` block so that any errors thrown by the client will be logged and
+handled appropriately. Note that a valid `record_id` is not needed to
+initalize the client. This is to support the use case where you don't know in
+advance the record you want to access and you want your user to be presented
+with a UI for selecting a record. This is used in the `if not args_record_id`
+block.
 
 
 ### Requesting the Request Token
 
-The next step in the OAuth dance is for your app to request the request_token to
-allow access to a specific patient record. This is done simply by initializing
-the SMARTClient with the `api_base` and desired `record_id`. Assuming your
-initialized SMARTClient is stored in a variable named `smart`:
+The next line, checks to see if we already have an OAuth access token:
+
+    acc_token = flask.session.get('acc_token')
+
+That can happen if the user just switched records. We'll assume the default
+case of no access token.
+
+Next we call a helper function to get the OAuth request token, which is the
+first step in the OAuth "dance", with the call:
+
+        _request_token_for_record(client)
+
+See step (2) in the [Yahoo OAuth
+diagram](http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html).
+
+If there were no errors in fetching the request token from the Container, this
+helper function saves the returned token in the Flask session store with the
+line:
+
+        flask.session['req_token'] = client.fetch_request_token()
 
 
-    smart.fetch_request_token()
+### User Authorization for Access
 
-
-### Authorizing the request
-
-If this call was successful, the next step in the dance is to have
-the user signal to the container that they approve this request for
-access. This is done by having your app redirect the user's browser
-to the container's "access authorization page":
+The next step in the OAuth dance is to have the user signal to the container
+that they approve this app's request for access. This corresponds to step (3)
+in the diagram. How does the user apporove this request for access? You app
+redirects the user's browser to the container's "access authorization page"
+defined in the SMARTClient:
 
      flask.redirect(smart.auth_redirect_url)
 
 
 ### Exchange the Request Token for the Access Token
 
-Once the user authorizes your app's request with the container, the
-container will redirect the users' browser to the `oauth_callback` URL
-(typically `/authorized`) that you defined in the manifest that you
-installed with the container passing an `oauth_verifer` as a HTTP
-parameter. Your app's handler for this URL should then "exchange" the
-`request_token` and the `oauth_verifer` with the container to receive
-the `access_token` which your app will use to make requests for
-protected data from the container.
+Once the user authorizes your app's request with the container, the container
+will redirect the users' browser to the `oauth_callback` URL (typically
+`/authorized`) that you defined in the manifest that you installed with the
+container and the container passes an `oauth_verifer` as a HTTP parameter to
+your page.
 
-    acc_token = smart.exchange_token(verifier)
+Your app's handler for this URL must then "exchange" the `request_token` and
+the `oauth_verifer` (a temporary token) with the container to receive the
+`access_token`. Once the `access_token` is received, the OAuth dance is
+complete and your app can now access protected data until the access token
+expires.
+
+After a couple lines of code checking to make sure that we have the correct
+tokens, the code makes this call to the `_exchange_token(verifier)` helper
+function passing in the `oauth_verifer` send in the HTTP request arguments:
+
+    _exchange_token(flask.request.args.get('oauth_verifier'))
+
+Inside the helper function, this call performs the verifier for access token
+exchange:
+
+    acc_token = client.exchange_token(verifier)
+
+If that proceded without error, control returns to the `authorize()` function,
+which then redirects the user's browser back to `/index`. With the access
+token saved in the Flask session, we can now access the data:
+
+    return flask.redirect('/smartapp/index.html?api_base=%s&record_id=%s' %
+                          (api_base, record_id))
+
 
 ### Accessing Protected Data With the Access Token
-
-A few final steps are required before accessing data: your app will need
-to store the access token in a web session (or other means) so it can be
-reused across multiple requests. And the smart client's internal token
-should be "updated" e.g.
-
-
-    flask.session['acc_token'] = acc_token
-    smart.update_token(acc_token)
 
 
 Now accessing data using the SMART REST API is simply a matter of
@@ -329,12 +306,10 @@ making calls such as:
     demo = smart.get_demographics()
 
 
-
 The result is an SMARTResponse object containing an RDF graph of data,
 which we can query for just the fields we want which you can query with
 SPARQL e.g.:
 
- 
     sparql = """
         PREFIX vc: <http://www.w3.org/2006/vcard/ns#>
         SELECT ?given ?family
