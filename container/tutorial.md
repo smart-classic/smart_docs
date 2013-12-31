@@ -3,18 +3,63 @@ layout: container
 title: SMART - Sample Container Tutorial
 ---
 
-## Sample Container Tutorial
+## SMART Container Sample Container Tutorial
+
+<div class='simple_box'>
+  Note: This tutorial and <code>smart-api-container.js</code> are for SMART
+  container developers, not SMART app developers! If you want to write a SMART
+  app, the app development guide is <a href='/guide'>here</a>.
+</div>
+
+
+### Getting an Understanding of SMART Connect
+
+SMART defines two different interfaces for apps can use to access medical
+data: SMART Connect and SMART REST. Review the [SMART
+Architecture](/framework/architecture/) overview for an explanation of both
+APIs. Simply put, the SMART Connect API is used for in-browser _web apps_ with
+no "backend" or "offline" access to your container's data. Put another way,
+SMART Connect apps always have a live user making hits to a websever. For apps
+that require "offline" or "non-web" access, the REST API is available. In a
+complete implementation of SMART your container would provide both APIs to
+apps.
+
+While a complete implementation should be the goal of all containers, it's
+best to get started (both as an app or container developer) with the simpler
+Connect API. To get a app developer's view of the Connect API see the [app
+quickstart tutorial](/guide) and the detailed [SMART Connect
+tutorial](/guide/tutorials/smart_connect.html). We will discuss implimenting
+SMART REST in another tutorial.
+
+
+### We Provide the Glue Between the App and your Web
+
+- one benefit of SMART connect, the "glue" b/w the connect apps and your web
+  system.
+
+- this "glue" is in a library called s-a-c.js
+
+- connect apps "live" in a <iframe> isolated from the surrounding html code
+of your website... then how do they access the Connect api?
+
+- through a process of interframe messaginge provided for you by s-a-c
+
+- your job is reduced to setting up, initalization, and responding to
+  requests over the channel.
+
+- 
+
+
+### See the 
+
+https://github.com/chb/smart_sample_apps/blob/master/static/sample_container/index.html
+
 
 ### What is smart-api-container.js?
 
 `smart-api-container.js` enables a SMART container to talk with SMART apps,
 establishing inter-frame messaging to pass data and notifications between
 application and container.
-
-<div class='simple_box'>
-  N.B. <code>smart-api-container.js</code> is for SMART container developers,
-  not SMART app developers!
-</div>
 
 `smart-api-container.js` is used by SMART containers such as electronic medical
 records platforms. It is a key component that helps turn ordinary EMRs into
@@ -23,15 +68,6 @@ about the api-container, since it sits on the other side of the interface
 between your SMART Connect app and the data it consumes.
 
 
-### Using `smart-api-container.js`
-
-There are two broad steps involved in turning your ordinary EMR into a SMART
-container:
-
-1. Expose the SMART REST API on your server
-2. Offer the SMART Connect API on your Web site
-
-This document focuses on #2.
 
 
 ### Including the Javascript Files
