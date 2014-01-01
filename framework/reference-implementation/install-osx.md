@@ -7,11 +7,11 @@ This walks you through installing an *insecure SMART testing environment* on
 Mac OS X. We will be installing everything needed for SMART into the directory
 `/Library/SMART`, all the instructions assume that you are running a Terminal
 open from this location. Of course you can use your own location, just remember
-to return to your `SMART` directory. Tested on OS X Lion and Mountain Lion.
+to return to your `SMART` directory. Tested on OS X Lion and newer.
 
 
-Install Homebrew
-================
+Install Homebrew and Utilities
+==============================
 
 We use [Homebrew] as package manager to install most libraries. Since this
 needs some extra command line tools to compile code, you first have to do
@@ -26,13 +26,19 @@ needs some extra command line tools to compile code, you first have to do
 
 
 [Homebrew] is a superb replacement for the old managers Fink and MacPorts and
-you will love it! Here's a one-line installer for it:
+you will love it! Here's a one-line installer:
 
     $ /usr/bin/ruby -e "$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
 
-If you had Homebrew installed before, make sure to update it:
+If you had Homebrew installed before, make sure to update:
 
     $ brew update
+
+Later on we will need `wget` which by default is not installed on OS X. You can
+install it with Homebrew:
+
+    $ brew install wget
+
 
 [Homebrew]: http://mxcl.github.com/homebrew/
 [Xcode]: http://itunes.apple.com/ch/app/xcode/id497799835?l=en&mt=12
@@ -42,13 +48,17 @@ If you had Homebrew installed before, make sure to update it:
 Install Django and Python Tools
 ===============================
 
-We have to use [Django 1.3][django] for now. You will see a lot of warnings from clang that you can safely ignore.
+We have to use [Django 1.3][django] for now. You will see a lot of warnings from
+clang that you can safely ignore.
 
     $ sudo easy_install django==1.3.2
     $ sudo easy_install lxml, psycopg2
     $ sudo easy_install -U rdflib rdfextras jsonschema httplib2
 
-At the time of this writing, this will install Django `1.3.2`, lxml `3.1.0`, psycopg `2.4.6`, rdflib `3.4.0`, rdfextras `0.4` and jsonschema `1.1`. Those versions all work well, if you are having trouble with newer versions you want to specify which version to install.
+At the time of this writing, this will install Django `1.3.2`, lxml `3.1.0`,
+psycopg `2.4.6`, rdflib `3.4.0`, rdfextras `0.4` and jsonschema `1.1`. Those
+versions all work well, if you are having trouble with newer versions you want
+to specify which version to install.
 
 [django]: https://www.djangoproject.com/download/
 
@@ -56,7 +66,8 @@ At the time of this writing, this will install Django `1.3.2`, lxml `3.1.0`, psy
 PostgreSQL
 ==========
 
-OS X 10.8 ships with PostgreSQL including a launchd-item, but I was out of luck finding its data directory. So we...
+OS X 10.8 ships with PostgreSQL including a launchd-item, but I was out of luck
+finding its data directory. So we...
 
 * Install postgres with homebrew (installs version 9.2.3):
 
@@ -69,7 +80,9 @@ OS X 10.8 ships with PostgreSQL including a launchd-item, but I was out of luck 
 
         $ launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 
-* Because of some socket issues we must symlink the socket from its default in `/tmp` to `/var/pgsql_socket`. Both are needed and I haven't been able to figure out why. First, create the directory and make it yours:
+* Because of some socket issues we must symlink the socket from its default in
+`/tmp` to `/var/pgsql_socket`. Both are needed and I haven't been able to figure
+out why. First, create the directory and make it yours:
 
         $ sudo mkdir /var/pgsql_socket
         $ sudo chown `whoami`:admin /var/pgsql_socket/
@@ -104,7 +117,8 @@ Tomcat and openrdf-sesame
 
         $ export CATALINA_HOME=/usr/local/Cellar/tomcat/7.0.32/libexec
   
-  If brew didn't install version 7.0.32, change that number accordingly. If you don't use Bash adjust accordingly. Reload your profile file with:
+  If brew didn't install version 7.0.32, change that number accordingly. If you
+  don't use Bash adjust accordingly. Reload your profile file with:
 
         $ source ~/.profile
 
@@ -122,7 +136,9 @@ Tomcat and openrdf-sesame
   
 You should now be able to access `http://localhost:8080/openrdf-workbench/`
 
-> OS X no longer ships with **Java** installed. Tomcat runs on Java, so if you haven't installed Java yet simply type `java` in the Terminal and the OS will prompt and install Java for you.
+> OS X no longer ships with **Java** installed. Tomcat runs on Java, so if you
+> haven't installed Java yet simply type `java` in the Terminal and the OS will
+> prompt and install Java for you.
 
 
 Automated SMART install
@@ -140,11 +156,14 @@ We're now ready to get the latest and greatest from SMART.
 
         $ python smart_manager.py -a
 
-This will fetch all needed repositories, run an installer that asks you for some configurations, generate patient sample data and in the end run the server.
+This will fetch all needed repositories, run an installer that asks you for some
+configurations, generate patient sample data and in the end run the server.
 
 ## The reset script
 
-If you didn't run the automated install, mostly because you had an old SMART version around already, you might want to use the script `smart_server/reset.sh` to recreate your Postgres databases.
+If you didn't run the automated install, mostly because you had an old SMART
+version around already, you might want to use the script `smart_server/reset.sh`
+to recreate your Postgres databases.
 
 > This drops the current database, so all data will be lost!
 
