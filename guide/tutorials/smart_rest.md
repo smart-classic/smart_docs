@@ -105,11 +105,11 @@ the following command:
 
 ## The "Minimal" SMART REST App
 
-The code for the [here][] for you to follow along. It is a
-single python file and we'll start from the top and work our way down
-explaining the code as we go.
+We have a ["minimal" SMART REST][rest_minimal] example app that you can use as
+a starting point. It is a single Python file and we'll start from the top and
+work our way down explaining the code as we go.
 
-[here]: https://github.com/chb/smart_sample_apps/blob/master/rest_minimal/wsgi.py
+[rest_minimal]: https://github.com/chb/smart_sample_apps/blob/master/rest_minimal/wsgi.py
 
 
 ### Import the SMARTClient
