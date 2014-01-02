@@ -78,7 +78,7 @@
         </div><!--span3-->
 
         <div class="span8">
-          <h2>SMART Container Sample Container Tutorial</h2>
+          <h1>SMART Sample Container Tutorial</h1>
 
 <div class='simple_box'>
   Note: This tutorial and <code>smart-api-container.js</code> are for SMART
@@ -86,80 +86,75 @@
   app, the app development guide is <a href='/guide'>here</a>.
 </div>
 
-<h3>Getting an Understanding of SMART Connect</h3>
+<h3>Understanding SMART Connect</h3>
 
-<p>SMART defines two different interfaces for apps can use to access medical
-data: SMART Connect and SMART REST. Review the <a href="/framework/architecture/">SMART
-Architecture</a> overview for an explanation of both
-APIs. Simply put, the SMART Connect API is used for in-browser <em>web apps</em> with
-no &quot;backend&quot; or &quot;offline&quot; access to your container&#39;s data. Put another way,
-SMART Connect apps always have a live user making hits to a websever. For apps
-that require &quot;offline&quot; or &quot;non-web&quot; access, the REST API is available. In a
-complete implementation of SMART your container would provide both APIs to
-apps.</p>
+<p>SMART defines two interfaces apps can use to access medical data: SMART
+Connect and SMART REST. Review the <a href="/framework/architecture/">SMART Architecture
+overview</a> for an explanation of why both APIs are
+needed and how they differ. Simply stated, the SMART Connect API is used for
+in-browser <em>web apps</em> with no &quot;backend&quot; or &quot;offline&quot; access to a container&#39;s
+data. Put another way, SMART Connect apps always have a &quot;live&quot; user making
+requests to a websever with a web browser. For apps that require &quot;offline&quot; or
+&quot;server-to-server&quot; access, the REST API is available. In a complete
+implementation of SMART your container would provide both APIs</p>
 
 <p>While a complete implementation should be the goal of all containers, it&#39;s
 best to get started (both as an app or container developer) with the simpler
 Connect API. To get a app developer&#39;s view of the Connect API see the <a href="/guide">app
-quickstart tutorial</a> and the detailed <a href="/guide/tutorials/smart_connect.html">SMART Connect
+quickstart tutorial</a> and the more detailed <a href="/guide/tutorials/smart_connect.html">SMART Connect
 tutorial</a>. We will discuss implimenting
-SMART REST in another tutorial.</p>
+SMART REST in a container in another tutorial.</p>
 
-<h3>We Provide the Glue Between the App and your Web</h3>
+<h3>Connect Apps Are in an IFRAME in your Container&#39;s HTML</h3>
 
-<ul>
-<li><p>one benefit of SMART connect, the &quot;glue&quot; b/w the connect apps and your web
-system.</p></li>
-<li><p>this &quot;glue&quot; is in a library called s-a-c.js</p></li>
-<li><p>connect apps &quot;live&quot; in a <iframe> isolated from the surrounding html code
-of your website... then how do they access the Connect api?</p></li>
-<li><p>through a process of interframe messaginge provided for you by s-a-c</p></li>
-<li><p>your job is reduced to setting up, initalization, and responding to
-requests over the channel.</p></li>
-<li></li>
-</ul>
+<p>One key feature of SMART Connect apps is that they execute in an
+<code>&lt;iframe&gt;</code> embedded in your container&#39;s HTML. IFRAMEs are typically used
+to fetch and display content from servers other than the one the user is
+currntly on e.g. most ads on the web are inside IFRAMEs. By default, IFRAMEs
+are isolated from the parent HTML document, which raises the question: how
+does the embedded app get the data from your container?</p>
 
-<h3>See the</h3>
+<p>The answer is that we provide a library, <code>smart-api-container.js</code>, that
+provides the required messaging channel between the Connect app and your HTML.</p>
+
+<h3>The Sample Container Example</h3>
+
+<p>We&#39;ve created a brief example Container using this library that you can see
+here:</p>
 
 <p><a href="https://github.com/chb/smart_sample_apps/blob/master/static/sample_container/index.html">https://github.com/chb/smart_sample_apps/blob/master/static/sample_container/index.html</a></p>
 
-<h3>What is smart-api-container.js?</h3>
+<p>Be sure to read the code and refer to it while reading this tutorial. The rest
+of this document goes into detail on how to setup and use this library to
+implement SMART Connect in your container.</p>
 
-<p><code>smart-api-container.js</code> enables a SMART container to talk with SMART apps,
-establishing inter-frame messaging to pass data and notifications between
-application and container.</p>
+<h2>Getting Started</h2>
 
-<p><code>smart-api-container.js</code> is used by SMART containers such as electronic medical
-records platforms. It is a key component that helps turn ordinary EMRs into
-SMART containers. If you&#39;re a SMART app developer, you don&#39;t need to worry
-about the api-container, since it sits on the other side of the interface
-between your SMART Connect app and the data it consumes.</p>
-
-<h3>Including the Javascript Files</h3>
+<h3>Include the Javascript Files</h3>
 
 <p>SMART containers the provide SMART Connect API on their Web site by including
-(or otherwise loading) three key javascript files: jQuery, jschannel, and
-<code>smart-api-container</code>. The simplest way is to include the following script tags
-in your HTML:</p>
+three key javascript files: jQuery, jschannel, and <code>smart-api-container</code>. The
+simplest way is to include the following script tags in your HTML:</p>
 
 <div class="highlight"><pre><code class="html">  <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
   <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sandbox.smartplatforms.org/static/smart_common/resources/jschannel.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
   <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://sandbox.smartplatforms.org/static/smart_common/resources/smart-api-container.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre></div>
 
-<p>If your existing JavaScript codebase employs the &#39;$&#39; variable and you don&#39;t
-want jQuery to clobber that namespace, you might also want to call:</p>
+<p>If your existing JavaScript code employs the &#39;$&#39; variable and you don&#39;t want
+jQuery to clobber that namespace, you might also want to call:</p>
 
 <div class="highlight"><pre><code class="html">  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">noConflict</span><span class="p">();</span><span class="nt">&lt;/script&gt;</span>
 </code></pre></div>
 
-<h2>Exposing the SMART Connect Interface</h2>
+<h2>Expose the SMART Connect Interface</h2>
 
 <h3>Instantiate a <code>SMART_CONNECT_HOST</code></h3>
 
-<p><code>smart-api-container</code> attempts to handle the generic messaging and data routing
-that SMART Connect apps require. To get things started, first instantiate a
-<code>SMART_CONNECT_HOST</code> object. By convention, we&#39;ll call it <code>SMART_HOST</code></p>
+<p><code>smart-api-container</code> attempts to handle the generic messaging and data
+routing that SMART Connect apps require. To get things started, first
+instantiate a <code>SMART_CONNECT_HOST</code> object. By convention, we&#39;ll call it
+<code>SMART_HOST</code></p>
 
 <div class="highlight"><pre><code class="javascript">  <span class="kd">var</span> <span class="nx">SMART_HOST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SMART_CONNECT_HOST</span><span class="p">();</span>
 </code></pre></div>
@@ -177,16 +172,16 @@ Instances Credential object (details below).</p>
 
 <h3>Override <code>SMART_HOST.get_iframe(app_instance, callback)</code></h3>
 
-<p><code>get_credentials</code> is called automatically when a new app launches -- right after
-<code>get_credentials</code>. Its job is to provide the fledgling app with an empty <code>&lt;iframe&gt;</code>
-DOM element in which to render.</p>
+<p><code>get_iframe</code> is called automatically when a new app launches -- right after
+<code>get_credentials</code>. Its job is to provide the fledgling app with an empty
+<code>&lt;iframe&gt;</code> DOM element in which to render.</p>
 
 <ul>
 <li>Input: App Instance object with UUID, context, credentials (details below)</li>
 <li>Callback with: iframe DOM ojbect</li>
 </ul>
 
-<h3>Override <code>SMART_HOST.handle_api(app_instance, api_call, callback_success, callback_error)</code></h3>
+<h3>Override <code>SMART_HOST.handle_api(app_instance, api_call, cb_success, cb_error)</code></h3>
 
 <p><code>handle_api</code> is called whenever an already-running app needs to make a API call
 with SMART CONNECT. Its job is to obtain the results of the specified API call
@@ -199,8 +194,8 @@ and return them back to the app.</p>
 <li>App Instance object with UUID, context, credentials (details below).</li>
 <li>API Call object with method, func, params (details below)</li>
 </ul></li>
-<li>Callback on success with: <code>callback_success({&#39;contentType&#39;: string, data: string})</code></li>
-<li>Callback on error with: <code>callback_error(http_status, {&#39;contentType&#39;: string, data: string})</code></li>
+<li>Callback on success with: <code>cb_success({&#39;contentType&#39;: string, data: string})</code></li>
+<li>Callback on error with: <code>cb_error(http_status, {&#39;contentType&#39;: string, data: string})</code></li>
 </ul>
 
 <p>Note: your SMART Container may override additional functions if needed. Four
@@ -216,7 +211,7 @@ functions are provided as hooks for this purpose:</p>
 <p>The framework calls these functions at the beginning and end of launch (and
 delegated launch) operations.</p>
 
-<h3>Launch an app</h3>
+<h3>Launch an App</h3>
 
 <p>Your Container should provide some way for a user to trigger the launch of an
 app, for instance by clicking on the app&#39;s icon in a sidebar. When this occurs,
@@ -270,7 +265,7 @@ example below:</p>
 <code>SMART_HOST.notify_app(app_instance, &quot;backgrounded&quot;);</code></p>
 
 <p>And if you restore it to view you should call:
-`SMART_HOST.notify_app(app_instance, &quot;foregrounded&quot;);</p>
+<code>SMART_HOST.notify_app(app_instance, &quot;foregrounded&quot;);</code></p>
 
 <h3>Closing Apps when the Patient Record Context Changes</h3>
 
@@ -293,9 +288,9 @@ defining a <code>handle_context_changed</code> function:</p>
   <span class="p">};</span>
 </code></pre></div>
 
-<h2>Understanding App Instance, Manifest, and API Call JavaScript Objects</h2>
+<h2>The App Instance, Manifest, and API Call JS Objects</h2>
 
-<h3>App Instance Object</h3>
+<h3>The App Instance Object</h3>
 
 <p>The <code>SMART_CONNECT_HOST</code> interface uses plain-old JavaScript objects to represent 
 app instances as follows:</p>
@@ -320,7 +315,7 @@ app instances as follows:</p>
   <span class="p">}</span>
 </code></pre></div>
 
-<h3>App Instance Credentials</h3>
+<h3>The App Instance Credentials</h3>
 
 <p>To support REST apps, your SMART Container should generate OAuth tokens each
 time an app launches. The OAuth tokens are provided to the app as part of a
@@ -377,7 +372,7 @@ oauth_signature_method=&quot;HMAC-SHA1&quot;,
 oauth_version=&quot;1.0&quot;,
 oauth_consumer_key=&quot;problem-list%40apps.smartplatforms.org&quot;&#39;
 </code></pre></div>
-<h3>API Call Object</h3>
+<h3>The API Call Object</h3>
 
 <p>When an app makes an API Call, your handler function will be invoked with an
 argument that looks like:</p>
@@ -392,7 +387,7 @@ argument that looks like:</p>
 
 <p>You can use this object to determine how to respond appropriately.</p>
 
-<h3>SMART Manifest Object</h3>
+<h3>The SMART Manifest Object</h3>
 
 <p>You&#39;ll provide the <code>SMART_CONNECT_HOST</code> with details about an app to launch by
 passing a JavaScript manifest object that looks like the one below. For more
@@ -412,14 +407,17 @@ details, see App Manifest Documentation.</p>
   <span class="p">}</span>
 </code></pre></div>
 
-<h2>A &quot;working&quot; example</h2>
+<h2>A Working Example</h2>
 
-<p>Here&#39;s a complete <a href="http://sample-apps.smartplatforms.org/sample_container/index.html">working example</a>
-of a SMART Container. This container implements only
-one API call: (<code>GET medications</code>), and displays an alert if the contained app
-attempts to call any other function. Be sure to view the source code! </p>
+<p>Here&#39;s a complete <a href="http://sample-apps.smartplatforms.org/sample_container/index.html">working
+example</a> of
+a SMART Container. This container implements only one API call, <code>GET
+medications</code>, and displays an alert if the contained app attempts to call any
+other function. Be sure to view the source code here:</p>
 
-<h2>Some manifests online</h2>
+<p><a href="https://github.com/chb/smart_sample_apps/blob/master/static/sample_container/index.html">https://github.com/chb/smart_sample_apps/blob/master/static/sample_container/index.html</a></p>
+
+<h2>Example Manifests</h2>
 
 <p>If you&#39;re building a container, here are some manifests you can try loading to
 get started, hosted in our sandbox</p>
