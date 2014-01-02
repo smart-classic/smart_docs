@@ -139,7 +139,7 @@ The framework calls these functions at the beginning and end of launch (and
 delegated launch) operations.
 
 
-### Launch an App
+### Launching an App
 
 Your Container should provide some way for a user to trigger the launch of an
 app, for instance by clicking on the app's icon in a sidebar. When this occurs,
