@@ -5,23 +5,24 @@ title: SMART - REST App Tutorial
 
 # SMART REST App Tutorial
 
-For many apps you may want to build the [SMART Connect JavaScript
-library](/guide/tutorials/smart_connect.html) will be the only interface you
-will need to get the data you require from a SMART container. But if your app
-has a backend that needs access to the data as well, you will need to use the
-SMART REST API. This tutorial will show you how to setup and use the REST API
-to enable that type of "server-to-server" data flow.
+For browser-based apps, the [SMART Connect JavaScript
+library](/guide/tutorials/smart_connect.html) will often be the only interface
+you need to fetch clinical data from a SMART container. But if your app runs
+outside of the browser (for example, a native smartphone app), or if it has a
+server-side backend that needs access to patient data, then the SMART REST API
+can help. This tutorial will show you how to use the REST API to talk to a
+SMART Container.
 
 
 ## Authentication and Authorization is Required
 
-With SMART Connect authentication and authorization are handled for you by the
+With SMART Connect, authentication and authorization are handled for you by the
 SMART Connect library and the SMART Container. Specifically, the JS API call
-notified the outer frame (supplied by the SMART Container) of the data
+notifies the outer frame (supplied by the SMART Container) of the data
 request, and the outer frame already knows the identity of the logged in user
 and what medical record currently being accessed. Authentication and
-authorization of that request happened inside the user's browser without any
-effort required of you as the app writer.
+authorization of that request happen inside the user's browser without any
+effort required on the part of the app developer.
 
 Now consider a case where you want the backend of your app to obtain data
 directly from the SMART Container. In this case, the SMART Container doesn't
@@ -54,18 +55,13 @@ an open standard for access delegation.
 
 [oauth]: http://tools.ietf.org/html/rfc5849
 
-OAuth bundles two features essential in using SMART REST:
-
-1. A way to label and sign HTTP requests using an identifier token and a secret
-   string
-
-2. A dance involving the user's browser, the data server, and the server that
-   wishes to consume the data, which, when the user approves the exchange,
-   provides the data consumer with the token and secret needed to perform the
-   authenticated API calls as per (1).
-
-SMART employs both (1) the signing features of OAuth and (2) the full OAuth
-authentication "dance".
+OAuth provides a way for apps to obtain access tokens representing
+narrow, user authorization decisions. For example, a token might represent
+the fact that Dr. Dave has authorized the BP Centiles app to access
+the record of Patient Penny. A SMART app signs each REST API call
+with an appropriate access token, allowing the SMART Container to
+authenticate access, confirm authorization, and return the appropriate
+content.
 
 ## OAuth Authentication Flow Visualized
 
