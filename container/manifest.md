@@ -4,16 +4,15 @@ title: SMART - Container Manifests
 ---
 
 <div class='simple_box'>
-  Note: This document describes SMART container manifests not SMART app
-  manifests! For information on SMART app manifests see <a
-  href='/framework/manifests/'>here</a>.
+  Note: This document describes SMART **container** manifests not <a
+  href='/framework/manifests/'>SMART **app** manifests</a>.
 </div>
 
 
 ### Introduction to Container Manifests
 
 To help apps know the capabilities and other useful information about your
-container, you should provide a JSON manifest file at
+container, you must provide a JSON manifest file at
 <http://mysmartcontainer/manifest>.
 
 
@@ -77,20 +76,37 @@ The manifest contains some basic information about your container.
 ### OAuth URLs
 
 {% highlight javascript %}
-    "api_base": "http://sandbox-api-v10.smartplatforms.org", 
+    "api_base": "http://sandbox-api-v10.smartplatforms.org",
     "launch_urls": {
-        "app_launch": "http://sandbox-v10.smartplatforms.org/apps/{{app_id}}/launch", 
-        "authorize_token": "http://sandbox-v10.smartplatforms.org/oauth/authorize", 
-        "exchange_token": "http://sandbox-api-v10.smartplatforms.org/oauth/access_token", 
-        "request_token": "http://sandbox-api-v10.smartplatforms.org/oauth/request_token"
+        "app_launch": "http://sandbox-v10.smartplatforms.org/apps/{{app_id}}/launch",
+        "request_token": "http://sandbox-api-v10.smartplatforms.org/oauth/request_token",
+        "authorize_token": "http://sandbox-v10.smartplatforms.org/oauth/authorize"
+        "exchange_token": "http://sandbox-api-v10.smartplatforms.org/oauth/access_token",
     }, 
 {% endhighlight  %}
 
 Apps that use the [SMART REST API](/guide/tutorials/smart_rest.html) need to
-know the URLs your container provides for the various steps of the OAuth
-"dance". The most important one is the `api_base`.
+know the URLs your container provides for the various steps of the OAuth dance:
 
-TODO: describe use of `launch_urls`.
+- `api_base`: the base URL of your container. REST paths are relative to this
+  URL, so apps need to know the base URL to build request URLs.
+- `app_launch`: this URL can be called to have a container launch a specific
+  app. The app to launch is specified by the `{{app_id}}` placeholder and the
+  container will display the app's launch page, potentially after prompting
+  to log in. If the <a href='/framework/manifests/'>app's manifest</a> specifies
+  the `standalone` flag, the container should open the app's index page in a
+  new window or tab, otherwise the app can be launched inside the container's
+  iframe.
+- `request_token`: to initiate the OAuth dance, the app will request a request
+  token from this URL.
+- `authorize_token`: after the app received a request token, the user must
+  authorize the token. For this step the app must load the authorize URL in a
+  browser view where the user can login, if not already done so, and authorize
+  the token manually, if not previously done so. The container will return the
+  oauth_verifier to the app.
+- `exchange_token`: finally, the request token and the oauth_verifier obtained
+  at the previous URLs can be exchanged for an access token at this URL. The
+  container returns an access token that the app can then use to make requests.
 
 
 ### Capabilities
