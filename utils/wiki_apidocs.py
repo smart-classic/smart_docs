@@ -88,7 +88,7 @@ def type_start_for_nav(t):
     print "\n<li class='nav-type'><a href='#%s'>%s</a></li>" % (name_id, name)
 
 
-def type_start(t, call_class, category):
+def type_start(t, show_api_links_p):
     name = type_name_string(t)
     if (sp.Code in [x.uri for x in t.parents]):
         name += " code"
@@ -100,7 +100,8 @@ def type_start(t, call_class, category):
     # manually add ids to the type <h3>s
     print "\n<h3 class='model-type' id='%s'><code>%s</code></h3>\n" % (name_id, name)
 
-    print "\n<p><a href='/framework/api/#%s_%s'>Go to the %s API</a></p>" % ('record', name_id.lower(), name)
+    if show_api_links_p:
+        print "\n<p><a href='/framework/api/#%s_%s'>Go to the %s API</a></p>" % ('record', name_id.lower(), name)
 
     if len(t.parents) > 0:
         print "<code>%s</code> is a subtype of and inherits properties from:" % type_name_string(t)
@@ -215,8 +216,8 @@ def split_uri(t):
         except:
             return ""
 
-def wiki_payload_for_type(t, call_class, category):
-    type_start(t, call_class, category)
+def wiki_payload_for_type(t, show_api_links_p):
+    type_start(t, show_api_links_p)
     wiki_properties_for_type(t)
 
 def wiki_payload_for_type_nav(t):
@@ -367,22 +368,14 @@ calls_to_document = sorted(calls_to_document, key=call_sort_order)
 
 if __name__=="__main__":
     if "models" in sys.argv:
-        current_batch = None
+        batch_name = ''
         for t in main_types:
-            if type_sort_order(t) != current_batch:
-                current_batch = type_sort_order(t)
-                wiki_batch_start(current_batch+" Types") # e.g. "Record Items" or "Container Items"
+            if type_sort_order(t) != batch_name:
+                batch_name = type_sort_order(t)
+                wiki_batch_start(batch_name+" Types") # e.g. "Record Items" or "Container Items"
 
-            # send calls_to_document as well to get api calls
-            for c in calls_to_document:
-                target = SMART_Class[c.target]
-                # if target.name (the class name) == t.name (the model name), pass class
-                call_class = None
-                if target.name == t.name:
-                    call_class = target
-
-            # also pass call category needed to create href
-            wiki_payload_for_type(t, call_class, c.category)
+            show_api_links_p = True if batch_name == 'Clinical Statement' else False
+            wiki_payload_for_type(t, show_api_links_p)
 
     if "models_nav" in sys.argv:
         current_batch = None
