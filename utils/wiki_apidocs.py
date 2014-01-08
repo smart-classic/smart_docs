@@ -259,6 +259,11 @@ def wiki_properties_for_type(t):
 
                     desc += " where " + p + " comes from <a href='#%s'>%s</a>" % (pc_id, pc_str)
 
+            # Hack for special handling of ImagesList itmes, since they don't fit neatly in the
+            # ontology model
+            if targetname == "ImagesList":
+                desc = "<span style='font-size: small'>An RDF collection of <a href='#MedicalImage'>medical images</a>"
+                    
             desc += '</span>\n<br><br>'
             if c.description:
                 desc += c.description
@@ -324,7 +329,8 @@ for t in api_types:
     if t.is_statement or len(t.calls) > 0:
         main_types.append(t)
     elif (sp.Component in [x.uri for x in t.parents]):
-        main_types.append(t)
+        if t.name != "ImagesList": # Hack to hide ImagesList from the documentation
+            main_types.append(t)
 
 def type_sort_order(x):
     if x.is_statement or len(x.calls) > 0:
