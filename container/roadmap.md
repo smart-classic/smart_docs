@@ -42,4 +42,4 @@ implementation specificly tailored to your medical records system. Such an
 implementation has the potential of offering the most efficient and robust
 SMART container for you yet will require more effort than the first approach.
 A good starting point for this approach is to first implement the SMART Connect
-interface based on our [Sample Container Tutorial](./tutorial.html). (TODO add details here)
+interface based on our [Sample Container Tutorial](./tutorial.html).
