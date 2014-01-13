@@ -133,6 +133,13 @@ the Container with OAuth.
     }
 
 
+For this app we hardcode the endpoint information for one container which is
+the typical use case. However, an app can connect to multiple containers i.e.
+endpoints aren't required to be hardcoded. For some use cases, it may be
+useful to show a friendly list of containers to the user then use the endpoint
+information of the container selected.
+
+
 ### Configure Flask
 
 After that comes a few lines of configuration for Flask:

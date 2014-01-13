@@ -207,6 +207,12 @@ _ENDPOINT = {
     &quot;consumer_secret&quot;: &quot;smartapp-secret&quot;
 }
 </code></pre></div>
+<p>For this app we hardcode the endpoint information for one container which is
+the typical use case. However, an app can connect to multiple containers i.e.
+endpoints aren&#39;t required to be hardcoded. For some use cases, it may be
+useful to show a friendly list of containers to the user then use the endpoint
+information of the container selected.</p>
+
 <h3>Configure Flask</h3>
 
 <p>After that comes a few lines of configuration for Flask:</p>
