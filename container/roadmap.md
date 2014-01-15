@@ -31,8 +31,25 @@ running SMART apps on top of medical records. However, it most likely is less
 than ideal for the needs of most containers necessitating a degree of
 customization or complete replacement.
 
-(TODO: add description of the steps for securing the reference container,
-enabling proxy mode, and testing the installation)
+Should you decide to use the SMART reference container in a production environment
+to store protected patient data, you should be careful about securing your installation.
+Besides following good security practices for your server, you should also at
+the very minimum:
+
+   * change the default secrets on the SMART apps installed on the machine
+(or remove them by resetting the sever)
+   * disable the unsupervised account creation page (or password protect
+it)
+   * enforce SSL connections over HTTP in the Apache config
+   * if you are planning on using OpenRDF based on the SMART reference
+container installation guide, make sure that you disable remote access to
+Tomcat as described in the installation guide
+
+If you need to replace the data layer of the reference container with your own,
+perhaps the easiest approach is to set the container in proxy mode by editing
+`settings.py` in the smart_server (https://github.com/chb/smart_server/blob/master/settings.py.default).
+In proxy mode, the reference container will issue REST calls for patient data directly to
+the REST base that you specify instead of querying its internal triplestore.
 
 
 ### Implementing a SMART Container from Scratch
