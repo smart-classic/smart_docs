@@ -233,118 +233,171 @@ app.secret_key = &#39;mySMARTrestAPPrules!!&#39;  # only for encrypting the sess
 SMARTClient. (Internal helper functions and variables are indicated with a
 leading underscore.). We&#39;ll come back to them as they are used below.</p>
 
-<h2>The /index Route</h2>
+<h3>The /index Route</h3>
 
 <p>We designed this app to handle most of the typical use cases for SMART REST,
-therefore it&#39;s not as simple as it could possibily be. These use cases include
+therefore it&#39;s not as simple as it could possibly be. These use cases include
 showing the user a record selection page and record change within the app.
-This adds much of the extra complexity, however we think the extra complexity
-is worth it since this code can be used the basis for your real-world REST
-app.</p>
+This adds some extra complexity to the code, but we think this extra
+complexity is worth it since this code can be used the basis for your
+real-world REST app.</p>
 
 <p>The <code>index</code> function is the core of the app. It responds to both the <code>/index</code>
 and <code>/smartapp/index.html</code> URLs. The second URL is the default URL used by the
 SMART reference Container&#39;s &quot;MyApp&quot; app.</p>
 
-<h3>Setting up api_base and record_id</h3>
+<h3>Get <code>record_id</code> or Redirect to Record Selection</h3>
 
-<p>First, we define <code>api_base</code> as the Container URL we set before in <code>_ENDPOINT</code>
-and save it in Flask&#39;s session storage:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">api_base = flask.session[&#39;api_base&#39;] = _ENDPOINT.get(&#39;url&#39;)
-</code></pre></div>
-<p>Next we check if we already have a <code>record_id</code> in the session store. This is
-not needed in trivial cases, but for real apps that may want to switch between
-records it&#39;s required:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">current_record_id = flask.session.get(&#39;record_id&#39;)
-args_record_id = flask.request.args.get(&#39;record_id&#39;)
-</code></pre></div>
-<h3>Conditional Redirect to Record Selection</h3>
+<p>First, we get the <code>record_id</code> from the HTTP request. It should be passed to
+this function in the default app launch scenario, but it may not be passed in
+all situations, so we must check for its existence. If it&#39;s missing from the
+request we don&#39;t know what record we&#39;re trying to access and, therefore, we&#39;ll
+need to redirect the user&#39;s browser to a record selection UI.</p>
 
-<p>If we didn&#39;t get a <code>record_id</code> in the arguments of the URL (<code>args_record_id</code>),
-we need to redirect the user to a record selection UI. The URL for this UI is
-the <code>launch_url</code> and is a property of the client (<code>client.launch_url</code>). If it
-is found, we redirect to it here. (We&#39;ll describe the <code>init_smart_client()</code>
-call shortly.)</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">    logging.debug(&#39;Redirecting to app launch_url: &#39; + client.launch_url)
+<p>The URL for the record selection UI is the <code>launch_url</code> property of the client
+(<code>client.launch_url</code>). If it is found, we redirect to it. (We&#39;ll describe the
+<code>init_smart_client()</code> call shortly.)</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">if not record_id:
+    # no record_id, redirect to record selection page
+    flask.session[&#39;sessions&#39;] = {}
+    client = _init_smart_client()  # just init to get launch_url
+    assert client.launch_url, &quot;No launch_url found in client. Aborting.&quot;
+    logging.debug(&#39;Redirecting to app launch_url: %s&#39;, client.launch_url)
     return flask.redirect(client.launch_url)
 </code></pre></div>
 <p>Once the user has selected a record, it will return to the <code>index</code> URL above,
 now sending the <code>record_id</code> as an URL argument.</p>
 
-<h3>Check for Record Switch</h3>
+<h3>Check for a Valid Access Token</h3>
 
-<p>The next section is some housekeeping that checks if the passed in <code>record_id</code>
-is different from the <code>record_id</code> saved in the Flask session. If it is, we&#39;ve
-had a record switch and need to update our session information.</p>
+<p>The next 35 lines or so are a series of tests to check if there is:</p>
 
+<ol>
+<li>a valid <code>sessions</code> dictionary stored in the flask session cookie</li>
+<li>a valid <code>session</code> dictionary for this <code>record_id</code> stored in the <code>sessions</code>
+dictionary</li>
+<li>a valid <code>acc_token</code> in that <code>session</code> dictionary</li>
+</ol>
+
+<p>These checks are required to create &quot;sub-sessions&quot; scoped by <code>record_id</code> and
+to make sure they are properly initialized if there are any errors or missing
+data. Why do do this extra work instead of having a simple <code>record_id</code> and/or
+<code>acc_token</code> stored in the browser&#39;s cookies? The problem is that a single user
+could be using the same app with multiple browser windows open to different
+records at the same time. In that case, a single <code>record_id</code> or <code>acc_token</code>
+cookie would be shared between these browser windows creating the possibly for
+many types of serious concurrency errors.</p>
+
+<h3>Checking for a <code>session</code> for This <code>record_id</code></h3>
+
+<p>The following code checks for a <code>session</code> cookie that holds all the
+&quot;sub-session&quot; data and that there is exists a &quot;sub-session&quot; scoped to the
+given <code>record_id</code>. If either one is missing a flag <code>reauth_required_p</code> is set:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">sessions = flask.session.get(&#39;sessions&#39;, {})
+if not sessions:
+    # no sessions object, create a fresh one
+    flask.session[&#39;sessions&#39;] = {}
+    reauth_required_p = True
+
+session = sessions.get(record_id, {})
+if not session:
+    # no session for this record_id in the sessions object, create one
+    sessions[record_id] = {}
+    flask.session[&#39;sessions&#39;] = sessions
+    reauth_required_p = True
+</code></pre></div>
 <h3>Initialize the SMARTClient</h3>
 
-<p>Now we can initialize the client with the line:</p>
+<p>At this point we initialize the client with the line:</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">client = _init_smart_client(record_id)
 </code></pre></div>
-<p><code>_init_smart_client()</code>, simply wraps the call initalizing the SMARTClient in a
-<code>try/expect</code> block so that any errors thrown by the client will be logged and
-handled appropriately. Note that a valid <code>record_id</code> is not needed to
-initalize the client. This is to support the use case where you don&#39;t know in
-advance the record you want to access and you want your user to be presented
-with a UI for selecting a record. This is used in the <code>if not args_record_id</code>
-block.</p>
+<p><code>_init_smart_client()</code>, simply wraps the call initializing the SMARTClient in
+a <code>try/expect</code> block so that any errors thrown by the client will be logged
+and handled appropriately. Note that a valid <code>record_id</code> is not needed to
+initialize the client (and that is how we got the <code>launch_url</code> earlier). This
+is to support the use case where you don&#39;t know in advance the record you want
+to access and you want the user to be presented with a UI for selecting a
+record.</p>
+
+<h3>Check the <code>acc_token</code> is Valid</h3>
+
+<p>Since we have a &quot;sub-session&quot; for this <code>record_id</code>, the next step is to check
+that we have a valid access token:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">acc_token = session.get(&#39;acc_token&#39;, None)
+if not acc_token:
+    # missing acc_token for this session
+    reauth_required_p = True
+else:
+    client.update_token(acc_token)
+
+    if not _test_acc_token(client):
+        reauth_required_p = True
+</code></pre></div>
+<p>If the <code>acc_token</code> exists, we &quot;update&quot; the client with it then test it&#39;s
+validity with <code>_test_acc_token()</code>. If that function returned <code>True</code>, we know
+we already have a valid access token and no further authentication is
+required.</p>
 
 <h3>Requesting the Request Token</h3>
 
-<p>The next line, checks to see if we already have an OAuth access token:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">acc_token = flask.session.get(&#39;acc_token&#39;)
-</code></pre></div>
-<p>That can happen if the user just switched records. We&#39;ll assume the default
-case of no access token.</p>
-
-<p>Next we call a helper function to get the OAuth request token, which is the
-first step in the OAuth &quot;dance&quot;, with the call:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">    _request_token_for_record(client)
+<p>If we don&#39;t have a valid access token for any reason, we&#39;ll need to start the
+OAuth dance. To do so, we call the helper function:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">    _request_token_for_record(record_id, client)
 </code></pre></div>
 <p>See step (2) in the <a href="http://developer.yahoo.com/oauth/guide/oauth-auth-flow.html">Yahoo OAuth
 diagram</a>.</p>
 
 <p>If there were no errors in fetching the request token from the Container, this
-helper function saves the returned token in the Flask session store with the
-line:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">    flask.session[&#39;req_token&#39;] = client.fetch_request_token()
+helper function saves the returned token in the Flask <code>sessions</code> dictionary
+with the <code>record_id</code> as the index with the lines:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">    req_token = client.fetch_request_token()
+    sessions = flask.session[&#39;sessions&#39;]
+    sessions[record_id] = {&#39;req_token&#39;: req_token, &#39;acc_token&#39;: None}
+    flask.session[&#39;sessions&#39;] = sessions
+</code></pre></div>
+<p>The <code>record_id</code> being used in the current OAuth process is also stored in it&#39;s
+own encrypted cookie as a convenience for the next step:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">    flask.session[&#39;auth_in_progress_record_id&#39;] = record_id
 </code></pre></div>
 <h3>User Authorization for Access</h3>
 
 <p>The next step in the OAuth dance is to have the user signal to the container
 that they approve this app&#39;s request for access. This corresponds to step (3)
-in the diagram. How does the user apporove this request for access? You app
-redirects the user&#39;s browser to the container&#39;s &quot;access authorization page&quot;
-defined in the SMARTClient:</p>
+in the diagram. How does the user approve this request for access? Control is
+returned to the <code>index</code> function and the app the redirects the user&#39;s browser
+to the container&#39;s &quot;access authorization page&quot; defined in the SMARTClient:</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text"> flask.redirect(smart.auth_redirect_url)
 </code></pre></div>
 <h3>Exchange the Request Token for the Access Token</h3>
 
-<p>Once the user authorizes your app&#39;s request with the container, the container
-will redirect the users&#39; browser to the <code>oauth_callback</code> URL (typically
-<code>/authorized</code>) that you defined in the manifest that you installed with the
-container and the container passes an <code>oauth_verifer</code> as a HTTP parameter to
-your page.</p>
+<p>Once the user authorizes the app&#39;s request with the container, the container
+will redirect the users&#39; browser to the <code>oauth_callback</code> URL (&#39;/authorized&#39; by
+convention) defined in the manifest installed within the container. The
+container then passes a temporary token, the <code>oauth_verifer</code>, as a HTTP
+parameter to that callback URL.</p>
 
-<p>Your app&#39;s handler for this URL must then &quot;exchange&quot; the <code>request_token</code> and
-the <code>oauth_verifer</code> (a temporary token) with the container to receive the
-<code>access_token</code>. Once the <code>access_token</code> is received, the OAuth dance is
-complete and your app can now access protected data until the access token
-expires.</p>
+<p>The app&#39;s handler for this URL must then &quot;exchange&quot; the <code>request_token</code> and
+the <code>oauth_verifer</code> with the container to receive the final <code>access_token</code>.
+Once the <code>access_token</code> is received, the OAuth dance is complete and the app
+can now access protected data until the access token expires.</p>
 
-<p>After a couple lines of code checking to make sure that we have the correct
-tokens, the code makes this call to the <code>_exchange_token(verifier)</code> helper
-function passing in the <code>oauth_verifer</code> send in the HTTP request arguments:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">_exchange_token(flask.request.args.get(&#39;oauth_verifier&#39;))
+<p>After a couple lines checking that we have the correct tokens, the code makes
+a call to the <code>_exchange_token()</code> helper function passing in the
+<code>oauth_verifer</code> sent in the HTTP request arguments:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text"># now use the verifier to get the access token
+_exchange_token(record_id,
+                req_token,
+                flask.request.args.get(&#39;oauth_verifier&#39;))
 </code></pre></div>
 <p>Inside the helper function, this call performs the verifier for access token
 exchange:</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">acc_token = client.exchange_token(verifier)
 </code></pre></div>
-<p>If that proceded without error, control returns to the <code>authorize()</code> function,
-which then redirects the user&#39;s browser back to <code>/index</code>. With the access
-token saved in the Flask session, we can now access the data:</p>
+<p>If that proceeded without error, the access token is then saved in the
+<code>record_id</code> indexed sub-session, and control returns to the <code>authorize()</code>
+function which then redirects the user&#39;s browser back to <code>/index</code>. Now with a
+fresh, valid <code>acc_token</code> mapped to <code>record_id</code> in the session dictionary, the
+checks in <code>/index</code> will pass, and we can now access the data:</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">return flask.redirect(&#39;/smartapp/index.html?api_base=%s&amp;record_id=%s&#39; %
                       (api_base, record_id))
 </code></pre></div>
