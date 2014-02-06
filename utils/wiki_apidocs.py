@@ -116,22 +116,22 @@ def type_start(t, show_api_links_p):
 
     if t.equivalent_classes:
         ec = filter(lambda x: x.one_of, t.equivalent_classes)
-        print 'Constrained to one of: \n {% highlight xml %}'
+        print '<div><p>Constrained to one of:</p>\n{% highlight xml %}'
         for member in [x for c in ec for x in c.one_of]:
             ts  = filter(lambda x: x != owl.NamedIndividual, member.type)
             identifier = split_uri(member.uri)
             system = str(member.uri).split(identifier)[0]
             spcode = split_uri(str(t.uri))
 
-            print """\n
+            print """
 <spcode:%s rdf:about="%s">
   <rdf:type rdf:resource="http://smartplatforms.org/terms#Code" />
   <dcterms:title>%s</dcterms:title>
   <sp:system>%s</sp:system>
   <dcterms:identifier>%s</dcterms:identifier>
-</spcode:%s>\n""" % (spcode, str(member.uri), member.title, system, identifier, spcode)
+</spcode:%s>""" % (spcode, str(member.uri), member.title, system, identifier, spcode)
 
-        print """{% endhighlight %}\n"""
+        print """{% endhighlight %}</div>\n"""
 
 
     # can we process this example? if it exists, but we can't
