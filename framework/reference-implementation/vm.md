@@ -61,20 +61,20 @@ machine, you should:
 it)
    * enforce SSL connections over HTTP in the Apache config
 
-## Downloads
+## Current SMART VM Builder
 
-The SMART server deployment is packaged as a generic Ubuntu 12.04 server
-virtual machine. The default username and password are "smart". After
+You can build the latest SMART VM (API version 0.6.2) using Vagrant. Follow the instructions on 
+[https://github.com/chb/smart-vm](https://github.com/chb/smart-vm)
+   
+## Legacy Pre-built VM Downloads
+
+The legacy SMART server deployments are packaged as generic Ubuntu Server 64-bit
+virtual machines. The default username and password are "smart". After
 logging in, follow the on-screen instructions to set up the smart-vm
 host substitution on your local machine. You can then try out the SMART
 reference server by pointing your browser at <http://smart-vm:7001>.
 
-Latest release version:
-
-[SMART VMWare Virtual Machine (API version 0.6.1)](http://media.smartplatforms.org/smart-vm/smart-vm-0.6.1.zip)
-
-Older versions available:
-
+* [SMART VMWare Virtual Machine (API version 0.6.1)](http://media.smartplatforms.org/smart-vm/smart-vm-0.6.1.zip)
 * [SMART VMWare Virtual Machine (API version 0.6)](http://media.smartplatforms.org/smart-vm/smart-vm-0.6.zip)
 * [SMART VMWare Virtual Machine (API version 0.5.2)](http://media.smartplatforms.org/smart-vm/smart-vm-0.5.2.zip)
 * [SMART VMWare Virtual Machine (API version 0.5.1)](http://media.smartplatforms.org/smart-vm/smart-vm-0.5.1.zip)
