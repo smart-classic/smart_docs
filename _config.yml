@@ -7,4 +7,4 @@ markdown: redcarpet
 redcarpet:
   extensions: ["no_intra_emphasis",  "autolink", "strikethrough", "fenced_code"]
 
-production_url: http://docs-v06.smartplatforms.org
+baseurl: /smart_docs_2
