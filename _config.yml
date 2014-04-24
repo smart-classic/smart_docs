@@ -7,4 +7,4 @@ markdown: redcarpet
 redcarpet:
   extensions: ["no_intra_emphasis",  "autolink", "strikethrough", "fenced_code"]
 
-baseurl: /smart_docs_2
+baseurl: /smart_docs_2/
