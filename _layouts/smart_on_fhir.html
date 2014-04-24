@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>{{ page.title }}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <style type="text/css"> body { padding-top: 60px; } </style>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script></script>
+  </head>
+
+  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id='ref-sidebar' class="span3"> </div><!--span3-->
+
+        <div class="span8">
+          {{ content }}
+        </div><!--span8-->
+
+        <div class="span1">
+            <!-- empty column for right margin -->
+            &nbsp;
+        </div><!--span1-->
+      </div><!--row-->
+
+    {% include footer.html %}
+
+    </div><!--/.fluid-container-->
+  </body>
+</html>
+
