@@ -14,7 +14,7 @@ See the source, or click "preview" to see the app in action!
 
 <iframe
   style="border: 1px solid black"
-  src="http://embed.plnkr.co/DOm4EQD1J5lhph51kuuK/get-data.js"
+  src="http://embed.plnkr.co/DOm4EQD1J5lhph51kuuK/preview"
   width="100%" height="500px" />
 
 // fin.
