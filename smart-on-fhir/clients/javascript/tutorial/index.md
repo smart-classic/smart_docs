@@ -98,4 +98,4 @@ Here's a complete example of the steps above:
 
 TODO <!-- plunkr iframe embed -->
 
-For more details, see our JS client <a href="api.html>API docs</a>.
+For more details, see our JS client [API docs](api)
