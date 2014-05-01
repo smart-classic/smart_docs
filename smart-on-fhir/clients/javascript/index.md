@@ -111,7 +111,7 @@ The JS client supports the following FHIR API calls:
 For full deatils on these operations, the FHIR API calls are documented at:
 http://www.hl7.org/implement/standards/fhir/http.html
 
-## Reading a single resource: instance-level operations
+## Reading a single resource
 
 Instance-level operations in FHIR work with a single resource instance at a
 time. Two key operations are `read` and `vread`:
@@ -131,7 +131,7 @@ resources you can work with include:
 * `Patient`
 * `Procedure`
 
-## Searching for resources: type-level operations
+## Searching for resources
 
 The most important type-level operation is `search`, which allows you to find
 resources of a given type, with a set of filters applied.
@@ -151,29 +151,73 @@ more portable.)
 
 ### FHIR Search Parameters
 
-When you perform a FHIR `search` operation, you'll often want to specific
-filters to limit the results you get back. For example, you may want to get a
-list of HbA1c lab results, and you're not interested in cholesterol readings.
-You can create an expressive set of filters using FHIR's "search parameters," a
-set of constraints passed along as URL parameters. The SMART on FHIR JS client
-has built-in support for all search parameters defined in FHIR. To learn how
-these work, let's take the `MedicationPrescription` resource as an example.
-FHIR [defines a set of search
+When you perform a FHIR `search` operation, you'll often want to apply filters
+to limit the results you get back. For example, you may want to fetch a list of
+HbA1c lab results when you're not interested in cholesterol readings.  You can
+create an expressive set of filters using FHIR's "search parameters," a set of
+constraints passed along as URL parameters. The SMART on FHIR JS client has
+built-in support for all search parameters defined in FHIR.
+
+To learn how these work, let's look at an example from the FHIR spec. We'll
+examine the `MedicationPrescription` resource.  FHIR [defines a set of search
 parameters](http://www.hl7.org/implement/standards/fhir/medicationprescription.html#search)
-for this resource (and all other resources) at the bottom of the resource documentation page. Within the FHIR spec, we see:
+for this resource (and all other resources) at the bottom of the resource
+documentation page. Excerpting from the FHIR spec, we see:
 
 <table class="list">
-<tr><td><b>Name</b></td><td><b>Type</b></td><td><b>Description</b></td></tr>
-<tr><td>_id</td><td><a href="http://www.hl7.org/implement/standards/fhir/search.html#token">token</a></td><td/></tr>
-<tr><td>datewritten</td><td><a href="http://www.hl7.org/implement/standards/fhir/search.html#date">date</a></td><td>Return prescriptions written on this date</td></tr>
-<tr><td>encounter</td><td><a href="http://www.hl7.org/implement/standards/fhir/search.html#reference">reference</a></td><td>Return prescriptions with this encounter identity</td></tr>
-<tr><td>identifier</td><td><a href="http://www.hl7.org/implement/standards/fhir/search.html#token">token</a></td><td>Return prescriptions with this external identity</td></tr>
-<tr><td>medication</td><td><a href="http://www.hl7.org/implement/standards/fhir/search.html#reference">reference</a></td><td>Code for medicine or text in medicine name</td></tr>
-<tr><td>patient</td><td><a href="http://www.hl7.org/implement/standards/fhir/search.html#reference">reference</a></td><td>The identity of a patient to list dispenses  for</td></tr>
-<tr><td>status</td><td><a href="http://www.hl7.org/implement/standards/fhir/search.html#token">token</a></td><td>Status of the prescription</td></tr>
+  <tr>
+    <td><b>Name</b>
+    </td>
+    <td><b>Type</b>
+    </td>
+    <td><b>Description</b>
+    </td>
+  </tr>
+  <tr>
+    <td>_id</td>
+    <td><a href="http://www.hl7.org/implement/standards/fhir/search.html#token">token</a>
+    </td>
+    <td/>
+  </tr>
+  <tr>
+    <td>datewritten</td>
+    <td><a href="http://www.hl7.org/implement/standards/fhir/search.html#date">date</a>
+    </td>
+    <td>Return prescriptions written on this date</td>
+  </tr>
+  <tr>
+    <td>encounter</td>
+    <td><a href="http://www.hl7.org/implement/standards/fhir/search.html#reference">reference</a>
+    </td>
+    <td>Return prescriptions with this encounter identity</td>
+  </tr>
+  <tr>
+    <td>identifier</td>
+    <td><a href="http://www.hl7.org/implement/standards/fhir/search.html#token">token</a>
+    </td>
+    <td>Return prescriptions with this external identity</td>
+  </tr>
+  <tr>
+    <td>medication</td>
+    <td><a href="http://www.hl7.org/implement/standards/fhir/search.html#reference">reference</a>
+    </td>
+    <td>Code for medicine or text in medicine name</td>
+  </tr>
+  <tr>
+    <td>patient</td>
+    <td><a href="http://www.hl7.org/implement/standards/fhir/search.html#reference">reference</a>
+    </td>
+    <td>The identity of a patient to list dispenses for</td>
+  </tr>
+  <tr>
+    <td>status</td>
+    <td><a href="http://www.hl7.org/implement/standards/fhir/search.html#token">token</a>
+    </td>
+    <td>Status of the prescription</td>
+  </tr>
 </table>
 
-In short, this defines the set of paramters that can be used to search for a
+In short, this defines the set of parameters that can be used to search for a
 prescription. Each parameter has a name, which is how we refer to it, and a
 type, which tells us what kind of operations it supports. For example,
 `date`-type search parameters like `datewritten` allow simple date math like:
