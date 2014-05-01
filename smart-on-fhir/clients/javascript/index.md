@@ -97,41 +97,59 @@ TODO <!-- plunkr iframe embed -->
 
 ## Supported API operations
 
-The SMART on FHIR client supports the following FHIR API calls:
+The JS client supports the following FHIR API calls:
 
 #### Instance-level operations
-* `read`  Read the current state of the resource
-* `vread` Read the state of a specific version of the resource
+
+* `read`  Read the current state of a given resource
+* `vread` Read a specific version of a given resource
 
 #### Type-level operations
-* `search` Search the resource type based on some filter criteria
+
+* `search` Search for resources of a given type that match a set of filters
 
 For full deatils on these operations, the FHIR API calls are documented at:
 http://www.hl7.org/implement/standards/fhir/http.html
 
-## FHIR Resources
+## Reading a single resource: instance-level operations
 
-For instance-level calls, you'll use `smart.api.Something.read()` (or `vread`). Just change `Somethign` to the name of a FHIR resource from
-[this complete
-list](http://www.hl7.org/implement/standards/fhir/resourcelist.html). For
-example:
+Instance-level operations in FHIR work with a single resource instance at a
+time. Two key operations are `read` and `vread`:
+
+  * `smart.api.Something.read(resourceId)`  Read the current state of a given resource
+  * `smart.api.Something.vread(resourceId, versionId)`  Read a sepcific version of a given resource
+
+Just change `Something` to the name of a FHIR resource from [this complete
+list](http://www.hl7.org/implement/standards/fhir/resourcelist.html). The
+resources you can work with include:
 
 * `AllergyIntolerance`
 * `MedicationPrescription`
-* `Observation`, or
-* `Procedure`.
+* `MedicationDispense`
+* `Medication`
+* `Observation`
+* `Patient`
+* `Procedure`
 
-For type-level calls, you'll use either `smart.api.Something.search()`  when
-you want to search across patients, or
-`smart.context.patient.Something.search()` when you only want results for the
-patient in context. (Note: that in any case your app will only be able to read
-the data it's authorized to see -- so you could be lazy and query for "all" the
-data knowing that authorization restrictions will limit what you see. But it's
-a good practice to write explicit patient-level queries when that's what you
-have in mind, because it will make your intentions more clear -- and make your
-code more portable.)
+## Searching for resources: type-level operations
 
-## FHIR Search Parameters
+The most important type-level operation is `search`, which allows you to find
+resources of a given type, with a set of filters applied.
+
+To search for resources you'll use either:
+
+ * `smart.api.Something.search()`  when you want to search across patients, or
+
+ * `smart.context.patient.Something.search()` when you only want results for the patient in context.
+
+(Note: that in any case your app will only be able to read the data it's
+authorized to see -- so you could be lazy and query for "all" the data knowing
+that authorization restrictions will limit what you see. But it's a good
+practice to write explicit patient-level queries when that's what you have in
+mind, because it will make your intentions more clear -- and make your code
+more portable.)
+
+### FHIR Search Parameters
 
 When you perform a FHIR `search` operation, you'll often want to specific
 filters to limit the results you get back. For example, you may want to get a
@@ -161,9 +179,10 @@ type, which tells us what kind of operations it supports. For example,
 `date`-type search parameters like `datewritten` allow simple date math like:
 
 ```
-// Written anytime in the year 2014
+// Written anytime in the year 2014 and still active
 smart.api.MedicationPrescription
   .where
+  .status("active")
   .datewritten("2014")
 
 // Written between January 2014 and December 2015
@@ -199,5 +218,3 @@ smart.api.Patient.where
 
 (Note: you can pass multiple arguments, or array arguments like
 `givenIn(["John", "Bob"])` -- these work identically.
-
-
