@@ -21,8 +21,19 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div id='ref-sidebar' class="span3"> </div><!--span3-->
+        <div id='ref-sidebar' class="span3">
+            <div id='ref-sidebar-inner'
+                class='ref-sidenav well'
+                data-spy='affix'
+                style='font-family: roboto; height: auto; padding-bottom:
+                20px; margin-top: 30px'>
+            <ul class="nav nav-list">
 
+{% include smart_on_fhir_nav.html %}
+
+            </ul>
+          </div>
+        </div> <!--span3-->
         <div class="span8">
           {{ content }}
         </div><!--span8-->

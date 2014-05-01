@@ -1,6 +1,6 @@
 ---
 layout: smart_on_fhir
-title: SMART - The SMART Community
+title: SMART on FHIR
 ---
 
 # SMART on FHIR

@@ -674,3 +674,11 @@ strong {
 
 .dropdown-menu { background: #fafafa; }
 
+table.list {
+  margin-bottom:1em;
+  border: 1px solid grey;
+}
+
+table.list td {
+  margin-right: 1em;
+}
