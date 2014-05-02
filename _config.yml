@@ -1,7 +1,8 @@
 exclude: [
     "README.md",
     "utils",
-    "smart_common"
+    "smart_common",
+    "smart_docs_2"
 ]
 markdown: redcarpet
 redcarpet:

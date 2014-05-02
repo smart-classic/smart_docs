@@ -1,52 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <title>{{ page.title }}</title>
-
+    <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{{ site.baseurl }}assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="{{ site.baseurl }}assets/css/syntax.css" rel="stylesheet">
-    <link href="{{ site.baseurl }}assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="{{ site.baseurl }}assets/css/smart-docs.css" rel="stylesheet" media="screen">
-    <style type="text/css"> body { padding-top: 60px; } </style>
+    <title>
+      {{page.title}}
+    </title>
 
-    <script src="{{ site.baseurl }}assets/js/jquery.min.js"></script>
-    <script src="{{ site.baseurl }}assets/js/bootstrap.min.js"></script>
-    <script></script>
+    <!-- Bootstrap core CSS -->
+    <link href="{{site.baseurl}}assets/css/bootstrap-cosmo.css" rel="stylesheet">
+
+    <!-- Documentation extras -->
+    <link href="{{site.baseurl}}assets/css/smart-on-fhir-docs.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+
   </head>
+  <body data-spy="scroll" data-target=".page-navbar">
 
-  <body data-spy='scroll' data-target='#ref-sidebar' data-offset='80'>
+    <!-- Docs master nav -->
+    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="{{site.baseurl}}smart-on-fhir" class="navbar-brand">SMART on FHIR</a>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li>
+        <a href="{{site.baseurl}}smart-on-fhir/clients/javascript/tutorial">App tutorials</a>
+        </li>
+        <li>
+        <a href="#">Tech stack</a>
+        </li>
+        <li>
+        <a href="{{site.baseurl}}smart-on-fhir/clients/javascript/api">Client libraries</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://groups.google.com/forum/#!forum/smart-on-fhir">Google Group</a></li>
+        <li><a href="https://github.com/smart-on-fhir">GitHub</a></li>
+      </ul>
+      </nav>
+    </div>
+    </header>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div id='ref-sidebar' class="span3">
-            <div id='ref-sidebar-inner'
-                class='ref-sidenav well'
-                data-spy='affix'
-                style='font-family: roboto; height: auto; padding-bottom:
-                20px; margin-top: 30px'>
-            <ul class="nav nav-list">
 
-{% include smart_on_fhir_nav.html %}
+    <!-- Docs page layout -->
+
+    <div class="container bs-docs-container">
+
+      <div class="row">
+        <!--
+        <div class="col-md-3" role="complementary" >
+        <div  data-spy="affix" class="site-navbar" data-offset-top="10">
+            <h2>Main site nav</h2>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            line <br>
+            final
+        </div>
+        </div>
+        -->
+        <div class="col-md-9 page-content" role="main">
+
+          {{ content }}
+        </div>
+<!--
+        <div class="col-md-3">
+
+          <div class="hidden-print page-navbar" role="complementary" data-spy="affix" data-offset-top="35" data-offset-bottom="200">
+            <ul class="nav">
+              <li>
+              <a href="#clean">Clean data: FHIR</a>
+              </li>
+              <li>
+              <a href="#oauth">Permissions: OAuth2</a>
+              </li>
+              <li>
+              <a href="#openid">Sign-in: OpenID Connect</a>
+              </li>
+              <li>
+              <a href="#html">UI Integration: HTML5</a>
+              </li>
 
             </ul>
+            <a class="back-to-top" href="#top">
+              Back to top
+            </a>
           </div>
-        </div> <!--span3-->
-        <div class="span8">
-          {{ content }}
-        </div><!--span8-->
-
-        <div class="span1">
-            <!-- empty column for right margin -->
-            &nbsp;
-        </div><!--span1-->
-      </div><!--row-->
-
-    {% include footer.html %}
-
-    </div><!--/.fluid-container-->
+        </div>
+        -->
+      </div>
+    </div>
+    <script src="{{site.baseurl}}assets/js/jquery-2.1.0.js"></script>
+    <script src="{{site.baseurl}}assets/js/bootstrap3.min.js"></script>
   </body>
 </html>
-

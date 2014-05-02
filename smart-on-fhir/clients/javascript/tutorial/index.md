@@ -96,6 +96,11 @@ cursor, just call `cursor.next()`, which gives you a new `Deferred` result set.
 
 Here's a complete example of the steps above:
 
-TODO <!-- plunkr iframe embed -->
+See the source, or click "preview" to see the app in action!
+
+<iframe
+  style="border: 1px solid black"
+  src="http://embed.plnkr.co/exHhZjCA3L6pd7vRumJZ/get-data.js"
+  width="100%" height="500px" />
 
 For more details, see our JS client [API docs](../api)
