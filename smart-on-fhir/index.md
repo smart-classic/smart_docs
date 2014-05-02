@@ -32,7 +32,7 @@ $ curl https://open-api.fhir.me/Patient/1032702 -H 'Accept: application/json'
 }
 ```
 
-<h3 id="oauth">Permissions:  <b>OAuth2</b></h3>
+<h3 id="oauth">Fine-grained permissions:  <b>OAuth2</b></h3>
 
 Your app will get a "launch request" notification from the EHR. This
 notification includes a context identifier that you'll use to create an OAuth
@@ -61,14 +61,14 @@ permissions you need -- including access to clinical data and context such as:
 
 
 
-<h3 id="openid">Sign-in:  <b>OpenID Connect</b></h3>
+<h3 id="openid">Simple sign-in:  <b>OpenID Connect</b></h3>
 
 If your app needs to authenticate the EHR end-user, OpenID Connect is there to
 help. Just ask for one additional scope (`openid`) when you request
 authorization, and you'll have access to a `UserInfo` endpoint that exposes
 structure claims about the user, including name and NPI.
 
-<h3 id="html">UI integration:  <b>HTML5</b></h3>
+<h3 id="html">Lightweight UI integration:  <b>HTML5</b></h3>
 
 Need to hook your app into an existing EHR user interface? SMART on FHIR allows
 web apps to run inside browser widgets or inline frames, so users can interact
