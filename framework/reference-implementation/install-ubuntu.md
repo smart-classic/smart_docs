@@ -35,11 +35,11 @@ in order to run the SMART Reference EMR in your own environment:
 
         $ sudo easy_install -U "rdflib==3.2.3" "rdfextras==0.2" "jsonschema==0.7" httplib2
 
-* Django 1.3+
+* Django 1.3 (Note: the code base is not yet compatible with newer Django versions)
 
         $ sudo apt-get install python-django
 
-* PostgreSQL 8.3+
+* PostgreSQL 9.1
 
         $ sudo apt-get install postgresql
 
