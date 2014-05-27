@@ -380,3 +380,6 @@ SPARQL e.g.:
 And that's it! You now have the ability to create apps that access SMART
 Container via the REST API and so can work with records outside of the
 Container's web UI allowing the creating of mobile and server apps!
+
+The complete source code for this example is available here:
+https://github.com/chb/smart_sample_apps/tree/master/rest_minimal
