@@ -129,12 +129,13 @@ pre-generated from the OWL specification. Unless you plan on changing the OWL
 specification (and it&#39;s very likely you don&#39;t want to do that), you won&#39;t need
 to run these utilities.</p>
 
-<p>Also, you&#39;ll need <code>rdflib</code>, a Pythonic RDF library:</p>
+<p>Also, you&#39;ll need <code>rdflib</code>, a Pythonic RDF library (note the specific version requirements):</p>
 
 <div class="highlight"><pre><code class="sh">  <span class="nv">$ </span>sudo apt-get install python-pyparsing
-  <span class="nv">$ </span>sudo easy_install -U <span class="s2">&quot;rdflib&gt;=3.0.0&quot;</span>
-  <span class="nv">$ </span>sudo easy_install rdfextras
+  <span class="nv">$ </span>sudo easy_install -U <span class="s2">&quot;rdflib==3.2.3&quot;</span> <span class="s2">&quot;rdfextras==0.2&quot;</span>
 </code></pre></div>
+
+<p>Note: These instructions have been tested on Ubuntu 12.04 with Python 2.7</p>
 
 <h2>Set your Python Path</h2>
 
