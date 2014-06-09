@@ -31,7 +31,7 @@ implementing the web backend for your SMART App, using a toolkit such as
 
 The SMART client library is on Github:
 
-  $ git clone https://github.com/chb/smart_client_python.git
+  $ git clone https://github.com/smart-platforms/smart_client_python.git
 
 You will notice `generate_api.py` and `generate_readme.py` inside the newly formed
 directory `smart_client_python`. You do NOT need to run these. The API is
@@ -221,4 +221,4 @@ medications use case. Check out our [API][]. You can also use command
 to automatically generate the available methods in the client library.
 
 If you don't want to run that code yourself, check out this library' README on
-[github](http://github.com/chb/smart_client_python).
+[github](http://github.com/smart-platforms/smart_client_python).

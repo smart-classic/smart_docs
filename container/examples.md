@@ -15,4 +15,4 @@ or open source.
 * [OpenMRS SMART Container Module](https://wiki.openmrs.org/display/docs/Smart+Container+Module)
 * [Mirth Results SMART Container](http://www.mirthcorp.com/community/wiki/display/MR/SMART+Container)
 * [WorldVista](http://www.worldvista.org/)
-* [Boston Childrens Hospital (Cerner)](https://github.com/chb/smart_grails_proxy)
+* [Boston Childrens Hospital (Cerner)](https://github.com/smart-platforms/smart_grails_proxy)

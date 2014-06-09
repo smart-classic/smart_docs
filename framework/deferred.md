@@ -41,7 +41,7 @@ hood.
 ### A Real-World Example
 
 [The Cardiac Risk Visualiztion
-App](https://github.com/chb/smart_sample_apps/blob/master/static/framework/cardi
+App](https://github.com/smart-platforms/smart_sample_apps/blob/master/static/framework/cardi
 o_risk_viz/load_data.js) requires both demographics (gender and age) and also
 lab results (hsCRP, cholesterol, and HDL values) to compute a risk score. This
 requires two calls to the SMART Connect API:

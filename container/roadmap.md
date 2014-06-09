@@ -47,7 +47,7 @@ Tomcat as described in the installation guide
 
 If you need to replace the data layer of the reference container with your own,
 perhaps the easiest approach is to set the container in proxy mode by editing
-`settings.py` in the smart_server (https://github.com/chb/smart_server/blob/master/settings.py.default).
+`settings.py` in the smart_server (https://github.com/smart-platforms/smart_server/blob/master/settings.py.default).
 In proxy mode, the reference container will issue REST calls for patient data directly to
 the REST base that you specify instead of querying its internal triplestore.
 

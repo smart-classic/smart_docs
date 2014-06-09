@@ -44,7 +44,7 @@ using the excellent [Flask][] web microframework. This isn't a tutorial on
 Flask, but to get started all you'll need to understand is that Flask provides
 a simple mechanism to map HTTP URLs to Python functions.
 
-[smart_rest_minimal]: https://github.com/chb/smart_sample_apps/tree/master/rest_minimal
+[smart_rest_minimal]: https://github.com/smart-platforms/smart_sample_apps/tree/master/rest_minimal
 [flask]: http://flask.pocoo.org/
 
 
@@ -105,7 +105,7 @@ We have a ["minimal" SMART REST][rest_minimal] example app that you can use as
 a starting point. It is a single Python file and we'll start from the top and
 work our way down explaining the code as we go.
 
-[rest_minimal]: https://github.com/chb/smart_sample_apps/blob/master/rest_minimal/wsgi.py
+[rest_minimal]: https://github.com/smart-platforms/smart_sample_apps/blob/master/rest_minimal/wsgi.py
 
 
 ### Import the SMARTClient
@@ -382,4 +382,4 @@ Container via the REST API and so can work with records outside of the
 Container's web UI allowing the creating of mobile and server apps!
 
 The complete source code for this example is available here:
-https://github.com/chb/smart_sample_apps/tree/master/rest_minimal
+https://github.com/smart-platforms/smart_sample_apps/tree/master/rest_minimal

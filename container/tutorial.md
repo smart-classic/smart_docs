@@ -50,7 +50,7 @@ provides the required messaging channel between the Connect app and your HTML.
 We've created a brief example Container using this library that you can see
 here:
 
-<https://github.com/chb/smart_sample_apps/blob/master/static/sample_container/index.html>
+<https://github.com/smart-platforms/smart_sample_apps/blob/master/static/sample_container/index.html>
 
 Be sure to read the code and refer to it while reading this tutorial. The rest
 of this document goes into detail on how to setup and use this library to
@@ -347,7 +347,7 @@ a SMART Container. This container implements only one API call, `GET
 medications`, and displays an alert if the contained app attempts to call any
 other function. Be sure to view the source code here:
 
-<https://github.com/chb/smart_sample_apps/blob/master/static/sample_container/index.html>
+<https://github.com/smart-platforms/smart_sample_apps/blob/master/static/sample_container/index.html>
 
 
 ## Example Manifests

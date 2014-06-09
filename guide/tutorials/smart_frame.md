@@ -115,5 +115,5 @@ You can view the example app at:
 (just create an account and add the "Frame UI Example" app.)
 
 You can see the code at:
-[https://github.com/chb/smart_sample_apps/tree/dev/static/framework/frame_ui_example](https://github.com/chb/smart_sample_apps/tree/dev/static/framework/frame_ui_example) 
+[https://github.com/smart-platforms/smart_sample_apps/tree/dev/static/framework/frame_ui_example](https://github.com/smart-platforms/smart_sample_apps/tree/dev/static/framework/frame_ui_example) 
 

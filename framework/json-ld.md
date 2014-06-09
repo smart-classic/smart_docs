@@ -201,4 +201,4 @@ and interactively discoverable interface to SMART patient data. You can
 start using this API in your apps today. For examples of this API in use
 see the code (in `main.js`) for the SMART [Diabetes Monograph app][].
 
-[Diabetes Monograph app]: https://github.com/chb/smart_sample_apps/tree/master/static/framework/dm_monograph/js/main.js
+[Diabetes Monograph app]: https://github.com/smart-platforms/smart_sample_apps/tree/master/static/framework/dm_monograph/js/main.js

@@ -102,7 +102,7 @@ out why. First, create the directory and make it yours:
 the Postgres config to use md5 passwords.
 
 [postgres-mac]: http://www.postgresql.org/download/macosx/
-[instructions]: https://github.com/chb/smart_server
+[instructions]: https://github.com/smart-platforms/smart_server
 
 
 Tomcat and openrdf-sesame
@@ -148,7 +148,7 @@ We're now ready to get the latest and greatest from SMART.
 
 * Download the SMART manager
   
-        $ curl -O https://raw.github.com/chb/smart_server/master/load_tools/smart_manager.py
+        $ curl -O https://raw.github.com/smart-platforms/smart_server/master/load_tools/smart_manager.py
 
 * Run the manager. This will install the current `master` branch of all SMART
   repositories that we need. If you want the bleeding edge `dev` version, add a

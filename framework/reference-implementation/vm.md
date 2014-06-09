@@ -64,7 +64,7 @@ it)
 ## Current SMART VM Builder
 
 You can build the latest SMART VM (API version 0.6.2) using Vagrant. Follow the instructions on 
-[https://github.com/chb/smart-vm](https://github.com/chb/smart-vm)
+[https://github.com/smart-platforms/smart-vm](https://github.com/smart-platforms/smart-vm)
    
 ## Legacy Pre-built VM Downloads
 

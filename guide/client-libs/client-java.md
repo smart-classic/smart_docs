@@ -42,7 +42,7 @@ fetch dependencies, you'll also need ant >1.7. For example on Ununtu, you can:
 Then, grab the SMART Java client library from github:
 
 {% highlight sh %}
-  git clone https://github.com/chb/smart_client_java.git
+  git clone https://github.com/smart-platforms/smart_client_java.git
 {% endhighlight %}
 
 
