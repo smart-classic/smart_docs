@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>SMART Developers Documentation</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/smart-docs.css" rel="stylesheet" media="screen">
+    <link href="/assets/css/syntax.css" rel="stylesheet">
+
+    <style type="text/css">
+      body { padding-top: 10px; padding-bottom: 40px; }
+      .top-row {
+        background: #e5e5e5;
+        border-radius: 6px;
+        margin-top: 40px;
+        padding-top: 20px;
+        padding-bottom: 30px;
+        margin-right: -30px; /* fix to match bs margin-left: -30px */
+      }
+      .get-started-btn { margin-top: 26px; }
+      .hero-left {
+        text-align: justify;
+        font-size: 18px;
+        font-weight: 200;
+        line-height: 30px;
+      }
+      .hero-h1 {
+        font-size: 38px;
+        margin-bottom: 16px;
+        color: #555;
+        text-align: center;
+      }
+      .hero-right {
+        font-size: 14px;
+        font-family: consolas, monospace;
+        padding-top: 15px;
+      }
+      .hero-pre {
+        background: lavender;
+        border: 1px solid #f5f5f5;
+        padding: 3px 3px 3px 26px;
+        overflow: scroll;
+        margin-top: 35px;
+      }
+      .hero-sample {
+        white-space: pre;
+        word-wrap: normal !important;
+      }
+      .links-row { text-align: center;
+        margin: 40px 0px 30px 0px;
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+      .weight500 { font-weight: 500; }
+      .left-para {
+        margin-left: 25px;
+      }
+      .copy-row {
+        background: #f0f0f2;
+        border-radius: 12px;
+        padding-bottom: 18px;
+        margin-right: -20px;
+      }
+
+    </style>
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class='red_box'>SMART "Classic" is being transitioned to support-only mode as we continue new development on SMART-on-FHIR. <a href="http://fhir-docs.smartplatforms.org">Click here</a> to see the SMART-on-FHIR docs</div>
+    
+      <div class='row top-row'>
+        <div class='hero-left span6'>
+          <h1 class='hero-h1'>Revolutionize Health IT!</h1>
+          <div>SMART is a free and open-source platform based on web standards
+          for building substitutable applications on top of a wide range of
+          health records systems.</div>
+          <div class='center get-started-btn'>
+            <a href="guide/" class="btn btn-primary btn-large">Get Started Now!</a>
+          </div>
+        </div>
+
+        <div class='hero-right span6'>
+          <pre class='hero-pre'>
+            <code class='hero-sample'>
+// Output structured medications in just 6 lines of Javascript!
+SMART.get_medications().success(
+  function(response){
+    $.each(response.objects.of_type.Medication, function(i, med){
+      document.write(med.drugName.dcterms__title + "&lt;br/&gt;");
+    })
+});</code>
+          </pre>
+        </div>
+      </div> <!-- top-row -->
+
+      <div class='links-row'>
+        <a href='/framework/architecture/'>Architecture</a>
+        &nbsp;<span class='weight500'>&middot;</span>&nbsp;
+        <a href='/framework/models/'>Data Models</a>
+        &nbsp;<span class='weight500'>&middot;</span>&nbsp;
+        <a href='/framework/api/'>API</a>
+        &nbsp;<span class='weight500'>&middot;</span>&nbsp;
+        <a href='/guide/'>App Development Guide</a>
+        &nbsp;<span class='weight500'>&middot;</span>&nbsp;
+        <a href='/container/roadmap.html'>Container Development Guide</a>
+     </div> <!-- row -->
+
+     <div class='links-row' style='margin-top: -20px'>
+        <a href='/guide/client-libs/clients.html'>Client Libraries</a>
+        &nbsp;<span class='weight500'>&middot;</span>&nbsp;
+        <a href='/framework/reference-implementation/architecture.html'>Reference Container</a>
+        &nbsp;<span class='weight500'>&middot;</span>&nbsp;
+        <a href='http://github.com/chb/'>Github</a>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row copy-row">
+        <div class="span3" style='margin-left: 22px'>
+          <div>
+            <h2 class='visible-desktop'>Documentation</h2>
+            <h2 class='hidden-desktop'>Docs</h2>
+            <p>For everything that you need to know about SMART's <a href='faq.html'>mission</a>,
+            <a href='/framework/architecture/'>technical architecture</a>,
+            <a href='/framework/models/'>data models</a>, and <a href='/framework/api'>APIs</a> and more.
+          </div>
+        </div>
+        <div class="span3">
+          <h2>Container Guide</h2>
+          <p>So you are thinking of SMART-enabling your medical records system? Here
+          is our <a href='/container/'>container development guide</a> to get you started as painlessly as possible.
+        </div>
+        <div class="span3">
+          <h2>Sandbox</h2>
+          <p>Our cloud-hosted SMART reference container is perfect for trying out a selection of sample
+          apps and testing your own apps. <a href="http://sandbox.smartplatforms.org">Try it.</a></p>
+        </div>
+        <div class="span3">
+          <h2>Community</h2>
+          <p>Dream SMART, talk SMART, live SMART! <a href='community.html'>Join a vibrant community</a> of fellow medical app developers who want to make a difference in advancing healthcare.</p>
+        </div>
+      </div>
+
+    
+<hr>
+
+<div class='footer-row'>
+    <img class='smartbug' src='/assets/img/smart-bug.png' style='height: 20px; width: 22px; padding-right: 4px;'>
+    <a href='http://smartplatforms.org'>SMARTPlatforms.org</a> &copy; 2014
+</div>
+
+
+    </div> <!-- /container -->
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+  </body>
+</html>
